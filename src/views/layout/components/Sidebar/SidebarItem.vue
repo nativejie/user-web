@@ -15,8 +15,8 @@
             <span v-if="item.meta&&item.meta.title" slot="title">{{item.meta.title}}</span>
           </template>
   
-          <template v-for="child in item.children" v-if="!child.hidden" :key="child.name">
-            <router-link :to="item.path+'/'+child.path"  >
+          <template v-for="child in item.children" v-if="!child.hidden" >
+            <router-link :to="item.path+'/'+child.path" :key="child.name" >
               <el-menu-item :index="item.path+'/'+child.path">
                 <svg-icon v-if="child.meta&&child.meta.icon" :icon-class="child.meta.icon"></svg-icon>
                 <span v-if="child.meta&&child.meta.title" slot="title">{{child.meta.title}}</span>
