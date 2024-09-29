@@ -1,12 +1,17 @@
 {
   "name": "admin-vue-web",
   "private": true,
-  "version": "0.0.0",
+  "version": "2.2.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "vite build --mode development",
+    "build:test": "vite build --mode test",
+    "build:production": "vite build --mode production",
     "preview": "vite preview"
+  },
+  "browser": {
+    "./util.inspect.js": false
   },
   "dependencies": {
     "admin-vue-web": "file:",
@@ -15,7 +20,7 @@
     "element-ui": "^2.15.14",
     "js-cookie": "^3.0.5",
     "nprogress": "^0.2.0",
-    "qs": "^6.13.0",
+    "query-string": "^9.1.0",
     "v-charts": "^1.19.0",
     "vue": "^2.7.16",
     "vue-i18n": "^7.3.2",
@@ -24,8 +29,12 @@
   },
   "devDependencies": {
     "@vitejs/plugin-vue2": "^2.3.1",
+    "fast-glob": "^3.3.2",
+    "madge": "^8.0.0",
     "normalize.css": "^8.0.1",
     "sass-embedded": "^1.79.2",
-    "vite": "^5.4.1"
+    "vite": "^5.4.1",
+    "vite-plugin-commonjs": "^0.10.3",
+    "vite-plugin-svg-icons": "^2.0.1"
   }
 }

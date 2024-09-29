@@ -1,62 +1,72 @@
 <template>
   <div id="app">
+    <navbar></navbar>
     <router-view />
   </div>
 </template>
 
 <script>
-import { languageSettingList } from '@/api/language'
+import Navbar from "@/views/Navbar/index";
+import { mapGetters } from "vuex";
+import { getToken } from "@/utils/auth";
+import { languageSettingList } from "@/api/home";
 
 export default {
-  name: 'App',
-  data () {
-    return {
-
-    }
+  components: {
+    Navbar,
   },
-  created () {
-    let data = sessionStorage.getItem('elementContentMap')
+  name: "App",
+  data() {
+    return {};
+  },
+  computed: {
+    ...mapGetters(["userInfo"]),
+  },
+  created() {
+    let data = sessionStorage.getItem("elementContentMap");
     if (!data) {
-      this.getElementContentMap()
+      this.getElementContentMap();
     } else {
       if (!window.elementContentList) {
-        this.getElementContentMap()
+        this.getElementContentMap();
       }
     }
-    if (!sessionStorage.getItem('languageList')) {
-      this.getLanguageSettingList()
+    if (!sessionStorage.getItem("languageList")) {
+      this.getLanguageSettingList();
     }
-    console.log('window', window)
+  },
+  mounted() {
+    let token = getToken();
+    if (this.userInfo && token) {
+      this.$store.dispatch("GetInfo");
+    }
   },
   methods: {
-    getLanguageSettingList () {
-      languageSettingList().then(res => {
-        sessionStorage.setItem('languageList', JSON.stringify(res.data))
-      })
+    getLanguageSettingList() {
+      languageSettingList().then((res) => {
+        sessionStorage.setItem("languageList", JSON.stringify(res.data));
+      });
     },
-    getElementContentMap () {
-      let elementContentMap = window.elementContentMap
-      elementContentMap = elementContentMap ? elementContentMap.slice(1, elementContentMap.length - 2) : ''
-      let arr = elementContentMap.split(',')
-      let obj = {}
-      arr.forEach(item => {
-        let ele = item.split('=')
-        ele[0] = ele[0].replace(' ', '')
-        this.$set(obj, ele[0], ele[1])
-      })
-      window.elementContentList = obj
-      sessionStorage.setItem('elementContentMap', JSON.stringify(obj))
+    getElementContentMap() {
+      window.elementContentList = window.elementContentList || {"portal_custom_basic_label11":"Back"};
+      sessionStorage.setItem(
+        "elementContentMap",
+        JSON.stringify(window.elementContentList)
+      );
     },
   },
-}
+};
 </script>
 
-<style>
+<style lang="scss" scoped>
 #app {
+  font-family: "Poppins";
+  // width: 100%;
+  // height: 100%;
+  // position: absolute;
+  // left: 0;
+  // top: 0;
+  width: 100vw;
   height: 100vh;
-  width: 100%;
-  font-family: HarmonyOS Sans SC;
 }
 </style>
-
-

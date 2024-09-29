@@ -24,8 +24,10 @@ const messages = {
     ...zhLocale
   }
 }
+
 const languageCode = localStorage.getItem("LanguageCode") || 'en-GB'
 const i18n = new VueI18n({
+  // 设置语言 选项 en | zh
   locale: languageCode,
   // 设置文本内容
   messages

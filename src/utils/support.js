@@ -1,5 +1,5 @@
 import Cookies from "js-cookie";
-const SupportKey = 'adminSupportKey';
+const SupportKey = 'loginToken';
 export function getSupport () {
   return Cookies.get(SupportKey)
 }

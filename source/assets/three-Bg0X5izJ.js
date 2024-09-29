@@ -1,1 +1,0 @@
-import{n as r}from"./index-C6rblSgp.js";const n={data(){return{}},mounted(){this.initThree()},methods:{initThree(){}}};var s=function(){var e=this;return e._self._c,e._m(0)},_=[function(){var t=this,e=t._self._c;return e("div",[t._v(" three "),e("canvas",{attrs:{id:"three"}})])}],a=r(n,s,_,!1,null,null);const o=a.exports;export{o as default};

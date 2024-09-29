@@ -1,33 +1,5 @@
 import request from '@/utils/request'
 
-export function login (username, password) {
-  return request({
-    url: '/admin/login',
-    method: 'post',
-    data: {
-      username,
-      password
-    }
-  })
-}
-
-// 发送邮箱验证码
-export function emailAuthCodeSend (type, username) {
-  return request({
-    url: `/admin/sso/emailAuthCode/send?type=${type}&username=${username}`,
-    method: 'post'
-  })
-}
-
-
-// 忘记密码
-export function forgetPassword (data) {
-  return request({
-    url: `/admin/sso/forgetPassword?authCode=${data.authCode}&password=${data.password}&username=${data.username}`,
-    method: 'post',
-  })
-}
-
 
 export function getInfo () {
   return request({
@@ -51,13 +23,13 @@ export function fetchList (params) {
   })
 }
 
-// export function createAdmin (data) {
-//   return request({
-//     url: '/admin/register',
-//     method: 'get',
-//     params: data
-//   })
-// }
+export function createAdmin (data) {
+  return request({
+    url: '/admin/register',
+    method: 'post',
+    data: data
+  })
+}
 
 export function updateAdmin (id, data) {
   return request({
@@ -97,21 +69,68 @@ export function allocRole (data) {
   })
 }
 
-export function updatePassword (data) {
+// 会员登录
+export function login (account, password) {
   return request({
-    url: '/admin/updatePassword',
+    url: `/sso/login?account=${account}&password=${password}`,
     method: 'post',
-    data: data
   })
 }
 
-
-export function createAdmin (data) {
+// 会员注册
+export function register (data) {
   return request({
-    url: '/admin/create',
+    url: `/sso/register?account=${data.account}&authCode=${data.authCode}&nickName=${data.nickName}&password=${data.password}`,
     method: 'post',
-    data: data
   })
 }
 
+// 发送注册账号的邮箱验证码
+export function registerAuthCodeSend (data) {
+  return request({
+    url: `/sso/register/authCode/send?account=${data}`,
+    method: 'post',
+  })
+}
+
+// 检查邮箱验证码
+export function registerCheckAuthCodeSend (data, code) {
+  return request({
+    url: `/sso/register/checkAuthCode?account=${data}&authCode=${code}`,
+    method: 'post',
+  })
+}
+
+// 忘记密码
+export function forgetPassword (data) {
+  return request({
+    url: `/sso/forgetPassword?account=${data.account}&authCode=${data.authCode}&password=${data.password}`,
+    method: 'post',
+  })
+}
+
+// 发送忘记密码的邮箱验证码
+export function forgetPasswordAuthCodeSend (data) {
+  return request({
+    url: `/sso/forgetPassword/authCode/send?account=${data}`,
+    method: 'post',
+  })
+}
+
+// 账号检测
+export function userCheck (params) {
+  return request({
+    url: '/sso/user/check',
+    method: 'get',
+    params: params
+  })
+}
+
+// 刷新token
+export function refreshToken () {
+  return request({
+    url: '/sso/refreshToken',
+    method: 'get',
+  })
+}
 

@@ -1,4 +1,6 @@
-import { login, logout, getInfo } from '@/api/login'
+import { login, logout } from '@/api/login'
+import { getInfo } from '@/api/member'
+import { countCart } from '@/api/cart'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 
 const user = {
@@ -7,11 +9,8 @@ const user = {
     name: '',
     avatar: '',
     roles: [],
-    firstLogin: false,
-    storeUid: '',
-    roleCode: [],
-    storeId: '',
-    language: '',
+    userInfo: {},
+    cartNum: 0,
   },
 
   mutations: {
@@ -27,40 +26,37 @@ const user = {
     SET_ROLES: (state, roles) => {
       state.roles = roles
     },
-    SET_FIRSTLOGIN: (state, firstLogin) => {
-      state.firstLogin = firstLogin
+    SET_USERINFO: (state, userInfo) => {
+      state.userInfo = userInfo
     },
-    SET_STOREUID: (state, storeUid) => {
-      state.storeUid = storeUid
-    },
-    SET_STOREID: (state, storeId) => {
-      state.storeId = storeId
-    },
-    SET_ROLECODE: (state, roleCode) => {
-      state.roleCode = roleCode
-    },
-    SET_LANGUAGE: (state, language) => {
-      state.language = language
+    SET_CARTNUM: (state, num) => {
+      state.cartNum = num
     }
   },
 
   actions: {
-    // 登录
-    Login ({ commit }, userInfo) {
-      const username = userInfo.username.trim()
+    // 获取购物车数量
+    UpdateCartNum ({ commit }) {
       return new Promise((resolve, reject) => {
-        login(username, userInfo.password).then(response => {
+        countCart({ pageNum: 1, pageSize: 1000 }).then(resp => {
+          commit('SET_CARTNUM', resp.data)
+          resolve()
+        }).catch(error => {
+          reject(error)
+        })
+      })
+    },
+    // 登录
+    Login ({ dispatch, commit }, userInfo) {
+      const account = userInfo.account.trim()
+      return new Promise((resolve, reject) => {
+        login(account, userInfo.password).then(response => {
           const data = response.data
           const tokenStr = data.tokenHead + data.token
           setToken(tokenStr)
           commit('SET_TOKEN', tokenStr)
-          commit('SET_FIRSTLOGIN', data.firstLogin)
-          commit('SET_STOREUID', data.storeUid)
-          let roleCode = data.roleCodeList[0]
-          commit('SET_ROLECODE', data.roleCodeList[0])
+          dispatch('GetInfo')
           resolve()
-          console.log('user.firstLogin', user.state.firstLogin)
-          console.log('user.roleCode', user.state.roleCode)
         }).catch(error => {
           reject(error)
         })
@@ -68,36 +64,30 @@ const user = {
     },
 
     // 获取用户信息
-    GetInfo ({ commit, state }) {
+    GetInfo ({ dispatch, commit }) {
       return new Promise((resolve, reject) => {
         getInfo().then(response => {
-          const data = response.data
-          if (data.roles && data.roles.length > 0) { // 验证返回的roles是否是一个非空数组
-            commit('SET_ROLES', data.roles)
-          } else {
-            reject('getInfo: roles must be a non-null array !')
-          }
-          commit('SET_NAME', data.username)
-          commit('SET_AVATAR', data.icon)
-          commit('SET_STOREID', data.storeId)
-          resolve(response)
+          sessionStorage.setItem('userInfo', JSON.stringify(response.data))
+          commit('SET_USERINFO', response.data)
+          resolve()
         }).catch(error => {
           reject(error)
         })
+        dispatch('UpdateCartNum')
       })
     },
 
     // 登出
     LogOut ({ commit, state }) {
       return new Promise((resolve, reject) => {
-        logout(state.token).then(() => {
-          commit('SET_TOKEN', '')
-          commit('SET_ROLES', [])
-          removeToken()
-          resolve()
-        }).catch(error => {
-          reject(error)
-        })
+        commit('SET_TOKEN', '')
+        commit('SET_ROLES', [])
+        removeToken()
+        resolve()
+        // logout(state.token).then(() => {
+        // }).catch(error => {
+        //   reject(error)
+        // })
       })
     },
 

@@ -37,6 +37,8 @@ Vue.use(VCharts)
 
 Vue.config.productionTip = false
 
+
+import "virtual:svg-icons-register"
 new Vue({
   el: '#app',
   router,
