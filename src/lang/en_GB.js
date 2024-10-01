@@ -166,12 +166,13 @@ export default {
       label13: 'Weight',
       label14: '比例效果示意图',
       label15: '专属定制模型',
-      label16: '比例',
+      label16: '打印比例',
       label17: '请输入完整信息后在此查看预估的模型高度和重量',
       label18: 'Estimate height',
       label19: 'Estimate weight',
       label20: 'Arrival date not be blank',
       label21: 'Arrival time not be blank',
+      label22: '昵称',
       placeholder1: 'Input your height',
       placeholder2: 'Input your weight',
       placeholder3: 'Please select print scale',
@@ -215,6 +216,7 @@ export default {
         btn: 'Confirm appointment',
         placeholder1: 'Select date',
         placeholder2: 'Select time',
+        subTitle: '请选择一家合适的门店，并完成扫描时间预约'
       },
       step7: {
         label1: '场景组合',

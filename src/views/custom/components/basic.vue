@@ -49,7 +49,7 @@
             $t('custom.basic.title4')
           "
           :step="step"
-          @handleBack="handleBack"
+          @handleBack="handleShowDialog"
         ></custom-header>
         <div class="info">
           <div
@@ -71,6 +71,37 @@
             </p>
             <div class="flex">
               <div class="inputs">
+                <!-- nickname -->
+                <div class="m_r flex">
+                  <div class="input">
+                    <span class="text4 flex-row-center">
+                      {{
+                        elementContentList.nickName ||
+                        $t("custom.basic.label22")
+                      }}
+                      <el-tooltip effect="dark" content="输入昵称可以更好区分不同对象" placement="top" :style="{ marginLeft: '2px' }">
+                        <i class="el-icon-info" :style="{ color: 'red', cursor: 'pinter' }"></i>
+                      </el-tooltip>
+                    </span>
+                    <el-input
+                      v-model="item.nickName"
+                      @blur="handleBlur(item, index)"
+                      @change="handleChange(item, index)"
+                      :placeholder="
+                        elementContentList.portal_custom_basic_placeholder1 ||
+                        $t('custom.basic.placeholder3')
+                      "
+
+                    />
+                  </div>
+                  <p class="tips tips2" v-if="item.showTip1">
+                    {{
+                      elementContentList.portal_custom_basic_tip1 ||
+                      $t("custom.basic.tip1")
+                    }}
+                  </p>
+                </div>
+                <!-- height -->
                 <div class="m_r flex">
                   <div class="input">
                     <span class="text4"
@@ -125,10 +156,15 @@
                 </div>
                 <div class="m_r2 flex">
                   <div class="input">
-                    <span class="text4">{{
-                      elementContentList.portal_custom_basic_label16 ||
-                      $t("custom.basic.label16")
-                    }}</span>
+                    <span class="text4 flex-row-center">
+                      {{
+                        elementContentList.portal_custom_basic_label16 ||
+                        $t("custom.basic.label16")
+                      }}
+                      <el-tooltip effect="dark" content="即最终成品与真实身高的比例。例如：身高为170cm，选择1:10的比例后，最终成品的高度就为17cm" placement="top" :style="{ marginLeft: '2px' }">
+                        <i class="el-icon-info" :style="{ color: 'red', cursor: 'pinter' }"></i>
+                      </el-tooltip>
+                    </span>
                     <el-select
                       v-model="item.sku"
                       @change="handleBlur3(item, index)"
@@ -202,28 +238,37 @@
 
         <div class="four_main flex_b_c">
           <div class="left">
-            <div class="tabs flex">
-              <div
-                class="tab_item"
-                :class="tab == index ? 'active' : ''"
-                @click="handleChangeTab(item, index)"
+            <div class="tabs">
+              <div 
                 v-for="(item, index) in serviceList"
+                class="tab_item-wrap" 
+                :class="tab == index ? 'active' : ''"
                 :key="item.customServiceUid"
               >
-                <p>{{ item.name }}</p>
-                <p>{{ item.serviceDesc }}</p>
-                <div class="border"></div>
+                <div
+                  class="tab_item"
+                  :class="tab == index ? 'active' : ''"
+                  @click="handleChangeTab(item, index)"
+                >
+                  <p>{{ item.name }}</p>
+                  <p>{{ item.serviceDesc }}</p>
+                  <div class="border"></div>
+                  <i class="el-icon-success"></i>
+                </div>
+                <div class="item-content" v-if="tab == index">
+                    <p class="item-content-title">
+                      {{
+                        elementContentList.portal_custom_basic_step4_label8 ||
+                        $t("custom.basic.step4.label8")
+                      }}
+                    </p>
+                    <div class="item-content-desc">{{ serviceDesc }}</div>
+                  </div>
               </div>
             </div>
-            <div class="style">
-              <p class="style_title">
-                {{
-                  elementContentList.portal_custom_basic_step4_label8 ||
-                  $t("custom.basic.step4.label8")
-                }}
-              </p>
-              <div class="desc">{{ serviceDesc }}</div>
-            </div>
+            <!-- <div class="style">
+              
+            </div> -->
           </div>
           <div class="right image_pre">
             <div
@@ -410,6 +455,12 @@
             $t("custom.basic.step6.title")
           }}
         </p>
+        <p class="sub-title">
+          {{
+            elementContentList.portal_custom_basic_step6_title ||
+            $t("custom.basic.step6.subTitle")
+          }}
+        </p>
         <div class="six_main">
           <div class="six_left">
             <div
@@ -435,6 +486,8 @@
                 <span>{{ item.address }}</span>
                 <span>{{ item.contact }}</span>
               </p>
+              <!-- <p class="distance">distance</p>
+              <p class="tel">tel</p> -->
               <p
                 class="status"
                 :style="item.status == 0 ? '' : { color: '#646873' }"
@@ -580,11 +633,12 @@
               :key="index + 'p'"
               :class="packIdx == index ? 'active' : ''"
             >
-              {{ item.productName }}
+              <div class="ellipsis">{{ item.productName }}</div>
               <div
                 class="border"
                 @click="handleChangePackIdx(item, index)"
               ></div>
+              <i class="el-icon-success" v-if="packIdx == index"></i>
             </div>
           </div>
           <div class="left image_pre">
@@ -658,7 +712,7 @@
                       >
                         {{ attr.productAttributeName + ":" + attr.value }}
                       </p>
-                      <p class="qty">
+                      <!-- <p class="qty">
                         <span>{{
                           elementContentList.portal_custom_basic_step7_label3 ||
                           $t("custom.basic.step7.label3")
@@ -672,7 +726,7 @@
                           "
                           v-model="item.productQuantity"
                         />
-                      </p>
+                      </p> -->
                     </div>
                     <div class="price">
                       <span
@@ -681,14 +735,14 @@
                     </div>
                   </div>
                 </div>
-                <span
+                <!-- <span
                   class="btn"
                   @click="handleEditServiceProduct(item, index)"
                   >{{
                     elementContentList.portal_custom_basic_step5_label4 ||
                     $t("custom.basic.step5.label4")
-                  }}</span
-                >
+                  }}
+                </span> -->
               </div>
             </div>
           </div>
@@ -814,8 +868,8 @@
                   >{{
                     elementContentList.portal_custom_basic_step5_label4 ||
                     $t("custom.basic.step5.label4")
-                  }}</span
-                >
+                  }}
+                </span>
               </div>
             </div>
           </div>
@@ -968,8 +1022,36 @@
     <customFooter
       :on-btn-click="handleClickBtn"
       :disabled="step === 1 && type === -1"
-    />
+    >
+      <div class="seven-foot-msg" v-if="[6, 7].includes(step)">
+        <div class="seven-foot-msg-item">
+          <p class="seven-foot-msg-item-title">
+            <i class="el-icon-user icon"></i>
+            扫描对象
+          </p>
+          <p class="seven-foot-msg-item-msg">人物 x5</p>
+        </div>
+        <div class="seven-foot-msg-item">
+          <p class="seven-foot-msg-item-title">
+            <i class="el-icon-box icon"></i>
+            造型风格
+          </p>
+          <p class="seven-foot-msg-item-msg">场景组合</p>
+        </div>
+      </div>
+    </customFooter>
     <productInfo v-if="showProInfo" :editServiceProduct="editServiceProduct" />
+    <Dialog
+      title='操作确认'
+      leftBtnText="Cancel"
+      rightBtnText="Confirm"
+      :dialogVisible="dialogVisible" 
+      :onClose="handleCose" 
+      :onCancel="handleCancel"
+      :onConfirm="handleConfirm"
+    >
+      <p class="dialog-msg">返回上一步将清除已填写信息，确认返回吗？</p>
+    </Dialog>
   </div>
 </template>
 
@@ -977,6 +1059,7 @@
 import productInfo from "./productInfo.vue";
 import footer from "./footer";
 import header from "./header.vue";
+import Dialog from '../../../components/Dialog';
 import {
   checkExist,
   detail,
@@ -1000,6 +1083,7 @@ export default {
     productInfo,
     customFooter: footer,
     customHeader: header,
+    Dialog
   },
   data() {
     return {
@@ -1055,6 +1139,8 @@ export default {
       },
       showDateTip: false,
       showTimeTip: false,
+      dialogVisible: false,
+      inputWidthS: '46px'
     };
   },
   created() {
@@ -1087,7 +1173,7 @@ export default {
             }
           });
         } else {
-          this.storeIdx = 0;
+          this.storeIdx = -1;
           this.imageAct2 = 0;
           this.storeInfo = respo.data.list[0];
         }
@@ -1315,7 +1401,10 @@ export default {
       let arr = [];
       this.packageProList.map((item) => {
         if (item.productUid == val.productUid) {
-          arr.push(item);
+          arr.push({
+            ...item,
+            check: true
+          });
         }
       });
       this.serviceProductList = arr;
@@ -1419,6 +1508,8 @@ export default {
         sku: "",
         modelHeight: "",
         modelWeight: "",
+        // TODO: 昵称字段
+        nickName: ""
       });
     },
     handleBack(val = this.step) {
@@ -1714,6 +1805,19 @@ export default {
         }
       );
     },
+    handleShowDialog() {
+      this.dialogVisible = true;
+    },
+    handleCose() {
+      this.dialogVisible = false;
+    },
+    handleCancel() {
+      this.handleCose();
+    },
+    handleConfirm() {
+      this.handleBack();
+      this.handleCose();
+    },
   },
 };
 </script>
@@ -1808,8 +1912,8 @@ export default {
   }
   .image_pre {
     .images {
-      width: 540px;
-      height: 540px;
+      width: 600px;
+      height: 600px;
       border-radius: 12px;
       position: relative;
       img {
@@ -1828,7 +1932,7 @@ export default {
         background: #ffffff;
         box-shadow: 0px 0px 50px 0px rgba(0, 0, 0, 0.2);
         cursor: pointer;
-        top: 250px;
+        top: 280px;
         i {
           color: #9a9c9f;
           font-size: 20px;
@@ -1847,7 +1951,7 @@ export default {
       align-items: center;
       overflow-x: hidden;
       height: 70px;
-      margin-top: 16px;
+      margin-top: 12px;
       .image_item {
         width: 65px;
         height: 65px;
@@ -2204,50 +2308,84 @@ export default {
   .four_main {
     margin-top: 71px;
     .left {
+      width: 100%;
       .tabs {
-        .tab_item {
-          width: 181.33px;
-          height: 88px;
-          border-radius: 12px;
-          padding: 17px;
-          gap: 8px;
-          background: #fff0f2;
-          position: relative;
+        width: 100%;
+        .tab_item-wrap {
           margin-right: 16px;
-          text-align: center;
-          p:nth-of-type(1) {
-            font-size: 16px;
-            font-weight: 500;
-            line-height: 24px;
+          overflow: hidden;
+          &:not(:first-child) {
+            margin-top: 16px;
           }
-          p:nth-of-type(2) {
-            color: #646873;
-            margin-top: 8px;
-          }
-          .border {
-            width: 181.33px;
-            height: 88px;
+          .tab_item {
+            width: 100%;
+            height: 100% !important;
             border-radius: 12px;
-            position: absolute;
-            top: 0;
-            left: 0;
-          }
-          &.active {
-            p {
-              color: #f6497f;
-            }
+            padding: 32px;
+            gap: 8px;
+            background: #fff;
+            position: relative;
+            text-align: left;
+            color: #1D2129;
+            cursor: pointer;
             .border {
-              border: 3px solid #f6497f;
+              border: 1px solid #E0E2E9;
+              width: 100%;
+              height: 100%;
+            }
+            p:nth-of-type(1) {
+              font-size: 16px;
+              font-weight: 500;
+              line-height: 24px;
+            }
+            p:nth-of-type(2) {
+              color: #646873;
+              margin-top: 8px;
+            }
+            .el-icon-success {
+              position: absolute;
+              color: red;
+              top: 8px;
+              right: 8px;
+              font-size: 24px;
+              opacity: 0;
+            }
+            &.active {
+              .border {
+                border: 3px solid #f6497f;
+              }
+              .el-icon-success {
+                opacity: 1;
+              }
             }
             &:hover {
+              .border {
+                border: 1px solid #ff9eb6;
+              }
+            }
+            &.active:hover {
               .border {
                 border: 3px solid #f6497f;
               }
             }
           }
-          &:hover {
-            .border {
-              border: 3px solid #ff9eb6;
+          .item-content {
+            width: 100%;
+            height: 100%;
+            padding: 16px;
+            border-radius: 8px;
+            box-sizing: border-box;
+            background: #F8F9FC;
+            color: #1D2129;
+            transition: height .3s ease-in-out;
+            margin-top: 4px;
+            .item-content-title {
+              font-size: 16px;
+              font-weight: 500;
+            }
+            .item-content-desc {
+              margin-top: 16px;
+              font-size: 14px;
             }
           }
         }
@@ -2280,6 +2418,7 @@ export default {
     }
   }
   .five {
+    padding-top: 64px;
     .five_main {
       height: 626px;
       margin-top: 69px;
@@ -2379,6 +2518,16 @@ export default {
         }
       }
     }
+    .image_pre {
+      width: 420px;
+      margin-right: 24px !important;
+      .arrow_left,.arrow_right {
+        top: 200px;
+      }
+    }
+    .text1 {
+      height: auto !important;
+    }
   }
   .six {
     height: 100%;
@@ -2469,7 +2618,7 @@ export default {
         }
         .introduce {
           width: 540px;
-          height: 257px;
+          height: auto;
           border-radius: 8px;
           padding: 12px 0 12px 16px;
           background: #f8f9fc;
@@ -2478,7 +2627,8 @@ export default {
             font-weight: 500;
           }
           .in_detail {
-            height: 203px;
+            // height: 203px;
+            height: 100%;
             overflow-y: scroll;
             padding-right: 8px;
             color: #646873;
@@ -2512,6 +2662,11 @@ export default {
         }
       }
     }
+    .sub-title {
+      font-size: 14px;
+      color: #535E6F;
+      margin-top: 12px;
+    }
   }
   .seven {
     .five_main {
@@ -2520,7 +2675,7 @@ export default {
     .pack_tabs {
       margin-right: 24px;
       .tabs_item {
-        width: 131px;
+        width: 240px;
         height: 56px;
         border-radius: 8px;
         background: #f8f9fc;
@@ -2529,12 +2684,19 @@ export default {
         position: relative;
         margin-bottom: 16px;
         .border {
-          width: 131px;
+          width: 100%;
           height: 56px;
           border-radius: 8px;
           position: absolute;
           top: 0;
           left: 0;
+        }
+        .el-icon-success {
+          position: absolute;
+          top: 6px;
+          right: 6px;
+          font-size: 16px;
+          color: #F6497F;;
         }
         &.active {
           background: #fff0f2;
@@ -2555,11 +2717,11 @@ export default {
       }
     }
     .images {
-      width: 450px;
-      height: 450px;
+      width: 420px;
+      height: 420px;
     }
     .image_list {
-      width: 450px;
+      width: 420px;
       overflow-x: scroll;
     }
     .text1 {
@@ -2635,5 +2797,41 @@ export default {
 }
 .el-checkbox__inner {
   border-radius: 4px;
+}
+.dialog-msg {
+  font-size: 14px;
+  font-weight: normal;
+  line-height: 22px;
+  letter-spacing: 0em;
+  color: #1D2129;
+}
+.flex-row-center {
+  display: flex;
+  align-items: center;
+}
+.ellipsis {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.seven-foot-msg {
+  display: flex;
+  .seven-foot-msg-item {
+    font-size: 14px;
+
+    &:not(:first-child) {
+      margin-left: 65px;
+    }
+    .icon {
+      font-size: 14px;
+    }
+    .seven-foot-msg-item-title {
+      color: #1D2129;
+    }
+    .seven-foot-msg-item-msg {
+      padding-left: 20px;
+      color: #F6497F;
+    }
+  }
 }
 </style>

@@ -158,6 +158,7 @@ export default {
       label13: 'Weight',
       label14: '比例效果示意图',
       label15: '专属定制模型',
+      label22: 'nickName',
       placeholder1: 'Input your height',
       placeholder2: 'Input your weight',
       placeholder3: 'Please select print scale',

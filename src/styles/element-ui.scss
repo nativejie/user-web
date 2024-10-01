@@ -52,6 +52,7 @@
   left: 0;
   position: relative;
   margin: 0 auto;
+  border-radius: 12px !important;
 }
 
 // refine element ui upload
@@ -81,4 +82,8 @@
 // to fix el-date-picker css style
 .el-range-separator {
   box-sizing: content-box;
+}
+
+.el-button--danger {
+  background-color: #f6497f !important;
 }
