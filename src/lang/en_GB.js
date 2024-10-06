@@ -227,7 +227,7 @@ export default {
         label1: '功能配件',
       },
       confirm: {
-        label1: '请确认你的定制配置',
+        label1: '请确认你的定制信息',
         label2: '扫描类型',
         label3: '身高体重',
         label4: '制作比例',
@@ -240,6 +240,9 @@ export default {
         label11: '合计: ',
         label12: 'Buy now',
         label13: 'Add to cart',
+        label14: '扫描对象',
+        label15: '配件商品',
+        label16: '价格信息',
       },
     },
   },

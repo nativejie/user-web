@@ -461,6 +461,7 @@
             $t("custom.basic.step6.subTitle")
           }}
         </p>
+        <!-- TODO: 门店介绍 -->
         <div class="six_main">
           <div class="six_left">
             <div
@@ -540,13 +541,14 @@
                 {{ storeInfo.storeDesc }}
               </div>
             </div>
-            <p>
+            <!-- <p>
               {{
                 elementContentList.portal_custom_basic_step6_label4 ||
                 $t("custom.basic.step6.label4")
               }}
-            </p>
-            <div class="time flex_b_c">
+            </p> -->
+            <!-- TODO: 时间选择 -->
+            <!-- <div class="time flex_b_c">
               <div class="flex">
                 <span>{{
                   elementContentList.portal_custom_basic_step6_label5 ||
@@ -596,7 +598,7 @@
                   }}
                 </p>
               </div>
-            </div>
+            </div> -->
           </div>
         </div>
       </div>
@@ -877,6 +879,7 @@
       </div>
     </div>
     <div v-else class="confirm_order">
+      <custom-header step="-1" @handleBack="handleConfirmOrderBack" />
       <p class="con_title">
         {{
           elementContentList.portal_custom_basic_confirm_label1 ||
@@ -887,129 +890,171 @@
         }}</span>
       </p>
       <div class="cus_info">
-        <div class="in_left">
-          <p>
-            <span class="in_label">{{
-              elementContentList.portal_custom_basic_confirm_label2 ||
-              $t("custom.basic.confirm.label2")
-            }}</span
-            ><span>{{ detailInfo ? detailInfo.cusProductName : "" }}</span>
-          </p>
-          <p>
-            <span class="in_label">{{
-              elementContentList.portal_custom_basic_confirm_label3 ||
-              $t("custom.basic.confirm.label3")
-            }}</span>
-            <span
-              v-for="(obj, idx) in detailInfo.customProductObjVOs"
-              :key="idx + 'p'"
-              >{{
-                obj.height +
-                "cm, " +
-                obj.weight +
-                (idx == detailInfo.customProductObjVOs.length - 1
-                  ? "kg"
-                  : "kg / ")
-              }}</span
-            >
-          </p>
-          <p>
-            <span class="in_label">{{
-              elementContentList.portal_custom_basic_confirm_label4 ||
-              $t("custom.basic.confirm.label4")
-            }}</span
-            ><span
-              v-for="(obj, idx) in detailInfo.customProductObjVOs"
-              :key="idx + 'p2'"
-              >{{
-                idx == detailInfo.customProductObjVOs.length - 1
-                  ? obj.ratio
-                  : obj.ratio + ","
-              }}</span
-            >
-          </p>
-          <p>
-            <span class="in_label">{{
-              elementContentList.portal_custom_basic_confirm_label5 ||
-              $t("custom.basic.confirm.label5")
-            }}</span
-            ><span>{{ detailInfo.customServiceName }}</span>
-          </p>
-          <div class="in_pro">
-            <span class="in_label">{{
-              elementContentList.portal_custom_basic_confirm_label6 ||
-              $t("custom.basic.confirm.label6")
-            }}</span>
-            <div>
-              <p
-                v-for="(pro, idx) in detailInfo.customServiceProductVOs"
-                :key="idx + 'c'"
-              >
-                <span class="text2">{{ pro.productName }}</span>
-                <span
-                  class="text2"
-                  v-for="attr in pro.attributeValueVOs"
-                  :key="attr.productAttributeUid"
-                  >{{ attr.value }}</span
-                >
-                <span class="text2">{{ "x" + pro.num }}</span>
-              </p>
+        <p>
+          <span class="in_label">{{
+            elementContentList.portal_custom_basic_confirm_label2 ||
+            $t("custom.basic.confirm.label2")
+          }}</span
+          ><span>{{ detailInfo ? detailInfo.cusProductName : "" }}</span>
+        </p>
+        <div class="order-item-line">
+          <!-- TODO: 扫描对象 -->
+          <span class="in_label">{{
+            elementContentList.portal_custom_basic_confirm_label14 ||
+            $t("custom.basic.confirm.label14")
+          }}</span>
+          <div class="label-val-wrap">
+            <div class="label-val">
+              <div class="label-val-row">
+                <div class="label-val-row-item">扫描对象1</div>
+                <div class="label-val-row-item">Cyrus</div>
+                <div class="label-val-row-item">174cm,64kg</div>
+                <div class="label-val-row-item">1:5</div>
+                <div class="label-val-row-item">1:5</div>
+                <div class="label-val-row-item red">£ 12</div>
+                <div class="label-val-row-item btn">Deposit</div>
+              </div>
+              <div class="label-val-row">
+                <div class="label-val-row-item">扫描对象2</div>
+                <div class="label-val-row-item">Cyrus</div>
+                <div class="label-val-row-item">174cm,64kg</div>
+                <div class="label-val-row-item">1:5</div>
+                <div class="label-val-row-item">1:5</div>
+              </div>
+              <div class="label-val-row">
+                <div class="label-val-row-item red flex">
+                  £ 12 &nbsp;
+                  <div class="label-val-row-item btn">Deposit</div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-        <div class="in_right">
+        <div class="order-item-line">
+          <span class="in_label">{{
+            elementContentList.portal_custom_basic_confirm_label5 ||
+            $t("custom.basic.confirm.label5")
+          }}</span>
+          <span>{{ detailInfo.customServiceName }}</span>
+        </div>
+        <div class="order-item-line">
+          <span class="in_label">{{
+            elementContentList.portal_custom_basic_confirm_label6 ||
+            $t("custom.basic.confirm.label15")
+          }}</span>
           <div>
-            <p>
-              <span class="in_label">{{
-                elementContentList.portal_custom_basic_confirm_label7 ||
-                $t("custom.basic.confirm.label7")
-              }}</span
-              ><span>{{ detailInfo.storeName }}</span>
-            </p>
-            <p>
-              <span class="in_label">{{
-                elementContentList.portal_custom_basic_confirm_label8 ||
-                $t("custom.basic.confirm.label8")
-              }}</span
-              ><span>{{
-                detailInfo.arrivalDateStr + " " + detailInfo.arrivalTime
-              }}</span>
-            </p>
-          </div>
-          <div>
-            <p class="in_price">
-              <span class="in_label" style="margin-right: 0">{{
-                elementContentList.portal_custom_basic_confirm_label9 ||
-                $t("custom.basic.confirm.label9")
-              }}</span
-              ><span style="color: #f6497f">{{
-                " £ " +
-                (detailInfo.cusTotalPrice - detailInfo.serviceProductTotalPrice)
-              }}</span>
-            </p>
-            <p class="in_price">
-              <span class="in_label" style="margin-right: 0">{{
-                elementContentList.portal_custom_basic_confirm_label10 ||
-                $t("custom.basic.confirm.label10")
-              }}</span
-              ><span style="color: #f6497f">{{
-                " £ " + detailInfo.serviceProductTotalPrice
-              }}</span>
-            </p>
-            <p class="in_total">
-              <span class="in_label" style="margin-right: 0">{{
-                elementContentList.portal_custom_basic_confirm_label11 ||
-                $t("custom.basic.confirm.label11")
-              }}</span
-              ><span style="color: #f6497f">{{
-                " £ " + detailInfo.cusTotalPrice
-              }}</span>
+            <p
+              v-for="(pro, idx) in detailInfo.customServiceProductVOs"
+              :key="idx + 'c'"
+            >
+              <span class="text2">{{ pro.productName }} &nbsp;</span>
+              <span
+                class="text2"
+                v-for="attr in pro.attributeValueVOs"
+                :key="attr.productAttributeUid"
+                >{{ attr.value }}</span
+              >
+              <span class="text2">{{ "x" + pro.num }} &nbsp;</span>
             </p>
           </div>
         </div>
+        <div class="order-item-line">
+          <span class="in_label">{{
+            elementContentList.portal_custom_basic_confirm_label7 ||
+            $t("custom.basic.confirm.label7")
+          }}</span>
+          <span>{{ detailInfo.storeName }}</span>
+        </div>
+        <div class="order-item-line">
+          <span class="in_label">{{
+            elementContentList.portal_custom_basic_confirm_label8 ||
+            $t("custom.basic.confirm.label8")
+          }}</span>
+          <span>{{
+            detailInfo.arrivalDateStr + " " + detailInfo.arrivalTime
+          }}</span>
+        </div>
+        <!-- 身高体重 -->
+        <div class="order-item-line">
+          <span class="in_label">{{
+            elementContentList.portal_custom_basic_confirm_label3 ||
+            $t("custom.basic.confirm.label3")
+          }}</span>
+          <span
+            v-for="(obj, idx) in detailInfo.customProductObjVOs"
+            :key="idx + 'p'"
+            >{{
+              obj.height +
+              "cm, " +
+              obj.weight +
+              (idx == detailInfo.customProductObjVOs.length - 1
+                ? "kg"
+                : "kg / ")
+            }}
+          </span>
+        </div>
+        <!-- 制作比例 -->
+        <div class="order-item-line">
+          <span class="in_label">{{
+            elementContentList.portal_custom_basic_confirm_label4 ||
+            $t("custom.basic.confirm.label4")
+          }}</span
+          ><span
+            v-for="(obj, idx) in detailInfo.customProductObjVOs"
+            :key="idx + 'p2'"
+            >{{
+              idx == detailInfo.customProductObjVOs.length - 1
+                ? obj.ratio
+                : obj.ratio + ","
+            }}</span
+          >
+        </div>
+        <div class="order-item-line col flex-end">
+          <p class="order-item-line-title">
+            {{
+              elementContentList.portal_custom_basic_confirm_label16 ||
+              $t("custom.basic.confirm.label16")
+            }}
+          </p>
+          <!-- 定制款项 -->
+          <p class="in_price flex-row">
+            <span class="in_label" style="margin-right: 0">{{
+              elementContentList.portal_custom_basic_confirm_label9 ||
+              $t("custom.basic.confirm.label9")
+            }} &nbsp;</span>
+            <span style="color: #f6497f; display: flex; alignItems: center;">
+              {{
+              " £ " +
+              (detailInfo.cusTotalPrice - detailInfo.serviceProductTotalPrice)
+              }}
+              <div class="label-val-row-item btn">Deposit</div>
+            </span>
+          </p>
+          <!-- 配件款项 -->
+          <p class="in_price flex-row">
+            <span class="in_label" style="margin-right: 0">{{
+              elementContentList.portal_custom_basic_confirm_label10 ||
+              $t("custom.basic.confirm.label10")
+            }}&nbsp;</span
+            ><span style="color: #f6497f">{{
+              " £ " + detailInfo.serviceProductTotalPrice
+            }}</span>
+          </p>
+          <!-- 合计 -->
+          <p class="in_total flex-row">
+            <span class="in_label" style="margin-right: 0">{{
+              elementContentList.portal_custom_basic_confirm_label11 ||
+              $t("custom.basic.confirm.label11")
+            }}&nbsp;</span
+            ><span style="color: #f6497f;fontSize: 32px;">{{
+              " £ " + detailInfo.cusTotalPrice
+            }}</span>
+          </p>
+        </div>
       </div>
       <p class="con_btns">
-        <el-button class="btn" @click="handleBuyNow">{{
+        <el-button class="red" type="text" @click="handleShowRuleDialog"> 定金规则说明</el-button>
+        <el-button class="btn" @click="handleShowRule">{{
           elementContentList.portal_custom_basic_confirm_label12 ||
           $t("custom.basic.confirm.label12")
         }}</el-button>
@@ -1020,6 +1065,7 @@
       </p>
     </div>
     <customFooter
+      v-if="showStep"
       :on-btn-click="handleClickBtn"
       :disabled="step === 1 && type === -1"
     >
@@ -1043,14 +1089,94 @@
     <productInfo v-if="showProInfo" :editServiceProduct="editServiceProduct" />
     <Dialog
       title='操作确认'
-      leftBtnText="Cancel"
-      rightBtnText="Confirm"
       :dialogVisible="dialogVisible" 
       :onClose="handleCose" 
       :onCancel="handleCancel"
       :onConfirm="handleConfirm"
     >
       <p class="dialog-msg">返回上一步将清除已填写信息，确认返回吗？</p>
+    </Dialog>
+    <Dialog
+      title="选择预约时间"
+      :dialogVisible="showSelectTimeDialog"
+      :onClose="hanleCancelSelectTime"
+      :onCancel='hanleCancelSelectTime'
+      :onConfirm="handleConfirmSelectTime"
+    >
+    <div class="time flex_b_c">
+      <div class="flex time-item">
+        <span>{{
+          elementContentList.portal_custom_basic_step6_label5 ||
+          $t("custom.basic.step6.label5")
+        }}</span>
+        <el-date-picker
+          class="time-item-picker"
+          v-model="arrivalDateStr"
+          type="date"
+          format="yyyy-MM-dd"
+          value-format="yyyy-MM-dd"
+          @blur="handleChangeData"
+          :picker-options="pickerOptions"
+          :placeholder="
+            elementContentList.portal_custom_basic_step6_placeholder1 ||
+            $t('custom.basic.step6.placeholder1')
+          "
+        >
+        </el-date-picker>
+        <p v-if="showDateTip" class="err_tip">
+          {{
+            elementContentList.portal_custom_basic_label20 ||
+            $t("custom.basic.label20")
+          }}
+        </p>
+      </div>
+      <div class="flex time-item">
+        <span>{{
+          elementContentList.portal_custom_basic_step6_label6 ||
+          $t("custom.basic.step6.label6")
+        }}</span>
+        <el-time-picker
+          class="time-item-picker"
+          v-model="arrivalTime"
+          type="date"
+          format="HH:mm"
+          value-format="HH:mm"
+          @blur="handleChangeTime"
+          :placeholder="
+            elementContentList.portal_custom_basic_step6_placeholder2 ||
+            $t('custom.basic.step6.placeholder2')
+          "
+        >
+        </el-time-picker>
+        <p v-if="showTimeTip" class="err_tip">
+          {{
+            elementContentList.portal_custom_basic_label21 ||
+            $t("custom.basic.label21")
+          }}
+        </p>
+      </div>
+    </div>
+    </Dialog>
+    <Dialog
+      title="请确认您已了解定金规则"
+      :dialogVisible="ruleConfirmDialogVisible"
+      :onClose="hanleCloseRuleDialog"
+      :onCancel='hanleCloseRuleDialog'
+      :onConfirm="handleToPay"
+      leftBtnText="取消"
+      rightBtnText="已阅读，去支付"
+    >
+      <p>说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容</p>
+    </Dialog>
+    <Dialog
+      title="定金规则内容"
+      :dialogVisible="ruleDialogVisible"
+      :onClose="handleCloseRuleDialog"
+      :onConfirm="handleCloseRuleDialog"
+      :leftBtnText="false"
+      rightBtnText="OK"
+    >
+      <p>说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容</p>
     </Dialog>
   </div>
 </template>
@@ -1140,7 +1266,10 @@ export default {
       showDateTip: false,
       showTimeTip: false,
       dialogVisible: false,
-      inputWidthS: '46px'
+      inputWidthS: '46px',
+      showSelectTimeDialog: false,
+      ruleConfirmDialogVisible: false,
+      ruleDialogVisible: false
     };
   },
   created() {
@@ -1731,27 +1860,7 @@ export default {
           });
           break;
         case 6:
-          if (!this.arrivalTime) {
-            this.showTimeTip = true;
-            return false;
-          }
-          if (!this.arrivalDateStr) {
-            this.showDateTip = true;
-            return false;
-          }
-          this.showTimeTip = false;
-          this.showDateTip = false;
-          let params = {
-            arrivalDateStr: this.arrivalDateStr,
-            arrivalTime: this.arrivalTime,
-            storeUid: this.storeInfo.storeUid,
-          };
-          storeSave(this.customProductId, params).then((res) => {
-            detail().then((resp) => {
-              this.detailInfo = resp.data;
-              this.showStep = false;
-            });
-          });
+          this.showSelectTimeDialog = true;
           break;
       }
     },
@@ -1818,6 +1927,56 @@ export default {
       this.handleBack();
       this.handleCose();
     },
+    hanleCancelSelectTime() {
+      this.showSelectTimeDialog = false;
+    },
+    handleConfirmSelectTime() {
+      // TODO: 时间逻辑
+      if (!this.arrivalTime) {
+        this.showTimeTip = true;
+        return false;
+      }
+      if (!this.arrivalDateStr) {
+        this.showDateTip = true;
+        return false;
+      }
+      this.showTimeTip = false;
+      this.showDateTip = false;
+      let params = {
+        arrivalDateStr: this.arrivalDateStr,
+        arrivalTime: this.arrivalTime,
+        storeUid: this.storeInfo.storeUid,
+      };
+      storeSave(this.customProductId, params).then((res) => {
+        detail().then((resp) => {
+          this.detailInfo = resp.data;
+          this.showStep = false;
+        });
+      });
+      this.showSelectTimeDialog = false;
+    },
+    handleConfirmOrderBack() {
+      // TODO 匹配类型返回最后一步
+      // this.step = 6;
+      console.log(`%c 返回`, 'color: #ff6700');
+    },
+    handleShowRule() {
+      this.ruleConfirmDialogVisible = true;
+    },
+    hanleCloseRuleDialog() {
+      this.ruleConfirmDialogVisible = false;
+    },
+    handleToPay() {
+      // TODO: 支付
+      this.handleBuyNow();
+      this.hanleCloseRuleDialog();
+    },
+    handleShowRuleDialog() {
+      this.ruleDialogVisible = true;
+    },
+    handleCloseRuleDialog() {
+      this.ruleDialogVisible = false;
+    }
   },
 };
 </script>
@@ -1828,6 +1987,9 @@ export default {
   height: 100%;
   padding: 0 40px 80px 40px;
   .confirm_order {
+    .custom-header {
+      height: auto;
+    }
     .con_title {
       font-size: 40px;
       font-weight: 500;
@@ -1848,6 +2010,7 @@ export default {
       padding: 40px;
       margin-top: 95px;
       display: flex;
+      flex-direction: column;
       font-size: 20px;
       line-height: 28px;
       color: #1f2126;
@@ -1855,8 +2018,10 @@ export default {
         margin: 0 0 40px 0;
       }
       .in_label {
+        display: flex;;
         font-weight: 500;
         margin-right: 80px;
+        white-space: nowrap;
       }
       .in_left {
         width: 50%;
@@ -1879,6 +2044,7 @@ export default {
         flex-direction: column;
         justify-content: space-between;
         .in_price {
+          display: flex;
           font-size: 14px;
           line-height: 22px;
           margin-bottom: 12px;
@@ -1892,7 +2058,7 @@ export default {
       }
     }
     .con_btns {
-      text-align: center;
+      text-align: right;
       margin-top: 32px;
       .btn {
         width: 188px;
@@ -2307,6 +2473,7 @@ export default {
   }
   .four_main {
     margin-top: 71px;
+    align-items: flex-start;
     .left {
       width: 100%;
       .tabs {
@@ -2635,31 +2802,6 @@ export default {
             margin-top: 8px;
           }
         }
-        .time {
-          margin-top: 15px;
-          position: relative;
-          .el-input {
-            width: 162px;
-            margin-left: 12px;
-          }
-          .el-input__inner {
-            width: 162px;
-            height: 32px;
-            border-radius: 6px;
-            border: 1px solid rgba(0, 0, 0, 0.15);
-          }
-          .el-input__icon {
-            line-height: 32px;
-          }
-          .err_tip {
-            position: absolute;
-            bottom: -22px;
-            font-family: 思源黑体;
-            font-size: 12px;
-            line-height: 24px;
-            color: #ff5a63;
-          }
-        }
       }
     }
     .sub-title {
@@ -2833,5 +2975,105 @@ export default {
       color: #F6497F;
     }
   }
+}
+.time {
+  position: relative;
+  flex-direction: column !important;
+  .time-item {
+    width: 100%;
+    display: flex;
+    margin-bottom: 16px;
+    font-size: 14px;
+    color: #1F2126;
+    .time-item-picker {
+      margin-left: 40px;
+    }
+  }
+  .el-input {
+    width: 50%;
+    margin-left: 12px;
+    position: relative;
+  }
+  .el-input__inner {
+    width: 100%;
+    height: 32px;
+    border-radius: 16px;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    background: #F8F9FC;
+  }
+  .el-input__icon {
+    line-height: 32px;
+  }
+  .err_tip {
+    position: absolute;
+    bottom: -22px;
+    font-family: 思源黑体;
+    font-size: 12px;
+    line-height: 24px;
+    color: #ff5a63;
+  }
+}
+.label-val {
+  flex: 1;
+  font-size: 14px;
+  color: #1D2129;
+
+  .label-val-row {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 12px;
+
+    .label-val-row-item {
+      display: flex;
+      margin-right: 27px;
+      // flex: 1;
+      min-width: 100px;
+      &.red {
+        color: #F6497F;
+      }
+    }
+  }
+}
+.order-item-line {
+  display: flex;
+  margin-bottom: 40px;
+  border-top: 1px solid #ccc;
+  padding-top: 24px;
+  &.col {
+    flex-direction: column;
+  }
+  &.flex-end {
+    justify-content: end;
+    align-items: flex-end;
+  }
+  .label-val-wrap {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  .order-item-line-title {
+    align-self: flex-start;
+    // color: #535E6F;
+    font-size: 16px;
+  }
+  .label-val-row-item.btn {
+    min-width: 54px;
+    padding: 0 6px;
+    height: 18px;
+    line-height: 18px;
+    text-align: center;
+    border-radius: 4px;
+    border: 1px #F6497F solid;
+    background-color: #FBB9CE;
+    color: #F6497F;
+    margin-left: 6px;
+  }
+}
+.flex-row {
+  display: flex;
+  align-items: center;
+}
+.red {
+  color: #F6497F !important;
 }
 </style>

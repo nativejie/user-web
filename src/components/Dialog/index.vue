@@ -21,8 +21,14 @@
   export default {
     props: {
       title: String,
-      leftBtnText: String,
-      rightBtnText: String,
+      leftBtnText: {
+        type: String,
+        default: 'Cancel'
+      },
+      rightBtnText: {
+        type: String,
+        default: 'Confirm'
+      },
       dialogVisible: Boolean,
       onCancel: Function,
       onConfirm: Function,
