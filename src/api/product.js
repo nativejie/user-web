@@ -23,7 +23,11 @@ export function checkProductSkuStock (params) {
   return request({
     url: '/product/checkProductSkuStock',
     method: 'get',
-    params
+    // params,
+    params: {
+      ...params,
+      productAttributeValueUidList: params?.productAttributeValueUidList?.[0]
+    }
   })
 }
 
@@ -32,7 +36,11 @@ export function getVisibleSkuAttrValues (params) {
   return request({
     url: '/product/getVisibleSkuAttrValues',
     method: 'get',
-    params
+    // params
+    params: {
+      ...params,
+      productAttributeValueUidList: params?.productAttributeValueUidList?.[0]
+    }
   })
 }
 
@@ -41,7 +49,11 @@ export function getSkuDetail (params) {
   return request({
     url: '/product/getSkuDetail',
     method: 'get',
-    params
+    // params
+    params: {
+      ...params,
+      productAttributeValueUidList: params?.productAttributeValueUidList?.[0]
+    }
   })
 }
 

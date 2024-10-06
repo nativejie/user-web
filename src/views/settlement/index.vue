@@ -212,9 +212,13 @@
                           v-for="it in item.cartCusObjItemVOS"
                           :key="it.cartCusItemId"
                         >
-                          <span style="margin-right: 24px">{{
-                            it.objNickname
-                          }}</span>
+                          <span style="margin-right: 24px">
+                            {{it.objNickname}}
+                          </span>
+                          <span style="margin-right: 24px">
+                            <!-- TODO: 新字段 -->
+                            {{it.cyrus}}
+                          </span>
                           <span style="margin-right: 24px">{{
                             (it.height ? it.height + "cm" : "") +
                             (it.weight ? it.weight + "kg" : "")
@@ -223,6 +227,7 @@
                           <span style="margin-right: 24px; color: #f6497f"
                             >£ {{ it.price }}</span
                           >
+                          <Deposit />
                         </p>
                         <div class="pro_info2">
                           <div style="margin-top: 16px">
@@ -374,30 +379,58 @@
           <div class="main_right">
             <div class="total_card">
               <p class="flex_b_c">
-                <span>{{
-                  elementContentList.portal_settlement_text6 ||
-                  $t("settlement.text6")
-                }}</span>
-                <span
-                  >£
-                  {{ orderDetail ? orderDetail.calcAmount.totalAmount : 0 }}</span
-                >
+                <span>
+                  {{
+                    elementContentList.portal_settlement_text6 ||
+                    $t("settlement.text6")
+                  }}
+                </span>
+                <span>
+                  £{{ orderDetail ? orderDetail.calcAmount.totalAmount : 0 }}
+                </span>
               </p>
               <p class="flex_b_c">
                 <span>{{
                   elementContentList.portal_settlement_text7 ||
                   $t("settlement.text7")
                 }}</span>
-                <span
-                  >£
-                  {{
+                <span>
+                  £{{
                     orderDetail
                       ? orderDetail.calcAmount.freightAmount
                         ? orderDetail.calcAmount.freightAmount
                         : 0
                       : 0
-                  }}</span
-                >
+                  }}
+                </span>
+              </p>
+              <p class="flex_b_c">
+                <span>{{
+                    elementContentList.portal_settlement_text17 ||
+                    $t("settlement.text17")
+                  }}</span>
+                <span>
+                  123
+                </span>
+              </p>
+              <p class="flex_b_c">
+                <span>{{
+                  elementContentList.portal_settlement_text18 ||
+                  $t("settlement.text18")
+                  }}</span>
+                <span>
+                  123
+                </span>
+              </p>
+              <p class="flex_b_c">
+                <span>{{
+                  elementContentList.portal_settlement_text19 ||
+                  $t("settlement.text19")
+                  }}
+                </span>
+                <span>
+                  123
+                </span>
               </p>
               <p class="flex_b_c">
                 <span>{{
@@ -654,11 +687,13 @@
   import { generateConfirmOrder, generateOrder, buyGenerateOrder, buyGenerateConfirmOrder, customGenerateOrder, groupGenerateOrder, groupGenerateConfirmOrder } from '@/api/order'
   import { qrcode, notifyPayResult, ispay, groupQrcode } from '@/api/payment'
   import pay from '@/components/pay/index'
+  import Deposit from '@/components/Deposit';
   
   export default {
     name: 'settlement',
     components: {
-      pay
+      pay,
+      Deposit
     },
     data () {
       return {

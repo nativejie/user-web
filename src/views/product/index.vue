@@ -454,6 +454,7 @@
           }
         })
         checkProductSkuStock(params).then(res => {
+          console.log('index~368 res：', res);
           if (!res.data) {
             this.disabled = true
           } else {

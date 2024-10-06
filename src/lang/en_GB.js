@@ -274,6 +274,9 @@ export default {
     text14: '请选择配送方式',
     text15: 'Select',
     text16: '你已选择：至门店取货',
+    text17: '定制商品定金',
+    text18: '配件商品',
+    text19: '普通商品',
     msg1: 'success',
   },
   order: {

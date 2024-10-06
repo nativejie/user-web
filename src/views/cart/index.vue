@@ -154,13 +154,20 @@
                     :key="it.cartCusItemId"
                   >
                     <span style="margin-right: 24px">{{ it.objNickname }}</span>
+                    <!-- TODO: 新增字段 -->
+                    <span style="margin-right: 24px">{{ it.cyrus || 'Cyrus' }}</span>
                     <span style="margin-right: 24px">{{
                       (it.height ? it.height + "cm" : "") +
                       (it.weight ? it.weight + "kg" : "")
                     }}</span>
                     <span style="margin-right: 24px">{{ it.ratio }}</span>
-                    <span style="color: #f6497f">£ {{ it.price }}</span>
+                    <span style="color: #f6497f; margin-right: 24px">£ {{ it.price }}</span>
+                    <Deposit />
                   </p>
+                  <div class="price custom-item-price">
+                    <p class="price-val">£ {{ item.priceTotal }}</p>
+                    <Deposit />
+                  </div>
                   <div class="pro_info">
                     <p @click="isOpen = !isOpen">
                       <span>{{
@@ -189,9 +196,27 @@
                     </div>
                   </div>
                 </div>
-                <div class="price">
-                  <p>£ {{ item.priceTotal }}</p>
-                  <div>
+                <div class="pro_detail-edit">
+                  <div class="pro_detail-edit-msg-block">
+                    <div class="msg-item">
+                      <p class="msg-item-name">定制商品 (定金)</p>
+                      <p class="msg-item-val">£ 4</p>
+                    </div>
+                    <div class="msg-item">
+                      <p class="msg-item-name">配件商品</p>
+                      <p class="msg-item-val">£ 234</p>
+                    </div>
+                    <div class="msg-item">
+                      <p class="msg-item-name b">Total</p>
+                      <p class="msg-item-val b">£ 2732</p>
+                    </div>
+                  </div>
+                  <div class="pro_detail-edit-block">
+                    <span @click="handleOpenJumpDialog(item, idx)" class="red">
+                      {{
+                        elementContentList.portal_btns_edit || $t("btns.edit")
+                      }}
+                    </span>
                     <span @click="handleRemove(item, idx)">{{
                       elementContentList.portal_btns_remove || $t("btns.remove")
                     }}</span>
@@ -234,17 +259,30 @@
         @changeSKUUid="changeSKUUid"
         :index="index"
       />
+      <Dialog
+        title="确定跳转定制商品流程吗？"
+        :dialogVisible='jumpDialogVisible'
+        :onClose="handleCloseJumpDialog"
+        :onCancel="handleCloseJumpDialog"
+        :onConfirm="handleEditCustom"
+      >
+       <p>确认后将跳转至定制商品流程进行内容修改</p>
+      </Dialog>
     </div>
   </template>
   
   <script>
   import { cartDelete, fetchList, cartEdit } from '@/api/cart'
   import productInfo from './productInfo.vue'
+  import Deposit from '@/components/Deposit';
+  import Dialog from '@/components/Dialog';
   
   export default {
     name: 'cart',
     components: {
-      productInfo
+      productInfo,
+      Deposit,
+      Dialog
     },
     data () {
       return {
@@ -260,6 +298,7 @@
         productSKUDetail: '',
         index: '',
         typeArr: [],
+        jumpDialogVisible: false
       }
     },
     mounted () {
@@ -434,6 +473,17 @@
           })
         }
       },
+      handleEditCustom() {
+        console.log(`%c 编辑`, 'color: #ff6700');
+        this.handleCloseJumpDialog();
+      },
+      handleOpenJumpDialog(val, idx) {
+        console.log('index~465 编辑：', val, idx);
+        this.jumpDialogVisible = true;
+      },
+      handleCloseJumpDialog() {
+        this.jumpDialogVisible = false;
+      }
     }
   }
   </script>
@@ -594,10 +644,21 @@
             }
             .price {
               text-align: right;
-              width: 100px;
               display: flex;
-              flex-direction: column;
-              justify-content: space-between;
+              &.custom-item-price {
+                width: auto;
+                height: 44px;
+                flex-direction: row;
+                justify-content: flex-start;
+                align-items: center;
+              }
+              .price-val {
+                font-size: 16px;
+                font-weight: 500;
+                color: #F6497F;
+                margin-right: 8px;
+                margin-bottom: 0 !important;
+              }
               .edit {
                 color: #f6497f;
                 margin-bottom: 6px;
@@ -634,6 +695,58 @@
                     border-radius: 4px;
                     object-fit: contain;
                   }
+                }
+              }
+            }
+            .pro_detail-edit {
+              padding-left: 70px;
+              display: flex;
+              flex-direction: column;
+              justify-content: space-between;
+              align-items: flex-end;
+              .pro_detail-edit-msg-block {
+                .msg-item {
+                  height: 24px;
+                  display: flex;
+                  align-items: center;
+                  justify-content: end;
+                  .msg-item-name {
+                    color: #929DAA;
+                    font-size: 14px;
+                    font-weight: normal;
+                    line-height: 22px;
+                    &.b {
+                      color: #1D2129;
+                    }
+                  }
+                  .msg-item-val {
+                    display: block;
+                    width: 40px;
+                    margin-left: 16px;
+                    color: #1D2129;
+                    font-size: 14px;
+                    font-weight: normal;
+                    line-height: 22px;
+                    text-align: right;
+                    white-space: nowrap;
+                    &.b {
+                      color: #1D2129;
+                      font-size: 20px;
+                      font-weight: 500;
+                    }
+                  }
+                }
+              }
+              .pro_detail-edit-block {
+                display: flex;
+                flex-direction: column;
+                .red {
+                  font-size: 14px;
+                  color: #F6497F;
+                }
+                & > span {
+                  margin-bottom: 4px;
+                  cursor: pointer;
                 }
               }
             }
