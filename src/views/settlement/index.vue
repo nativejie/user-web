@@ -892,6 +892,7 @@
         })
       },
       handleSaveRev () {
+        console.log('index~895 this.normalAddr：', this.customAddr);
         this.loading = true
         if (this.from == 'cart') {
           if (this.isGroup) {
@@ -900,7 +901,7 @@
               let obj = {
                 cartIds: [this.customList[0].id],
                 deliveryType: this.ActMethod,
-                memberAddressId: this.ActMethod == 1 ? Number(this.customAddr.id) : '',
+                memberAddressId: this.ActMethod == 1 ? String(this.customAddr.id) : '',
                 note: '',
                 payType: 1,
                 sourceType: 0,
@@ -915,7 +916,7 @@
               let obj = {
                 cartIds: cartIds,
                 deliveryType: 1,
-                memberAddressId: this.ActMethod == 1 ? Number(this.normalAddr.id) : '',
+                memberAddressId: this.ActMethod == 1 ? String(this.normalAddr.id) : '',
                 note: '',
                 payType: 1,
                 sourceType: 0,
@@ -949,7 +950,7 @@
           } else {
             const params = {
               cartIds: this.cartIds,
-              memberAddressId: this.normalAddr ? Number(this.normalAddr.id) : Number(this.customAddr.id),
+              memberAddressId: this.normalAddr ? String(this.normalAddr.id) : String(this.customAddr.id),
               note: '',
               payType: 1,
               sourceType: 0,
@@ -979,7 +980,7 @@
         } else if (this.from == 'now') {
           const params = {
             deliveryType: this.method,
-            memberAddressId: Number(this.normalAddr.id),
+            memberAddressId: String(this.normalAddr.id),
             note: '',
             payType: 10,
             sourceType: 0,
@@ -1013,7 +1014,7 @@
           const params = {
             customUid: this.orderDetail.customUid,
             deliveryType: this.method,
-            memberAddressId: Number(this.customAddr.id),
+            memberAddressId: String(this.customAddr.id),
             note: '',
             payType: 10,
             sourceType: 0,
