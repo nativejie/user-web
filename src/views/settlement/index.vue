@@ -378,18 +378,7 @@
           <!-- 订单总额及确认按钮 -->
           <div class="main_right">
             <div class="total_card">
-              <p class="flex_b_c">
-                <span>
-                  {{
-                    elementContentList.portal_settlement_text6 ||
-                    $t("settlement.text6")
-                  }}
-                </span>
-                <span>
-                  £{{ orderDetail ? orderDetail.calcAmount.totalAmount : 0 }}
-                </span>
-              </p>
-              <p class="flex_b_c">
+              <div class="flex_b_c">
                 <span>{{
                   elementContentList.portal_settlement_text7 ||
                   $t("settlement.text7")
@@ -403,17 +392,28 @@
                       : 0
                   }}
                 </span>
-              </p>
-              <p class="flex_b_c">
+              </div>
+              <div class="flex_b_c">
+                <span>
+                  {{
+                    elementContentList.portal_settlement_text6 ||
+                    $t("settlement.text6")
+                  }}
+                </span>
+                <span>
+                  £{{ orderDetail ? orderDetail.calcAmount.totalAmount : 0 }}
+                </span>
+              </div>
+              <div class="flex_b_c">
                 <span>{{
                     elementContentList.portal_settlement_text17 ||
                     $t("settlement.text17")
                   }}</span>
                 <span>
-                  123
+                  1234
                 </span>
-              </p>
-              <p class="flex_b_c">
+              </div>
+              <div class="flex_b_c">
                 <span>{{
                   elementContentList.portal_settlement_text18 ||
                   $t("settlement.text18")
@@ -421,18 +421,18 @@
                 <span>
                   123
                 </span>
-              </p>
-              <p class="flex_b_c">
+              </div>
+              <div class="flex_b_c">
                 <span>{{
-                  elementContentList.portal_settlement_text19 ||
-                  $t("settlement.text19")
+                  elementContentList.portal_settlement_text13 ||
+                  $t("settlement.text13")
                   }}
                 </span>
                 <span>
-                  123
+                  12333
                 </span>
-              </p>
-              <p class="flex_b_c">
+              </div>
+              <div class="flex_b_c font-b">
                 <span>{{
                   elementContentList.portal_settlement_text8 ||
                   $t("settlement.text8")
@@ -443,8 +443,8 @@
                     orderDetail ? orderDetail.calcAmount.payAmount : 0
                   }}</span></span
                 >
-              </p>
-              <p>
+              </div>
+              <div>
                 <el-button
                   v-show="step == 'pay'"
                   :disabled="disabled"
@@ -467,7 +467,7 @@
                     $t("settlement.btns.btn3")
                   }}</el-button
                 >
-              </p>
+              </div>
             </div>
           </div>
         </div>
@@ -1522,20 +1522,21 @@
           margin: 24px 0 0 18px;
           .total_card {
             width: 297px;
-            height: 239px;
+            min-height: 320px !important;
             border-radius: 12px;
             background: #ffffff;
             padding: 20px;
-            p:nth-of-type(2) {
-              margin-top: 10px;
-              padding-bottom: 26px;
-              border-bottom: 1px solid #c1cddc;
+            & > div.flex_b_c {
+              margin-top: 8px;
             }
-            p:nth-of-type(3) {
+            & > .font-b {
               margin: 19px 0 32px;
               font-size: 20px;
               font-weight: 500;
               line-height: 28px;
+              border-top: 1px solid #c1cddc;
+              padding-top: 16px;
+              margin-top: 16px;
             }
             .set_btn {
               width: 100%;

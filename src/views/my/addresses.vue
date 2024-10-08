@@ -240,6 +240,7 @@
         })
       },
       handleEdit (val) {
+        console.log('%c addresses~243 %c val：', 'color: #999', 'color: #ff6700;', val);
         this.status = 'edit'
         addressInfo(val.id).then(res => {
           if (res.code == 200) {

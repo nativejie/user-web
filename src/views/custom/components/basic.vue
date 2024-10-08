@@ -69,7 +69,7 @@
                 elementContentList.portal_btns_delete || $t("btns.delete")
               }}</span>
             </p>
-            <div class="flex">
+            <div class="flex two-item">
               <div class="inputs">
                 <!-- nickname -->
                 <div class="m_r flex">
@@ -190,7 +190,36 @@
                   </p>
                 </div>
               </div>
-              <div class="results">
+              <div class="item-res flex-row">
+                <!-- TODO: 动态计算数据补充 -->
+                <div class="item-res-item flex-row">
+                  <div class="item-res-title flex-row">
+                    预估成品数据
+                  </div>
+                  <div class="flex-row item-res-content">
+                    <div class="item-res-item-name">Height</div>
+                    <div class="item-res-item-val">123 cm</div>
+                  </div>
+                  <div class="flex-row item-res-content">
+                    <div class="item-res-item-name">Weight</div>
+                    <div class="item-res-item-val">12345 g</div>
+                  </div>
+                </div>
+                <div class="item-res-item flex-row">
+                  <div class="item-res-title flex-row">
+                    预估成品数据
+                  </div>
+                  <div class="flex-row item-res-content">
+                    <div class="item-res-item-name">Height</div>
+                    <div class="item-res-item-val">123 cm</div>
+                  </div>
+                  <div class="flex-row item-res-content">
+                    <div class="item-res-item-name">Weight</div>
+                    <div class="item-res-item-val">12345 g</div>
+                  </div>
+                </div>
+              </div>
+              <!-- <div class="results">
                 <div v-if="item.modelWeight">
                   <p class="res flex">
                     <img src="@/assets/index/height.png" />
@@ -215,7 +244,7 @@
                     $t("custom.basic.label17")
                   }}
                 </p>
-              </div>
+              </div> -->
             </div>
           </div>
         </div>
@@ -2231,6 +2260,54 @@ export default {
       flex-direction: column;
       .item {
         margin-bottom: 32px;
+        .two-item {
+          width: 100%;
+          flex-direction: column;
+          border-radius: 8px;
+          padding: 16px 24px 24px 24px;
+          background: #f7f8fb;
+          & > .inputs {
+            width: 100%;
+            padding-right: 0;
+            padding-left: 0;
+            margin-right: 0;
+          }
+          .item-res {
+            width: 100%;
+            justify-content: space-between;
+            .item-res-item {
+              width: 524px;
+              height: 100px;
+              padding: 16px 24px;
+              background-color: #fff;
+              border-radius: 4px;
+              flex-wrap: wrap;
+              .item-res-title {
+                width: 100%;
+              }
+              .item-res-content {
+                flex: 1;
+                .item-res-item-name {
+                  font-size: 16px;
+                  font-weight: normal;
+                  line-height: 24px;
+                  text-align: center;
+                  color: #929DAA;
+                }
+                .item-res-item-val {
+                  font-family: Cyrus;
+                  font-size: 20px;
+                  font-weight: 500;
+                  line-height: 28px;
+                  text-align: center;
+                  letter-spacing: 0em;
+                  color: #1D2129;
+                  margin-left: 16px;
+                }
+              }
+            }
+          }
+        }
         .label {
           margin-bottom: 12px;
           span:nth-of-type(1) {
@@ -2257,10 +2334,6 @@ export default {
         }
         .inputs {
           position: relative;
-          height: 104px;
-          border-radius: 8px;
-          padding: 16px 24px 24px 24px;
-          background: #f7f8fb;
           display: flex;
           margin-right: 15px;
           flex: 1;
@@ -3072,6 +3145,7 @@ export default {
 .flex-row {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
 }
 .red {
   color: #F6497F !important;
