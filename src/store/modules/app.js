@@ -6,7 +6,8 @@ const app = {
       opened: !+Cookies.get('sidebarStatus'),
       withoutAnimation: false
     },
-    device: 'desktop'
+    device: 'desktop',
+    loginDialogVisible: false
   },
   mutations: {
     TOGGLE_SIDEBAR: state => {
@@ -24,6 +25,9 @@ const app = {
     },
     TOGGLE_DEVICE: (state, device) => {
       state.device = device
+    },
+    CHANGE_LOGIN_DIALOG_VISIBLE: (state, bool) => {
+      state.loginDialogVisible = bool;
     }
   },
   actions: {

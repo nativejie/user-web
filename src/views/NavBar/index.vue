@@ -37,7 +37,7 @@
                 {{ elementContentList.portal_navbar_menu3 || $t("navbar.menu3") }}
               </el-badge>
             </router-link>
-            <router-link v-if="!userInfo.username" class="menu_item" to="/login">
+            <router-link v-if="!userInfo.username" class="menu_item" to="/home">
               {{ elementContentList.portal_navbar_menu4 || $t("navbar.menu4") }}
             </router-link>
             <router-link v-else class="menu_item" to="/my/baseInfo">
