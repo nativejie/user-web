@@ -240,7 +240,11 @@
                       $t("order.btns.btn4")
                     }}</el-button
                   >
-                  <div v-if="item.order.status == 0 && !item.order.needCancelPay">
+                  <div class="flex-row" v-if="item.order.status == 0 && !item.order.needCancelPay">
+                    <p style="whiteSpace: nowrap; marginRight: 32px">
+                      <i class="el-icon-time"></i>
+                      <span>{{ item.order.newPayRemainTime }}</span>
+                    </p>
                     <el-button
                       class="btn btn2"
                       
@@ -250,10 +254,6 @@
                         $t("order.btns.btn5")
                       }}</el-button
                     >
-                    <p>
-                      <i class="el-icon-time"></i>
-                      <span>{{ item.order.payRemainTime }}</span>
-                    </p>
                   </div>
                   <el-button
                     class="btn btn2"
@@ -1243,7 +1243,12 @@
             arr[arr.length - 4] = m
             arr[arr.length - 6] = h
             arr[arr.length - 8] = d
+            
+            let newArr = arr.slice(2, 6);
             this.orderList[i].order.payRemainTime = arr.join(' ')
+            this.orderList[i].order.newPayRemainTime = newArr.join(' ')
+            
+
             if(s==0 && m==0 && h==0 && d==0){
               this.orderList[i].order.needCancelPay = true
             }
@@ -1279,7 +1284,6 @@
               }
             })
             this.orderList = arr
-            console.log('this.payArr', this.payArr)
             if(this.payArr.length > 0 ) {this.getPayRemainTime()}
           }
         })
@@ -1400,6 +1404,7 @@
           }
           .pro_details {
             display: flex;
+            flex-direction: column;
             border: 1px solid #e2e2e2;
             border-top: none;
             .det_left {
@@ -1543,7 +1548,9 @@
               }
             }
             .right_btns {
-              width: 220px;
+              display: flex;
+              justify-content: end;
+              width: 100%;
               border-left: 1px solid #e2e2e2;
               padding: 31px 26px;
               .btn {
@@ -1562,6 +1569,10 @@
                 background: #f6497f;
                 color: #ffffff;
                 border: none;
+              }
+              .flex-row {
+                display: flex;
+                align-items: center;
               }
             }
           }

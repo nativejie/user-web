@@ -401,7 +401,7 @@ export default {
       btn2: '查看申请',
       btn3: '撤销申请',
       btn4: 'Confirm receipt',
-      btn5: 'Pay Now',
+      btn5: '立即支付',
       btn6: 'Accept',
       btn7: 'Decline',
     },
