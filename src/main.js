@@ -35,11 +35,44 @@ if (languageCode == 'zh-CN') {
 }
 Vue.use(VCharts)
 
-Vue.config.productionTip = false
+Vue.config.productionTip = false;
+
+Vue.mixin({
+  computed: {
+    loginDialogVisible() {
+      return this.$store.state.app.loginDialogVisible;
+    },
+    signUpDialogVisible() {
+      return this.$store.state.app.signUpDialogVisible;
+    },
+  },
+  methods: {
+    handleOpenLoginDialog() {
+      this.$store.commit('CHANGE_LOGIN_DIALOG_VISIBLE', true);
+    },
+    handleCloseLoginDialog() {
+      this.$store.commit('CHANGE_LOGIN_DIALOG_VISIBLE', false);
+    },
+    handleOpenSignUpDialog() {
+      this.$store.commit('CHANGE_SIGN_UP_DIALOG_VISIBLE', true);
+    },
+    handleCloseSignUpDialog() {
+      this.$store.commit('CHANGE_SIGN_UP_DIALOG_VISIBLE', false);
+    },
+    /** 登陆确认 - 未登陆，拉起登陆弹窗 */
+    handleCheckLogin() {
+      const IS_LOGIN = !this.$store.state.user.userInfo?.username;
+      if (!IS_LOGIN) {
+        this.handleOpenLoginDialog();
+      }
+      return IS_LOGIN;
+    }
+  }
+})
 
 
 import "virtual:svg-icons-register"
-new Vue({
+const vue = new Vue({
   el: '#app',
   router,
   store,
@@ -47,5 +80,7 @@ new Vue({
   render: h => h(App),
   components: { App }
 })
+
+export default vue;
 
 

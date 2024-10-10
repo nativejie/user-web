@@ -7,7 +7,8 @@ const app = {
       withoutAnimation: false
     },
     device: 'desktop',
-    loginDialogVisible: false
+    loginDialogVisible: false,
+    signUpDialogVisible: true,
   },
   mutations: {
     TOGGLE_SIDEBAR: state => {
@@ -28,6 +29,9 @@ const app = {
     },
     CHANGE_LOGIN_DIALOG_VISIBLE: (state, bool) => {
       state.loginDialogVisible = bool;
+    },
+    CHANGE_SIGN_UP_DIALOG_VISIBLE: (state, bool) => {
+      state.signUpDialogVisible = bool;
     }
   },
   actions: {

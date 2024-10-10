@@ -79,6 +79,8 @@
 </template>
 
 <script>
+  import { isvalidateEmail } from '@/utils/validate';
+  import { setSupport, getSupport, setCookie, getCookie } from '@/utils/support';
   export default {
     props: {
       dialogVisible: Boolean,
@@ -137,7 +139,9 @@
       },
       // 注册
       handleSignUp () {
-        this.$router.push('/register')
+        // this.$router.push('/register')
+        this.handleOpenSignUpDialog();
+        this.handleCloseLoginDialog();
       },
       showPwd () {
         if (this.pwdType === 'password') {
@@ -154,7 +158,8 @@
               this.loading = false;
               setCookie("account", this.loginForm.account, 15);
               setCookie("password", this.loginForm.password, 15);
-              this.$router.push({ path: '/home' })
+              // this.$router.push({ path: '/home' })
+              this.handleCloseLoginDialog();
             }).catch(() => {
               this.loading = false
             })

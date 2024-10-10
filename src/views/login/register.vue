@@ -313,7 +313,8 @@
         })
       },
       handleSignIn () {
-        window.location.href = '/login'
+        this.handleOpenLoginDialog();
+        // window.location.href = '/login'
       },
       // 查看协议
       handleShowAgreement (val) {
@@ -338,7 +339,8 @@
               if (res.code == 200) {
                 this.$message.success({ message: this.elementContentList.portal_login_msg3 || this.$t('login.msg3'), duration: 1500 })
                 this.loading = false
-                this.$router.push('/login')
+                this.handleOpenLoginDialog();
+                // this.$router.push('/login')
               } else {
                 this.loading = false;
               }

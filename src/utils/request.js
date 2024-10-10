@@ -6,6 +6,7 @@ import router from '@/router'
 // import qs from 'qs'
 import i18n from '@/lang'
 import queryString from 'query-string'
+import vue from '../main';
 // 创建axios实例
 const service = axios.create({
   // baseURL: process.env.BASE_API, // api的base_url
@@ -55,7 +56,8 @@ service.interceptors.response.use(
         //   store.dispatch('FedLogOut').then(() => {
         //   })
         //   })
-        router.push('/login')
+        // router.push('/login')
+        vue.handleOpenLoginDialog();
       } else {
         Message({
           message: res.message,

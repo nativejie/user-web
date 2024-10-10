@@ -25,9 +25,11 @@
             >
               {{ elementContentList.portal_navbar_menu1 || $t("navbar.menu1") }}
             </span>
+            <!-- General products -->
             <router-link class="menu_item" to="/general">
               {{ elementContentList.portal_navbar_menu2 || $t("navbar.menu2") }}
             </router-link>
+            <!-- cart -->
             <router-link class="menu_item" to="/cart">
               <el-badge :value="cartNum" :max="99" class="item">
                 <svg-icon
@@ -37,9 +39,10 @@
                 {{ elementContentList.portal_navbar_menu3 || $t("navbar.menu3") }}
               </el-badge>
             </router-link>
-            <router-link v-if="!userInfo.username" class="menu_item" to="/home">
+            <!-- login -->
+            <span style="cursor: pointer;" v-if="!userInfo.username" class="menu_item" @click="handleOpenLoginDialog">
               {{ elementContentList.portal_navbar_menu4 || $t("navbar.menu4") }}
-            </router-link>
+            </span>
             <router-link v-else class="menu_item" to="/my/baseInfo">
               <!-- {{ $store.state.user.userInfo.nickname }} -->
               {{ userInfo.nickname }}

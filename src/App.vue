@@ -2,6 +2,9 @@
   <div id="app">
     <navbar></navbar>
     <router-view />
+    <!-- 全局弹窗 - 属性通过全局mixin混入 -->
+    <LoginDialog v-if="loginDialogVisible" :dialogVisible="loginDialogVisible" :onClose="handleCloseLoginDialog" />
+    <SignUpDialog v-if="signUpDialogVisible" :dialogVisible="signUpDialogVisible" :onClose="handleCloseSignUpDialog" /> />
   </div>
 </template>
 
@@ -10,10 +13,14 @@ import Navbar from "@/views/Navbar/index";
 import { mapGetters } from "vuex";
 import { getToken } from "@/utils/auth";
 import { languageSettingList } from "@/api/home";
+import LoginDialog from '@/components/LoginDialog';
+import SignUpDialog from '@/components/SignUpDialog';
 
 export default {
   components: {
     Navbar,
+    LoginDialog,
+    SignUpDialog
   },
   name: "App",
   data() {

@@ -140,22 +140,19 @@
         </div>
       </div>
       <footerBar />
-      <LoginDialog v-if="loginDialogVisible" :dialogVisible="loginDialogVisible" :onClose="handleCloseLoginDialog" />
     </div>
   </template>
   
   <script>
-  import { mapGetters, mapState, mapMutations } from 'vuex'
+  import { mapGetters } from 'vuex'
   import footerBar from '@/components/footerBar/index'
   import { videoList, skuPage, picList, productPage, sectionPicList } from '@/api/home'
   import { checkExist } from '@/api/custom'
-  import LoginDialog from '@/components/LoginDialog';
   
   export default {
     name: 'home',
     components: {
       footerBar,
-      LoginDialog
     },
     data () {
       return {
@@ -172,14 +169,8 @@
       ...mapGetters([
         'userInfo',
       ]),
-      ...mapState([
-        'loginDialogVisible'
-      ]),
     },
     methods: {
-      ...mapMutations('app', [
-        'CHANGE_LOGIN_DIALOG_VISIBLE'
-      ]),
       handleToCustom () {
         checkExist().then(res => {
           if (res.data == false) {
@@ -226,22 +217,12 @@
         this.activeIdx = index
         this.$router.push({ path: '/product', query: { uid: val.recProductUid } })
       },
-      handleCloseLoginDialog() {
-        console.log(`%c close`, 'color: #ff6700');
-        this.loginDialogVisible = false;
-      }
     },
     created () {
       this.elementContentList = window.elementContentList
       this.getskuPage()
       this.getData()
     },
-    mounted() {
-      console.log('index~183333 loginDialogVisible：', this.loginDialogVisible);
-      // !this.userInfo?.username && 
-      this.CHANGE_LOGIN_DIALOG_VISIBLE(true);
-      console.log('index~241 this.CHANGE_LOGIN_DIALOG_VISIBLE：', this.CHANGE_LOGIN_DIALOG_VISIBLE);
-    }
   }
   </script>
   

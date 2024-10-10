@@ -4,6 +4,7 @@ import NProgress from 'nprogress' // Progress 进度条
 import 'nprogress/nprogress.css'// Progress 进度条样式
 import { Message } from 'element-ui'
 import { getToken } from '@/utils/auth' // 验权
+import vue from '@/main';
 
 const whiteList = ['/login', '/register', '/password_find', '/general', '/home', '/three'] // 不重定向白名单
 router.beforeEach((to, from, next) => {
@@ -38,7 +39,9 @@ router.beforeEach((to, from, next) => {
     if (whiteList.indexOf(to.path) !== -1) {
       next()
     } else {
-      next('/login')
+      // next('/login')
+      next('/')
+      vue.handleOpenLoginDialog();
       NProgress.done()
     }
   }

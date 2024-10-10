@@ -312,7 +312,8 @@ export default {
       forgetPasswordAuthCodeSend(this.emailForm.email).then(() => {});
     },
     handleLoginIn() {
-      window.location.href = "/login";
+      this.handleOpenLoginDialog();
+      // window.location.href = "/login";
     },
     // 忘记密码
     handleShowAgreement(val) {},
@@ -336,7 +337,8 @@ export default {
                   duration: 1500,
                 });
                 this.loading = false;
-                this.$router.push("/login");
+                this.handleOpenLoginDialog();
+                // this.$router.push("/login");
               } else {
                 this.loading = false;
               }
