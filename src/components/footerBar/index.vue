@@ -2,23 +2,23 @@
     <div class="footer_bar">
       <div class="footer_container">
         <div class="footer_logo">
-          <p><img src="@/assets/index/indexTop.png"></p>
-          <p >Print Your Magic Moments</p>
+          <p><img src="@/assets/images/logo.png"></p>
+          <p>Print Your Magic Moments</p>
         </div>
         <div class="cooperate">
           <div class="Navigation" v-for="item in 3" :key="item">
-            <p>Navigation</p>
+            <p class="pink">Navigation</p>
             <p>Navigation</p>
             <p>Navigation</p>
             <p>Navigation</p>
           </div>
         </div>
       </div>
-      <div class="company">
+      <!-- <div class="company">
         <span class="link" @click="handleShowAgreement('service')">{{ elementContentList.portal_foot_text1 || $t('foot.text1') }}</span>
         <span>|</span>
         <span class="link" @click="handleShowAgreement('privacy')">{{ elementContentList.portal_foot_text2 || $t('foot.text2') }}</span>
-      </div>
+      </div> -->
       <terms v-if="showTerms" />
       <privacyPolicy v-if="showPrivacy" />
     </div>
@@ -60,6 +60,8 @@
   
   <style lang="scss">
   .footer_bar{
+    background-color: #40001C;
+    color: #fff;
     width: 100%;
     .footer_container{
       width: 1200px;
@@ -67,7 +69,7 @@
       padding-top: 93px;
       margin: 0 auto;
       display: flex;
-      background: #fff;
+      background-color: #40001C;
       .footer_logo{
         padding-left: 40px;
         img{
@@ -77,7 +79,7 @@
           font-family: 'Montserrat';
           font-size: 20px;
           font-weight: 800;
-          color: #3D3D3D;
+          color: #fff;
           margin-top: 8px;
         }
       }
@@ -87,14 +89,13 @@
         justify-content: space-evenly;
         .Navigation{
           p{
-            color: #AFB5BD;
+            color: #fff;
             margin-bottom: 24px;
           }
           p:nth-of-type(1) {
             font-size: 20px;
             font-weight: 600;
             line-height: 28px;
-            color: #3D3D3D;
             margin-bottom: 20px;
           }
         }
@@ -114,6 +115,9 @@
         cursor: pointer;
         margin: 0 16px;
       }
+    }
+    .pink {
+      color: #FF90C0 !important;
     }
   }
   </style>

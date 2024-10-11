@@ -2,10 +2,10 @@
     <div class="navbar">
       <div class="nav_bar flex_b_c">
         <div class="nav_left flex_c_c">
-          <img src="@/assets/index/logo.png" />
-          <span @click="handleGoHome">{{
+          <img src="@/assets/images/logo.png" @click="handleGoHome" />
+          <!-- <span >{{
             elementContentList.portal_navbar_title || $t("navbar.title")
-          }}</span>
+          }}</span> -->
         </div>
         <div class="nav_right">
           <div class="nav_menu flex">
@@ -174,8 +174,9 @@
       .nav_left {
         height: 100%;
         img {
-          width: 40px;
-          height: 40px;
+          width: 164px;
+          // width: 40px;
+          // height: 40px;
           border-radius: 8px;
           margin-right: 16px;
         }

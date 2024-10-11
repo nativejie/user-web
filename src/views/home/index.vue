@@ -1,143 +1,114 @@
 <template>
     <div class="app_home">
-      <!-- 顶部视频 -->
-      <div class="top_card">
-        <div class="top_card_main">
-          <div class="card_left">
-            <p class="index_top"><img src="@/assets/index/indexTop.png" /></p>
-            <p class="top_text">
-              {{ elementContentList.portal_home_text1 || $t("home.text1") }}
-            </p>
-            <p class="top_text">
-              {{ elementContentList.portal_home_text2 || $t("home.text2") }}
-            </p>
-            <p>
-              <el-button class="top_btn" @click="handleToCustom">{{
-                elementContentList.portal_home_btns_btn1 || $t("home.btns.btn1")
-              }}</el-button>
-            </p>
-          </div>
-          <div class="card_right">
-            <div class="right_main">
-              <video :src="playUrl" controls></video>
+      <!-- 顶部banner -->
+      <div class="top-banner">
+        <div class="top-banner-menu">
+          <a href="#work">
+            <img src="@/assets/icon/work.png" />
+          </a>
+          <a href="#store">
+            <img src="@/assets/icon/store.png" />
+          </a>
+          <a href="#gallery">
+            <img src="@/assets/icon/gallery.png" />
+          </a>
+        </div>
+      </div>
+      <div id="work" class="flex-column-center">
+        <img src="@/assets/images/work-title.png" />
+        <img src="@/assets/images/work-01.png" />
+        <img src="@/assets/images/work-02.png" />
+        <img src="@/assets/images/work-03.png" />
+        <img src="@/assets/images/work-04.png" />
+        <img src="@/assets/images/work-05.png" />
+        <img src="@/assets/images/work-btn.png" class="work-btn" @click="handleToCustom" />
+      </div>
+      <div id="store" class="flex-column-center">
+        <div class="store-title">
+          <img src="@/assets/images/store-title.png" />
+          <div class="btn" @click="() => console.log(`%c see more`, 'color: #ff6700')"></div>
+        </div>
+        <div class="store-item-list">
+          <div v-for="(item, index) in productList" class="store-item" :key="index">
+            <div>
+              <img :src="item.skuPicUrl" class="store-item-img" />
+              <p class="store-item-title">{{ item?.productName }}</p>
+            </div>
+            <div class="store-item-bottom-line">
+              <p class="store-item-price">£ {{ item?.skuPrice }}</p>
+              <img 
+                src="@/assets/images/store-item-btn.png" 
+                class="btn"
+                @click="handleChangeProItem(index, item)"
+              />
             </div>
           </div>
         </div>
       </div>
-      <div class="home_container">
-        <!-- 跳转 -->
-        <div class="part_two">
-          <p class="part_two_title">
-            {{ elementContentList.portal_home_text3 || $t("home.text3") }}
-          </p>
-          <div style="display: flex; margin-top: 64px">
-            <div
-              class="part_two_left"
-              v-for="(item, index) in sectionList"
-              :key="index + 'se'"
-            >
-              <div style="width: 430px">
-                <p class="sub_title">
-                  <span>{{ "0" + (index + 1) }}</span>
-                  <span>{{ item.title }}</span>
-                </p>
-                <p class="describe">{{ item.description }}</p>
-                <div class="op_card flex_b_c">
-                  <div class="image">
-                    <img :src="item.thumbnailViewUrl" />
-                  </div>
-                  <div class="btns">
-                    <el-button @click="handleToCustom" class="btn"
-                      >{{
-                        elementContentList.portal_home_text6 || $t("home.text6")
-                      }}<svg-icon
-                        icon-class="arrow"
-                        style="
-                          width: 16px;
-                          height: 16px;
-                          position: relative;
-                          top: -2px;
-                        "
-                      ></svg-icon
-                    ></el-button>
-                  </div>
-                </div>
+      <div id="gallery" class="flex-column-center">
+        <div class="gallery-title">
+          <img src="@/assets/images/gallery-title.png" />
+          <div class="btn" @click="() => console.log(`%c see more`, 'color: #ff6700')"></div>
+        </div>
+        <!-- 第一行 -->
+        <div
+          class="image_list"
+          v-for="(item, index) in pictureList"
+          :key="index + 'pic'"
+          v-show="item.length == 5"
+        >
+          <div class="image_list2">
+            <div class="img_ani">
+              <div
+                class="image_item"
+                v-for="child in item"
+                :key="child.ossNo"
+              >
+                <img :src="child.preViewUrl" />
+              </div>
+            </div>
+            <div class="img_ani">
+              <div
+                class="image_item"
+                v-for="child in item"
+                :key="child.ossNo"
+              >
+                <img :src="child.preViewUrl" />
+              </div>
+            </div>
+            <div class="img_ani">
+              <div
+                class="image_item"
+                v-for="child in item"
+                :key="child.ossNo"
+              >
+                <img :src="child.preViewUrl" />
               </div>
             </div>
           </div>
         </div>
       </div>
-      <!-- 推荐商品 -->
-      <div class="part_three">
-        <div class="part_main">
-          <p class="part_three_title">
-            {{ elementContentList.portal_home_title || $t("home.title") }}
-          </p>
-          <div class="product_list">
-            <div
-              class="pro_item"
-              :class="activeIdx == index ? 'active' : ''"
-              :style="index % 4 == 3 ? { marginRight: '0px' } : ''"
-              v-for="(item, index) in productList"
-              :key="index.recProductSkuUid"
-              @click="handleChangeProItem(index, item)"
-            >
-              <div class="active_border"></div>
-              <div class="pro_img">
-                <img :src="item.skuPicUrl" />
-              </div>
-              <p class="pro_title">{{ item.productName || "-" }}</p>
-              <p class="pro_price">£ {{ item.skuPrice }}</p>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- 案例展示 -->
-      <div class="part_four">
-        <p class="part_four_title">
-          {{ elementContentList.portal_home_text4 || $t("home.text4") }}
-        </p>
-        <div class="part_four_container">
-          <div class="image_main">
-            <!-- 第一行 -->
-            <div
-              class="image_list"
-              v-for="(item, index) in pictureList"
-              :key="index + 'pic'"
-              v-show="item.length == 5"
-            >
-              <div class="image_list2">
-                <div class="img_ani">
-                  <div
-                    class="image_item"
-                    v-for="child in item"
-                    :key="child.ossNo"
-                  >
-                    <img :src="child.preViewUrl" />
-                  </div>
-                </div>
-                <div class="img_ani">
-                  <div
-                    class="image_item"
-                    v-for="child in item"
-                    :key="child.ossNo"
-                  >
-                    <img :src="child.preViewUrl" />
-                  </div>
-                </div>
-                <div class="img_ani">
-                  <div
-                    class="image_item"
-                    v-for="child in item"
-                    :key="child.ossNo"
-                  >
-                    <img :src="child.preViewUrl" />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+      <div class="qa flex-column-center">
+        <img src="@/assets/images/qa.png" />
+        <el-collapse class="qa-collapse" v-model="activeNames" @change="handleChange">
+          <el-collapse-item title="一致性 Consistency" name="1">
+            <div>与现实生活一致：与现实生活的流程、逻辑保持一致，遵循用户习惯的语言和概念；</div>
+            <div>在界面中一致：所有的元素和结构需保持一致，比如：设计样式、图标和文本、元素的位置等。</div>
+          </el-collapse-item>
+          <el-collapse-item title="反馈 Feedback" name="2">
+            <div>控制反馈：通过界面样式和交互动效让用户可以清晰的感知自己的操作；</div>
+            <div>页面反馈：操作后，通过页面元素的变化清晰地展现当前状态。</div>
+          </el-collapse-item>
+          <el-collapse-item title="效率 Efficiency" name="3">
+            <div>简化流程：设计简洁直观的操作流程；</div>
+            <div>清晰明确：语言表达清晰且表意明确，让用户快速理解进而作出决策；</div>
+            <div>帮助用户识别：界面简单直白，让用户快速识别而非回忆，减少用户记忆负担。</div>
+          </el-collapse-item>
+          <el-collapse-item title="可控 Controllability" name="4">
+            <div>用户决策：根据场景可给予用户操作建议或安全提示，但不能代替用户进行决策；</div>
+            <div>结果可控：用户可以自由的进行操作，包括撤销、回退和终止当前操作等。</div>
+          </el-collapse-item>
+        </el-collapse>
       </div>
       <footerBar />
     </div>
@@ -462,72 +433,229 @@
         .image_main {
           margin: 0 auto;
         }
-        .image_list {
-          width: 100%;
-          margin-bottom: 16px;
-          overflow: hidden;
-          position: relative;
-          @keyframes Animation {
-            0% {
-              transform: translateX(0%);
-              /* transform: translateX(200px); */
-            }
-            100% {
-              transform: translateX(-100%);
-            }
+      }
+    }
+
+    .top-banner {
+      width: 100%;
+      height: 900px;
+      background-image: url('@/assets/images/banner.png');
+      background-size: cover;
+      background-repeat: no-repeat;
+      display: flex;
+      flex-direction: column;
+      justify-content: end;
+      align-items: center;
+      padding-bottom: 48px;
+
+      .top-banner-menu {
+        width: 376px;
+        height: 72px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        & > a {
+          cursor: pointer;
+        }
+      }
+    }
+    #work {
+      padding: 20px 0 120px;
+      & > img {
+        margin-top: 100px;
+      }
+      .work-btn {
+        cursor: pointer;
+      }
+    }
+    #store {
+      background-color: #FFF7F9;
+      padding: 120px 0;
+
+      .store-title {
+        position: relative;
+        .btn {
+          width: 150px;
+          height: 20px;
+          position: absolute;
+          top: 75px;
+          right: 4px;
+          // background-color: red;
+          cursor: pointer;
+        }
+      }
+
+      .store-item-list {
+        width: 1152px;
+        display: flex;
+        flex-wrap: wrap;
+        margin-top: 80px;
+        .store-item {
+          width: 362px;
+          height: 436px;
+          border-radius: 16px;
+          border: 0.5px solid #40001C;
+          padding: 32px;
+          margin-right: 32px;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          &:nth-child(3n) {
+            margin-right: 0;
           }
-          .image_list2 {
-            display: flex;
-            .img_ani {
-              display: flex;
-              animation: Animation 20s linear infinite;
-              animation-duration: 50s;
-            }
+          &:nth-child(n + 4) {
+            margin-top: 32px;
           }
-          .image_item {
+          .store-item-img {
+            width: 298px;
+            height: 232px;
             border-radius: 8px;
-            margin: 0 12px;
-            img {
-              width: auto;
-              height: 401px;
-              object-fit: contain;
-              border-radius: 8px;
+          }
+          .store-item-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: #40001C;
+            margin-top: 12px;
+          }
+
+          .store-item-bottom-line {
+            display: flex;
+            justify-content: space-between;
+            font-size: 20px;
+            font-weight: bold;
+            .btn {
+              width: 85px;
+              height: 15px;
+              cursor: pointer;
             }
           }
+          
         }
-        .image_list::before {
-          background-image: -webkit-linear-gradient(
-            left,
-            #fff,
-            rgba(255, 249, 249, 0)
-          );
-          content: "";
-          height: 120%;
-          left: -15px;
+      }
+    }
+    #gallery {
+      padding-top: 120px;
+      .image_list {
+        margin-top: 100px;
+      }
+      .gallery-title {
+        position: relative;
+        .btn {
+          width: 150px;
+          height: 20px;
           position: absolute;
-          top: -10px;
-          width: 100px;
-          z-index: 2;
+          top: 75px;
+          right: 4px;
+          // background-color: red;
+          cursor: pointer;
         }
-        .image_list::after {
-          background-image: -webkit-linear-gradient(
-            right,
-            #fff9f9,
-            rgba(255, 249, 249, 0)
-          );
-          content: "";
-          height: 120%;
-          position: absolute;
-          right: -15px;
-          top: -10px;
-          width: 100px;
-          z-index: 2;
+      }
+    }
+    .qa {
+      padding-top: 160px;
+      padding-bottom: 200px;
+      .qa-collapse {
+        width: 1152px;
+        margin-top: 80px;
+        border: none;
+        .el-collapse-item {
+          background-color: #FCF7F7;
+          margin-bottom: 12px;
+          padding-left: 24px;
+          border-radius: 8px;
+
+          .el-collapse-item__header {
+            border: none;
+            background-color: #FCF7F7;
+            font-size: 20px;
+            font-weight: 600;
+            color: #40001C;
+          }
+          .el-collapse-item__wrap {
+            border: none;
+            background-color: #FCF7F7;
+            color: #40001C;
+            font-size: 14px;
+          }
+          &.is-active {
+            background: #FCF7F7;
+            .el-collapse-item__wrap {
+              border: none;
+              background-color: #FCF7F7;
+            }
+          }
         }
       }
     }
   }
   p {
     margin: 0;
+  }
+  .flex-column-center {
+    display: flex; 
+    flex-direction: column;
+    align-items: center;
+  }
+  .image_list {
+    width: 100%;
+    margin-bottom: 16px;
+    overflow: hidden;
+    position: relative;
+    @keyframes Animation {
+      0% {
+        transform: translateX(0%);
+        /* transform: translateX(200px); */
+      }
+      100% {
+        transform: translateX(-100%);
+      }
+    }
+    .image_list2 {
+      display: flex;
+      .img_ani {
+        display: flex;
+        animation: Animation 20s linear infinite;
+        animation-duration: 50s;
+      }
+    }
+    .image_item {
+      border-radius: 8px;
+      margin: 0 12px;
+      img {
+        width: auto;
+        height: 401px;
+        object-fit: contain;
+        border-radius: 8px;
+      }
+    }
+  }
+  .image_list::before {
+    background-image: -webkit-linear-gradient(
+      left,
+      #fff,
+      rgba(255, 249, 249, 0)
+    );
+    content: "";
+    height: 120%;
+    left: -15px;
+    position: absolute;
+    top: -10px;
+    width: 100px;
+    z-index: 2;
+  }
+  .image_list::after {
+    background-image: -webkit-linear-gradient(
+      right,
+      #fff9f9,
+      rgba(255, 249, 249, 0)
+    );
+    content: "";
+    height: 120%;
+    position: absolute;
+    right: -15px;
+    top: -10px;
+    width: 100px;
+    z-index: 2;
   }
   </style>
   
