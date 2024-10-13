@@ -8,7 +8,7 @@ const app = {
     },
     device: 'desktop',
     loginDialogVisible: false,
-    signUpDialogVisible: true,
+    signUpDialogVisible: false,
   },
   mutations: {
     TOGGLE_SIDEBAR: state => {

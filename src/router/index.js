@@ -22,12 +22,14 @@ import Layout from "../views/layout/Layout";
 export const constantRouterMap = [
   {
     path: "/login",
-    component: () => import("@/views/login/index"),
+    redirect: "/home?show_login=1",
+    // component: () => import("@/views/login/index"),
     hidden: true,
   },
   {
     path: "/register",
-    component: () => import("@/views/login/register"),
+    redirect: "/home?show_register=1",
+    // component: () => import("@/views/login/register"),
     hidden: true,
   },
   // { path: '/password_find', component: () => import('@/views/login/forget'), hidden: true },

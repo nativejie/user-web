@@ -12,7 +12,9 @@
 
 <style lang="scss" scoped>
 .deposit {
+  font-size: 12px;
   display: inline-block;
+  min-width: 54px;
   width: 54px;
   height: 18px;
   line-height: 18px;

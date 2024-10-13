@@ -43,6 +43,12 @@ export default {
     }
   },
   mounted() {
+    const _path = this.$route.path;
+    if(_path.includes('show_login=1')) {
+      this.handleOpenLoginDialog();
+    } else if (_path.includes('show_register=1')) {
+      this.handleOpenSignUpDialog();
+    }
     let token = getToken();
     if (this.userInfo && token) {
       this.$store.dispatch("GetInfo");

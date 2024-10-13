@@ -1,6 +1,7 @@
 <template>
     <div class="order">
       <div v-if="!showAfterSale">
+        <!-- 列表 -->
         <div class="order_container" v-if="isList">
           <div class="order_title">
             <span>{{
@@ -96,7 +97,24 @@
                         $t("order.text17")
                       }}
                     </p>
-                    <p>£ {{ item.order.totalAmount }}</p>
+                    <el-tooltip 
+                      class="item" 
+                      effect="dark" 
+                      :content="
+                        `£ ${ item.order.totalAmount }
+                        ${ item?.order?.orderItemList?.[0]?.productType == 'custom' ? '（定制商品定金：£24，定制商品尾款：£24，配件商品：£32）' : '' }`
+                      " 
+                      placement="top"
+                    >
+                      <p class="ellipsis" style="width: 200px">
+                        £ {{ item.order.totalAmount }}
+                        {{ item?.orderItemList?.[0]?.productType }}
+                        <!-- TODO: 定制化商品补充新字段展示 -->
+                        {{ 
+                          item?.orderItemList?.[0]?.productType == 'custom' ? '（定制商品定金：£24，定制商品尾款：£24，配件商品：£32）' : ''
+                        }}
+                      </p>
+                    </el-tooltip>
                   </div>
                 </div>
                 <div class="to_details">
@@ -110,6 +128,7 @@
                   >
                 </div>
               </div>
+              <!-- 订单详情 -->
               <div class="pro_details">
                 <div class="det_left">
                   <!-- <div class="order_status">
@@ -150,65 +169,80 @@
                     </div>
                     <!-- 套餐商品 -->
                     <!-- 定制商品 -->
-                    <div v-if="it.productType == 'custom'" class="item">
-                      <div class="pro_img flex_c_c">
-                        <img v-if="it.productPicUrl" :src="it.productPicUrl" />
-                        <img
-                          v-else
-                          style="width: 80px; height: 80px"
-                          src="@/assets/index/logo.png"
-                        />
+                    <div v-if="it.productType == 'custom'" class="item custom-item">
+                      <!-- TODO: 待扫描状态判断 -->
+                      <div class="flex-col wait-saomiao">
+                        <p class="warn-msg">请及时至门店完成扫描</p>
+                        <div class="wait-info-item flex-row">
+                          预约门店：<p class="wait-info-item-val">55 Corstorphine Road, Edinburgh EH12</p>
+                        </div>
+                        <div class="wait-info-item flex-row">
+                          预约时间：<p class="wait-info-item-val">2024-05-24 12:00-13:00</p>
+                        </div>
                       </div>
-                      <div class="pro_name">
-                        <p class="it_name">
-                          {{ it.productName }}
-                        </p>
-                        <p
-                          class="pro_style"
-                          v-for="obj in it.orderPageCusObjItemVOs"
-                          :key="obj.cartCusItemId"
-                        >
-                          <span style="margin-right: 24px">{{
-                            obj.objNickname
-                          }}</span>
-                          <span style="margin-right: 24px">{{
-                            (obj.height ? obj.height + "cm, " : "") +
-                            (obj.weight ? obj.weight + "kg" : "")
-                          }}</span>
-                          <span style="margin-right: 24px">{{ obj.ratio }}</span>
-                          <span style="color: #f6497f"
-                            >£ {{ obj.productPrice }}</span
-                          >
-                        </p>
-                        <div class="pro_info">
-                          <p>
-                            <span>{{
-                              elementContentList.portal_cart_text11 ||
-                              $t("cart.text11")
-                            }}</span>
+                      <div class="flex-row" style="align-items: start;">
+                        <div class="pro_img flex_c_c">
+                          <img v-if="it.productPicUrl" :src="it.productPicUrl" />
+                          <img
+                            v-else
+                            style="width: 80px; height: 80px"
+                            src="@/assets/index/logo.png"
+                          />
+                        </div>
+                        <div class="pro_name">
+                          <p class="it_name">
+                            {{ it.productName }}
                           </p>
-                          <div style="margin-top: 16px">
-                            <div
-                              class="pro_item2 flex"
-                              v-for="pro in it.orderPageCusServiceItemVOs"
-                              :key="pro.cartCusItemId"
-                            >
-                              <div class="flex_c_c img">
-                                <img :src="pro.productPicUrl" />
-                              </div>
-                              <div class="pro_name">
-                                <div class="name">{{ pro.productName }}</div>
-                                <div>
-                                  <span>{{ "x " + pro.productQuantity }}</span
-                                  ><span class="pro_price"
-                                    >£ {{ pro.productPrice }}</span
-                                  >
+                          <p
+                            class="pro_style"
+                            v-for="obj in it.orderPageCusObjItemVOs"
+                            :key="obj.cartCusItemId"
+                          >
+                            <span style="margin-right: 24px">{{
+                              obj.objNickname
+                            }}</span>
+                            <span style="margin-right: 24px">Cyrus</span>
+                            <span style="margin-right: 24px">{{
+                              (obj.height ? obj.height + "cm, " : "") +
+                              (obj.weight ? obj.weight + "kg" : "")
+                            }}</span>
+                            <span style="margin-right: 24px">{{ obj.ratio }}</span>
+                            <span style="color: #f6497f; margin-right: 24px;">£ {{ obj.productPrice }}</span>
+                            <Deposit />
+                          </p>
+                          <div class="pro_info">
+                            <p>
+                              <span>{{
+                                elementContentList.portal_cart_text11 ||
+                                $t("cart.text11")
+                              }}</span>
+                            </p>
+                            <div style="margin-top: 16px">
+                              <div
+                                class="pro_item2 flex"
+                                v-for="pro in it.orderPageCusServiceItemVOs"
+                                :key="pro.cartCusItemId"
+                              >
+                                <div class="flex_c_c img">
+                                  <img :src="pro.productPicUrl" />
+                                </div>
+                                <div class="pro_name">
+                                  <div class="name">{{ pro.productName }}</div>
+                                  <div>
+                                    <span>{{ "x " + pro.productQuantity }}</span>
+                                    <span class="pro_price">£ {{ pro.productPrice }}</span>
+                                  </div>
                                 </div>
                               </div>
                             </div>
                           </div>
+                          <div class="flex-row" style="justify-content: start;">
+                            <p class="it_price" style="margin-right: 24px">£ {{ it.productPrice }}</p>
+                            <Deposit />
+                          </div>
+                          <!-- 配件信息 -->
+                          <AttachmentInfo />
                         </div>
-                        <p class="it_price">£ {{ it.productPrice }}</p>
                       </div>
                     </div>
                     <div class="after_btn flex">
@@ -231,7 +265,9 @@
                   </div>
                 </div>
                 <div class="right_btns">
+                  <!-- Confirm receipt -->
                   <el-button
+                    round
                     class="btn btn2"
                     v-if="item.order.status == 2 || item.order.status == 8"
                     @click="handleConfirm(item, index)"
@@ -240,21 +276,31 @@
                       $t("order.btns.btn4")
                     }}</el-button
                   >
+                  <!-- 立即支付 -->
                   <div class="flex-row" v-if="item.order.status == 0 && !item.order.needCancelPay">
-                    <p style="whiteSpace: nowrap; marginRight: 32px">
+                    <p style="white-space: nowrap; margin-right: 32px">
                       <i class="el-icon-time"></i>
-                      <span>{{ item.order.newPayRemainTime }}</span>
+                      <span>{{ item.order.newPayRemainTime || item.order.payRemainTime }}</span>
                     </p>
                     <el-button
                       class="btn btn2"
-                      
+                      round
                       @click="handlePayment(item, index)"
                       >{{
                         elementContentList.portal_order_btns_btn5 ||
                         $t("order.btns.btn5")
-                      }}</el-button
-                    >
+                      }}</el-button>
+                      <el-button
+                        class="btn cancel-btn"
+                        round
+                        @click="handleCancel(item, index)"
+                        style="margin-left: 16px"
+                      >{{
+                        elementContentList.portal_order_btns_btn5 ||
+                        $t("order.btns.btn8")
+                      }}</el-button>
                   </div>
+                  <!-- Accept -->
                   <el-button
                     class="btn btn2"
                     v-if="item.hasCustom && item.order.status != 0"
@@ -264,6 +310,7 @@
                       $t("order.btns.btn6")
                     }}</el-button
                   >
+                  <!-- Decline -->
                   <el-button
                     class="btn"
                     v-if="item.hasCustom && item.order.status != 0"
@@ -278,6 +325,7 @@
             </div>
           </div>
         </div>
+        <!-- 详情 -->
         <div v-else class="order_details">
           <div class="details_title">
             <i @click="handleGoback" class="el-icon-arrow-left"></i>
@@ -1004,12 +1052,16 @@
   import { qrcode, notifyPayResult, ispay, genPayInfo, } from '@/api/payment'
   import afterSale from './afterSale.vue'
   import pay from '@/components/pay/index'
+  import Deposit from '@/components/Deposit';
+  import AttachmentInfo from '@/components/AttachmentInfo';
   
   export default {
     name: '',
     components: {
       afterSale,
       pay,
+      Deposit,
+      AttachmentInfo
     },
     data () {
       return {
@@ -1431,6 +1483,9 @@
                 .item {
                   display: flex;
                   flex: 1;
+                  &.custom-item {
+                    flex-direction: column;
+                  }
                   .pro_style {
                     font-size: 12px;
                     font-weight: 500;
@@ -1483,6 +1538,30 @@
                           color: #f6497f;
                         }
                       }
+                    }
+                  }
+                  .wait-saomiao {
+                    align-items: start;
+                    background-color: #F8F9FC;
+                    padding: 16px 24px;
+                    margin-bottom: 24px;
+                    border-radius: 6px;
+                  }
+                  .warn-msg {
+                    font-size: 16px;
+                    font-weight: 500;
+                    color: #F6497F;
+                    margin-bottom: 16px;
+                  }
+                  .wait-info-item {
+                    font-size: 14px;
+                    color: #929DAA;
+                    white-space: nowrap;
+                    &:not(:last-child) {
+                      margin-bottom: 8px;
+                    }
+                    .wait-info-item-val {
+                      color: #3D3D3D;
                     }
                   }
                 }
@@ -1548,16 +1627,16 @@
               }
             }
             .right_btns {
+              width: 100%;
               display: flex;
               justify-content: end;
-              width: 100%;
               border-left: 1px solid #e2e2e2;
               padding: 31px 26px;
               .btn {
-                width: 100%;
+                width: auto !important;
                 margin: 0;
                 height: 32px;
-                border-radius: 6px;
+                border-radius: 16px !important;
                 padding: 0px 16px;
                 gap: 8px;
                 background: #ffffff;
@@ -1571,8 +1650,11 @@
                 border: none;
               }
               .flex-row {
+                width: 100%;
                 display: flex;
+                flex-direction: row;
                 align-items: center;
+                justify-content: end;
               }
             }
           }
@@ -1630,7 +1712,6 @@
         .btn2{
           background: #F6497F;
           border: none;
-          color: #fff;
         }
       }
       .sted {

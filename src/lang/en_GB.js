@@ -404,6 +404,7 @@ export default {
       btn5: '立即支付',
       btn6: 'Accept',
       btn7: 'Decline',
+      btn8: '取消订单',
     },
     success: {
       text1: '成功提交售后申请',
