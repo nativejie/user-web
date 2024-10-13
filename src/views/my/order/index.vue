@@ -408,6 +408,7 @@
               elementContentList.portal_order_text20 || $t("order.text20")
             }}</span>
             <span>{{ orderDetails.order.orderSn }}</span>
+            <!-- 操作按钮 -->
             <span style="display: flex; float: right">
               <el-button
                 class="btns"
@@ -428,21 +429,241 @@
               >
             </span>
           </p>
-          <div class="order_info">
-            <div class="pay_info">
-              <p class="my_title">
-                {{ elementContentList.portal_order_text23 || $t("order.text23") }}
-              </p>
-              <p>
-                {{
-                  orderDetails.order.payType == 1
-                    ? "paypal"
-                    : orderDetails.order.payType == 2
-                    ? "weChat"
-                    : elementContentList.portal_order_text37 || $t("order.text37")
-                }}
-              </p>
+          <!-- 订单支付状态 -->
+          <div class="pay-order-info base-gray-bg" style="margin-top: 20px">
+            同列表 - 待确认整体状态都有哪些
+          </div>
+          <!-- 阶段进度 -->
+          <div class="progress-blo base-gray-bg" style="margin-top: 20px">
+            <div class="sted flex_a_c">
+              <div
+                class="step_item"
+                :class="
+                  processStatus == 101 ||
+                  processStatus == 102 ||
+                  processStatus == 103 ||
+                  processStatus == 104 ||
+                  processStatus == 105 ||
+                  processStatus == 106 ||
+                  processStatus == 107 ||
+                  processStatus == 108
+                    ? 'completed'
+                    : ''
+                "
+              >
+                <p class="schedule">
+                  <span class="left_line"></span>
+                  <span class="round"></span>
+                  <span class="right_line"></span>
+                </p>
+                <p class="sted_status">
+                  {{
+                    elementContentList.portal_order_steps_step1 ||
+                    $t("order.steps.step1")
+                  }}
+                </p>
+                <p class="time">
+                  <span
+                    v-for="item in orderDetails.orderProcessList"
+                    :key="item.processId"
+                    >{{ item.processStatus == 101 ? item.createTimeStr : "" }}</span
+                  >
+                </p>
+              </div>
+              <div
+                v-if="status != 4"
+                class="step_item"
+                :class="
+                  processStatus == 102 ||
+                  processStatus == 103 ||
+                  processStatus == 104 ||
+                  processStatus == 105 ||
+                  processStatus == 106 ||
+                  processStatus == 107 ||
+                  processStatus == 108
+                    ? 'completed'
+                    : ''
+                "
+              >
+                <p class="schedule">
+                  <span class="left_line"></span>
+                  <span class="round"></span>
+                  <span class="right_line"></span>
+                </p>
+                <p class="sted_status">
+                  {{
+                    elementContentList.portal_order_steps_step2 ||
+                    $t("order.steps.step2")
+                  }}
+                </p>
+                <p class="time">
+                  <span
+                    v-for="item in orderDetails.orderProcessList"
+                    :key="item.processId"
+                    >{{
+                      item.processStatus == 102 || item.processStatus == 103
+                        ? item.createTimeStr
+                        : ""
+                    }}</span
+                  >
+                </p>
+              </div>
+              <div
+                v-if="hasCustom == 1 && status != 4"
+                class="step_item"
+                :class="
+                  processStatus == 104 ||
+                  processStatus == 105 ||
+                  processStatus == 106 ||
+                  processStatus == 107 ||
+                  processStatus == 108
+                    ? 'completed'
+                    : ''
+                "
+              >
+                <p class="schedule">
+                  <span class="left_line"></span>
+                  <span class="round"></span>
+                  <span class="right_line"></span>
+                </p>
+                <p class="sted_status">
+                  {{
+                    elementContentList.portal_order_steps_step3 ||
+                    $t("order.steps.step3")
+                  }}
+                </p>
+                <p class="time">
+                  <span
+                    v-for="item in orderDetails.orderProcessList"
+                    :key="item.processId"
+                    >{{ item.processStatus == 104 ? item.createTimeStr : "" }}</span
+                  >
+                </p>
+              </div>
+              <div
+                v-if="hasCustom == 1 && status != 4"
+                class="step_item"
+                :class="
+                  processStatus == 105 ||
+                  processStatus == 106 ||
+                  processStatus == 107 ||
+                  processStatus == 108
+                    ? 'completed'
+                    : ''
+                "
+              >
+                <p class="schedule">
+                  <span class="left_line"></span>
+                  <span class="round"></span>
+                  <span class="right_line"></span>
+                </p>
+                <p class="sted_status">
+                  {{
+                    elementContentList.portal_order_steps_step4 ||
+                    $t("order.steps.step4")
+                  }}
+                </p>
+                <p class="time">
+                  <span
+                    v-for="item in orderDetails.orderProcessList"
+                    :key="item.processId"
+                    >{{ item.processStatus == 105 ? item.createTimeStr : "" }}</span
+                  >
+                </p>
+              </div>
+              <div
+                v-if="status != 4"
+                class="step_item"
+                :class="
+                  processStatus == 106 ||
+                  processStatus == 107 ||
+                  processStatus == 108
+                    ? 'completed'
+                    : ''
+                "
+              >
+                <p class="schedule">
+                  <span class="left_line"></span>
+                  <span class="round"></span>
+                  <span class="right_line"></span>
+                </p>
+                <p class="sted_status">
+                  {{
+                    elementContentList.portal_order_steps_step5 ||
+                    $t("order.steps.step5")
+                  }}
+                </p>
+                <p class="time">
+                  <span
+                    v-for="item in orderDetails.orderProcessList"
+                    :key="item.processId"
+                    >{{ item.processStatus == 106 ? item.createTimeStr : "" }}</span
+                  >
+                </p>
+              </div>
+              <div
+                v-if="status != 4"
+                class="step_item"
+                :class="
+                  processStatus == 107 || processStatus == 108 ? 'completed' : ''
+                "
+              >
+                <p class="schedule">
+                  <span class="left_line"></span>
+                  <span class="round"></span>
+                  <span class="right_line"></span>
+                </p>
+                <p class="sted_status">
+                  {{
+                    elementContentList.portal_order_steps_step6 ||
+                    $t("order.steps.step6")
+                  }}
+                </p>
+                <p class="time">
+                  <span
+                    v-for="item in orderDetails.orderProcessList"
+                    :key="item.processId"
+                    >{{ item.processStatus == 107 ? item.createTimeStr : "" }}</span
+                  >
+                </p>
+              </div>
+              <div v-if="status == 4" class="step_item cancel_pay">
+                <p class="schedule">
+                  <span class="left_line"></span>
+                  <span class="round"></span>
+                  <span class="right_line"></span>
+                </p>
+                <p class="sted_status">
+                  {{
+                    elementContentList.portal_order_steps_step7 ||
+                    $t("order.steps.step7")
+                  }}
+                </p>
+                <p class="time">{{ "" }}</p>
+              </div>
             </div>
+          </div>
+          <!-- 提货方式 -->
+          <div class="delivery-method base-gray-bg" style="margin-top: 20px">
+            <div class="addr_card">
+              <p>{{ elementContentList.portal_order_text22 || $t("order.text22") }}</p>
+              <div v-if="orderDetails.order.deliveryType != 2">
+                <p><span>{{ orderDetails.order.receiverName }}</span><span style="margin-left: 12px;">{{ orderDetails.order.receiverPhone }}</span></p>
+                <p style="margin-top: 4px;">
+                  {{ orderDetails.order.receiverDetailAddress +
+                    (orderDetails.order.receiverDetailAddress ? "," : "") +
+                    orderDetails.order.receiverDetailAddressTwo +
+                    (orderDetails.order.receiverDetailAddressTwo ? "," : "") +
+                    orderDetails.order.receiverCity +
+                    (orderDetails.order.receiverCity ? "," : "") +
+                    orderDetails.order.receiverCountry 
+                  }}
+                </p>
+              </div>
+              <p v-if="orderDetails.order.deliveryType == 2">{{ elementContentList.portal_order_text36 || $t("order.text36") }}</p>
+            </div>
+          </div>
+          <div class="order_info">
             <div class="summary">
               <p class="my_title">
                 {{ elementContentList.portal_order_text24 || $t("order.text24") }}
@@ -472,236 +693,26 @@
                 ><span>£ {{ orderDetails.order.payAmount }}</span>
               </p>
             </div>
+            <div class="pay_info">
+              <p class="my_title">
+                {{ elementContentList.portal_order_text23 || $t("order.text23") }}
+              </p>
+              <p>
+                {{
+                  orderDetails.order.payType == 1
+                    ? "paypal"
+                    : orderDetails.order.payType == 2
+                    ? "weChat"
+                    : elementContentList.portal_order_text37 || $t("order.text37")
+                }}
+              </p>
+            </div>
           </div>
           <!-- 定制商品 -->
           <div class="pro_details2" v-if="customList.length > 0">
             <div class="det_left2">
               <div class="pro_item">
                 <p class="type">{{ elementContentList.portal_order_text34 || $t("order.text34") }}</p>
-                <div class="addr_card">
-                  <p>{{ elementContentList.portal_order_text22 || $t("order.text22") }}</p>
-                  <div v-if="orderDetails.order.deliveryType != 2">
-                    <p><span>{{ orderDetails.order.receiverName }}</span><span style="margin-left: 12px;">{{ orderDetails.order.receiverPhone }}</span></p>
-                    <p style="margin-top: 4px;">
-                      {{ orderDetails.order.receiverDetailAddress +
-                        (orderDetails.order.receiverDetailAddress ? "," : "") +
-                        orderDetails.order.receiverDetailAddressTwo +
-                        (orderDetails.order.receiverDetailAddressTwo ? "," : "") +
-                        orderDetails.order.receiverCity +
-                        (orderDetails.order.receiverCity ? "," : "") +
-                        orderDetails.order.receiverCountry 
-                      }}
-                    </p>
-                  </div>
-                  <p v-if="orderDetails.order.deliveryType == 2">{{ elementContentList.portal_order_text36 || $t("order.text36") }}</p>
-                </div>
-                <div class="sted flex_a_c">
-                  <div
-                    class="step_item"
-                    :class="
-                      processStatus == 101 ||
-                      processStatus == 102 ||
-                      processStatus == 103 ||
-                      processStatus == 104 ||
-                      processStatus == 105 ||
-                      processStatus == 106 ||
-                      processStatus == 107 ||
-                      processStatus == 108
-                        ? 'completed'
-                        : ''
-                    "
-                  >
-                    <p class="schedule">
-                      <span class="left_line"></span>
-                      <span class="round"></span>
-                      <span class="right_line"></span>
-                    </p>
-                    <p class="sted_status">
-                      {{
-                        elementContentList.portal_order_steps_step1 ||
-                        $t("order.steps.step1")
-                      }}
-                    </p>
-                    <p class="time">
-                      <span
-                        v-for="item in orderDetails.orderProcessList"
-                        :key="item.processId"
-                        >{{ item.processStatus == 101 ? item.createTimeStr : "" }}</span
-                      >
-                    </p>
-                  </div>
-                  <div
-                    v-if="status != 4"
-                    class="step_item"
-                    :class="
-                      processStatus == 102 ||
-                      processStatus == 103 ||
-                      processStatus == 104 ||
-                      processStatus == 105 ||
-                      processStatus == 106 ||
-                      processStatus == 107 ||
-                      processStatus == 108
-                        ? 'completed'
-                        : ''
-                    "
-                  >
-                    <p class="schedule">
-                      <span class="left_line"></span>
-                      <span class="round"></span>
-                      <span class="right_line"></span>
-                    </p>
-                    <p class="sted_status">
-                      {{
-                        elementContentList.portal_order_steps_step2 ||
-                        $t("order.steps.step2")
-                      }}
-                    </p>
-                    <p class="time">
-                      <span
-                        v-for="item in orderDetails.orderProcessList"
-                        :key="item.processId"
-                        >{{
-                          item.processStatus == 102 || item.processStatus == 103
-                            ? item.createTimeStr
-                            : ""
-                        }}</span
-                      >
-                    </p>
-                  </div>
-                  <div
-                    v-if="hasCustom == 1 && status != 4"
-                    class="step_item"
-                    :class="
-                      processStatus == 104 ||
-                      processStatus == 105 ||
-                      processStatus == 106 ||
-                      processStatus == 107 ||
-                      processStatus == 108
-                        ? 'completed'
-                        : ''
-                    "
-                  >
-                    <p class="schedule">
-                      <span class="left_line"></span>
-                      <span class="round"></span>
-                      <span class="right_line"></span>
-                    </p>
-                    <p class="sted_status">
-                      {{
-                        elementContentList.portal_order_steps_step3 ||
-                        $t("order.steps.step3")
-                      }}
-                    </p>
-                    <p class="time">
-                      <span
-                        v-for="item in orderDetails.orderProcessList"
-                        :key="item.processId"
-                        >{{ item.processStatus == 104 ? item.createTimeStr : "" }}</span
-                      >
-                    </p>
-                  </div>
-                  <div
-                    v-if="hasCustom == 1 && status != 4"
-                    class="step_item"
-                    :class="
-                      processStatus == 105 ||
-                      processStatus == 106 ||
-                      processStatus == 107 ||
-                      processStatus == 108
-                        ? 'completed'
-                        : ''
-                    "
-                  >
-                    <p class="schedule">
-                      <span class="left_line"></span>
-                      <span class="round"></span>
-                      <span class="right_line"></span>
-                    </p>
-                    <p class="sted_status">
-                      {{
-                        elementContentList.portal_order_steps_step4 ||
-                        $t("order.steps.step4")
-                      }}
-                    </p>
-                    <p class="time">
-                      <span
-                        v-for="item in orderDetails.orderProcessList"
-                        :key="item.processId"
-                        >{{ item.processStatus == 105 ? item.createTimeStr : "" }}</span
-                      >
-                    </p>
-                  </div>
-                  <div
-                    v-if="status != 4"
-                    class="step_item"
-                    :class="
-                      processStatus == 106 ||
-                      processStatus == 107 ||
-                      processStatus == 108
-                        ? 'completed'
-                        : ''
-                    "
-                  >
-                    <p class="schedule">
-                      <span class="left_line"></span>
-                      <span class="round"></span>
-                      <span class="right_line"></span>
-                    </p>
-                    <p class="sted_status">
-                      {{
-                        elementContentList.portal_order_steps_step5 ||
-                        $t("order.steps.step5")
-                      }}
-                    </p>
-                    <p class="time">
-                      <span
-                        v-for="item in orderDetails.orderProcessList"
-                        :key="item.processId"
-                        >{{ item.processStatus == 106 ? item.createTimeStr : "" }}</span
-                      >
-                    </p>
-                  </div>
-                  <div
-                    v-if="status != 4"
-                    class="step_item"
-                    :class="
-                      processStatus == 107 || processStatus == 108 ? 'completed' : ''
-                    "
-                  >
-                    <p class="schedule">
-                      <span class="left_line"></span>
-                      <span class="round"></span>
-                      <span class="right_line"></span>
-                    </p>
-                    <p class="sted_status">
-                      {{
-                        elementContentList.portal_order_steps_step6 ||
-                        $t("order.steps.step6")
-                      }}
-                    </p>
-                    <p class="time">
-                      <span
-                        v-for="item in orderDetails.orderProcessList"
-                        :key="item.processId"
-                        >{{ item.processStatus == 107 ? item.createTimeStr : "" }}</span
-                      >
-                    </p>
-                  </div>
-                  <div v-if="status == 4" class="step_item cancel_pay">
-                    <p class="schedule">
-                      <span class="left_line"></span>
-                      <span class="round"></span>
-                      <span class="right_line"></span>
-                    </p>
-                    <p class="sted_status">
-                      {{
-                        elementContentList.portal_order_steps_step7 ||
-                        $t("order.steps.step7")
-                      }}
-                    </p>
-                    <p class="time">{{ "" }}</p>
-                  </div>
-                </div>
                 <div v-for="(it, idx) in customList" :key="idx+'cp'" class="item">
                   <div class="pro_img flex_c_c">
                     <img v-if="it.productPicUrl" :src="it.productPicUrl" />
@@ -793,23 +804,6 @@
             <div class="det_left2">
               <div class="pro_item">
                 <p class="type">{{ elementContentList.portal_order_text35 || $t("order.text35") }}</p>
-                <div class="addr_card">
-                  <p>{{ elementContentList.portal_order_text22 || $t("order.text22") }}</p>
-                  <div v-if="orderDetails.order.deliveryType != 2">
-                    <p><span>{{ orderDetails.order.receiverName }}</span><span style="margin-left: 12px;">{{ orderDetails.order.receiverPhone }}</span></p>
-                    <p style="margin-top: 4px;">
-                      {{ orderDetails.order.receiverDetailAddress +
-                        (orderDetails.order.receiverDetailAddress ? "," : "") +
-                        orderDetails.order.receiverDetailAddressTwo +
-                        (orderDetails.order.receiverDetailAddressTwo ? "," : "") +
-                        orderDetails.order.receiverCity +
-                        (orderDetails.order.receiverCity ? "," : "") +
-                        orderDetails.order.receiverCountry 
-                      }}
-                    </p>
-                  </div>
-                  <p v-if="orderDetails.order.deliveryType == 2">{{ elementContentList.portal_order_text36 || $t("order.text36") }}</p>
-                </div>
                 <div class="sted flex_a_c">
                   <div
                     class="step_item"
@@ -1780,7 +1774,7 @@
         width: 100%;
         border-radius: 8px;
         background: #fff;
-        padding: 24px 32px;
+        padding: 0;
         margin-top: 12px;
         background: #f8f9fc;
         border-radius: 8px;
@@ -1896,7 +1890,7 @@
           border-radius: 12px;
           background: #F8F9FC;
           padding: 16px;
-          margin-right: 16px;
+          margin-left: 16px;
         }
         .summary {
           flex: 1;
@@ -2200,6 +2194,9 @@
       .fahuo-msg2 {
         color: #929DAA;
       }
+    }
+    .delivery-method {
+      
     }
   }
   </style>
