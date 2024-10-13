@@ -38,6 +38,11 @@ Vue.use(VCharts)
 Vue.config.productionTip = false;
 
 Vue.mixin({
+  data() {
+    return {
+      
+    }
+  },
   computed: {
     loginDialogVisible() {
       return this.$store.state.app.loginDialogVisible;
@@ -45,6 +50,9 @@ Vue.mixin({
     signUpDialogVisible() {
       return this.$store.state.app.signUpDialogVisible;
     },
+    messageBoardVisible() {
+      return this.$store.state.app.messageBoardVisible;
+    }
   },
   methods: {
     handleOpenLoginDialog() {
@@ -66,6 +74,12 @@ Vue.mixin({
         this.handleOpenLoginDialog();
       }
       return IS_LOGIN;
+    },
+    handleOpenMessageBoard() {
+      this.$store.commit('CHANGE_MESSAGE_BOARD_VISIBLE', true);
+    },
+    handleCloseMessageBoard() {
+      this.$store.commit('CHANGE_MESSAGE_BOARD_VISIBLE', false);
     }
   }
 })

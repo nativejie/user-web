@@ -179,6 +179,11 @@
                         <div class="wait-info-item flex-row">
                           预约时间：<p class="wait-info-item-val">2024-05-24 12:00-13:00</p>
                         </div>
+                        <div class="flex-row">
+                          请阅读我们提供的&#x3000;
+                          <el-link underline type="danger">3D Photography Guidelines</el-link>
+                          &#x3000;以实现最佳扫描效果
+                        </div>
                       </div>
                       <div class="flex-row" style="align-items: start;">
                         <div class="pro_img flex_c_c">
@@ -242,6 +247,61 @@
                           </div>
                           <!-- 配件信息 -->
                           <AttachmentInfo />
+                          <!-- 打印确认 -->
+                          <PreviewModel />
+                          <!-- 支付尾款卡片 -->
+                          <div class="final-payment flex-col base-gray-bg">
+                          <div class="final-payment-dingjin flex-row justify-between">
+                            <p class="item-name">定金</p>
+                            <p class="item-price">已支付</p>
+                          </div>
+
+                          <div class="final-payment-content">
+                            <div class="final-payment-content-item border-bottom flex-row justify-between">
+                              <p class="item-name">尾款</p>
+                              <p class="item-price before-round-tag">待支付</p>
+                            </div>
+                            <div class="final-payment-content-item flex-row justify-between">
+                              <p class="item-name">扫描对象1</p>
+                              <p class="item-price">£ 1124.5</p>
+                            </div>
+                            <div class="final-payment-content-item border-bottom flex-row justify-between">
+                              <p class="item-name">定金</p>
+                              <p class="item-price">£ 1124.5</p>
+                            </div>
+                            <div class="final-payment-content-item flex-row justify-between">
+                              <p class="item-name"></p>
+                              <div class="flex-row">
+                                Total&#x3000;<p class="item-price">£ 1124.5</p>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div class="final-payment-foot flex-row justify-end">
+                            <el-button type="danger" round>支付尾款</el-button>
+                          </div>
+                          </div>
+                           <!-- 物流配送卡片 -->
+                          <div class="express flex-col base-gray-bg align-start">
+                            <b class="express-title text-red flex-row align-start">待发货</b>
+                            <template v-if="待发货">
+                              <div class="express-item flex-row justify-start">
+                                收货方式：<p class="express-item-val">物流配送</p>
+                              </div>
+                              <div class="express-item flex-row justify-start">
+                                收货地址：<p class="express-item-val">55 Corstorphine Road, Edinburgh EH12</p>
+                              </div>
+                              <div class="express-item flex-row justify-start">
+                                收货人：<p class="express-item-val">Cyrus, 17700000000</p>
+                              </div>
+                            </template>
+                            <template v-else-if="待收货">
+                              <div class="fahuo">
+                                <p class="fahuo-msg1">请收到货后及时检查货物</p>
+                                <p class="fahuo-msg2">自动确认收货：12 天 21 小时</p>
+                              </div>
+                            </template>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -1054,6 +1114,7 @@
   import pay from '@/components/pay/index'
   import Deposit from '@/components/Deposit';
   import AttachmentInfo from '@/components/AttachmentInfo';
+  import PreviewModel from '@/components/PreviewModel';
   
   export default {
     name: '',
@@ -1061,7 +1122,8 @@
       afterSale,
       pay,
       Deposit,
-      AttachmentInfo
+      AttachmentInfo,
+      PreviewModel
     },
     data () {
       return {
@@ -2078,6 +2140,67 @@
   }
   p {
     margin: 0;
+  }
+  .final-payment {
+    width: 100%;
+    margin-top: 20px;
+    .final-payment-dingjin {
+      width: 100%;
+      line-height: 56px;
+      background-color: #fff;
+      border-radius: 4px;
+      padding: 0 16px
+    }
+    .final-payment-content {
+      width: 100%;
+      padding: 16px;
+      background-color: #fff;
+      border-radius: 4px;
+      margin-top: 16px;
+      .final-payment-content-item {
+        line-height: 32px;
+        &.border-bottom {
+          border-bottom: 1px solid #EEEFF2;
+          padding-bottom: 16px;
+          margin-bottom: 16px;
+        }
+        .item-name {
+
+        }
+        .item-price {
+          color: #F6497F;
+        }
+      }
+    }
+    .final-payment-foot {
+      width: 100%;
+      margin-top: 16px;
+    }
+  }
+  .express {
+    width: 100%;
+    text-align: left;
+    margin-top: 20px;
+    .express-title {
+      margin-bottom: 16px;
+    }
+    .express-item {
+      font-size: 14px;
+      font-weight: normal;
+      line-height: 22px;
+      color: #929DAA;
+      .express-item-val {
+        color: #1D2129;
+      }
+    }
+    .fahuo {
+      font-size: 14px;
+      line-height: 22px;
+      color: #1D2129;
+      .fahuo-msg2 {
+        color: #929DAA;
+      }
+    }
   }
   </style>
   

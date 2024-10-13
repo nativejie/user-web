@@ -4,7 +4,8 @@
     <router-view />
     <!-- 全局弹窗 - 属性通过全局mixin混入 -->
     <LoginDialog v-if="loginDialogVisible" :dialogVisible="loginDialogVisible" :onClose="handleCloseLoginDialog" />
-    <SignUpDialog v-if="signUpDialogVisible" :dialogVisible="signUpDialogVisible" :onClose="handleCloseSignUpDialog" /> />
+    <SignUpDialog v-if="signUpDialogVisible" :dialogVisible="signUpDialogVisible" :onClose="handleCloseSignUpDialog" />
+    <MessageBoard v-if="messageBoardVisible" :dialogVisible="messageBoardVisible" :onClose="handleCloseMessageBoard" />
   </div>
 </template>
 
@@ -15,16 +16,19 @@ import { getToken } from "@/utils/auth";
 import { languageSettingList } from "@/api/home";
 import LoginDialog from '@/components/LoginDialog';
 import SignUpDialog from '@/components/SignUpDialog';
+import MessageBoard from '@/components/MessageBoard';
 
 export default {
   components: {
     Navbar,
     LoginDialog,
-    SignUpDialog
+    SignUpDialog,
+    MessageBoard
   },
   name: "App",
   data() {
-    return {};
+    return {
+    };
   },
   computed: {
     ...mapGetters(["userInfo"]),
