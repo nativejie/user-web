@@ -1,10 +1,10 @@
 <template>
   <div class="prview-model base-gray-bg mt16">
-    <div v-for="item in 3" :key="item" class="modal-item flex-row justify-start">
-      <p class="modal-item-name">扫描对象{{ item }}</p>
+    <div v-for="item in list" :key="item" class="modal-item flex-row justify-start">
+      <p class="modal-item-name">{{ item.productName }}</p>
       <div class="modal-item-desc">
         <i class="el-icon-printer" />
-        File name File name File name File name.obj{{ item }}
+        {{ item.objNickname }}
       </div>
       <el-link type="danger">Preview</el-link>
     </div>
@@ -29,17 +29,14 @@
 
 <script>
   export default {
+    props: {
+      list: Array,
+      onPrint: Function,
+      onCancelPrint: Function
+    },
     methods: {
       handlePrint() {
-        this.$alert('我们将尽快为您制作模型。', '感谢您选择接受打印！', {
-          confirmButtonText: 'ok',
-          callback: action => {
-            this.$message({
-              type: 'warn',
-              message: `action: ${ action }`
-            });
-          }
-        });
+        this?.onPrint?.();
       },
       handeleCancelPrint () {
         this.$prompt('请注意：放弃后您的订单将关闭，且定金无法退回!', '您即将放弃打印', {
@@ -47,15 +44,9 @@
           cancelButtonText: '取消',
           inputPlaceholder: '请告诉我们你放弃打印的原因'
         }).then(({ value }) => {
-          this.$message({
-            type: 'success',
-            message: '你的邮箱是: ' + value
-          });
+          this?.onCancelPrint?.(value);
         }).catch(() => {
-          this.$message({
-            type: 'info',
-            message: '取消输入'
-          });       
+          
         });
       },
     }
@@ -65,6 +56,16 @@
 <style lang="scss" scoped>
 .prview-model {
   .modal-item {
+    background-color: #fff;
+    &:first-child {
+      border-top-right-radius: 4px;
+      border-top-left-radius: 4px;
+    }
+    &:last-child {
+      border-bottom-left-radius: 4px;
+      border-bottom-right-radius: 4px;
+    }
+    padding: 12px;
     font-size: 14px;
     .modal-item-name {
       width: 66px;

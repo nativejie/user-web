@@ -102,7 +102,7 @@
                       effect="dark" 
                       :content="
                         `£ ${ item.order.totalAmount }
-                        ${ item?.order?.orderItemList?.[0]?.productType == 'custom' ? '（定制商品定金：£24，定制商品尾款：£24，配件商品：£32）' : '' }`
+                        ${ item?.order?.orderItemList?.[0]?.productType == 'custom' ? `（定制商品定金：£${item.order.totalDepositAmount || '-'}，定制商品尾款：£${ item.order.totalAmount - item.order.totalDepositAmount || '-' }，配件商品：£${ item.order.totalResidueAmount || '-' }）` : '' }`
                       " 
                       placement="top"
                     >
@@ -111,7 +111,7 @@
                         {{ item?.orderItemList?.[0]?.productType }}
                         <!-- TODO: 定制化商品补充新字段展示 -->
                         {{ 
-                          item?.orderItemList?.[0]?.productType == 'custom' ? '（定制商品定金：£24，定制商品尾款：£24，配件商品：£32）' : ''
+                          item?.orderItemList?.[0]?.productType == 'custom' ? `（定制商品定金：£${ item.order.totalDepositAmount || '-' }，定制商品尾款：£${ item.order.totalAmount - item.order.totalDepositAmount || '-' }，配件商品：£${item.order.totalResidueAmount || '-'}）` : ''
                         }}
                       </p>
                     </el-tooltip>
@@ -171,7 +171,7 @@
                     <!-- 定制商品 -->
                     <div v-if="it.productType == 'custom'" class="item custom-item">
                       <!-- TODO: 待扫描状态判断 -->
-                      <div class="flex-col wait-saomiao">
+                      <div class="flex-col wait-saomiao" v-if="it.status === ORDER_STATUS.WAIT_SCAN">
                         <p class="warn-msg">请及时至门店完成扫描</p>
                         <div class="wait-info-item flex-row">
                           预约门店：<p class="wait-info-item-val">55 Corstorphine Road, Edinburgh EH12</p>
@@ -185,6 +185,7 @@
                           &#x3000;以实现最佳扫描效果
                         </div>
                       </div>
+                      <!--配件商品信息 -->
                       <div class="flex-row" style="align-items: start;">
                         <div class="pro_img flex_c_c">
                           <img v-if="it.productPicUrl" :src="it.productPicUrl" />
@@ -245,12 +246,15 @@
                             <p class="it_price" style="margin-right: 24px">£ {{ it.productPrice }}</p>
                             <Deposit />
                           </div>
-                          <!-- 配件信息 -->
-                          <AttachmentInfo />
                           <!-- 打印确认 -->
-                          <PreviewModel />
+                          <PreviewModel 
+                            :list="it.orderPageCusObjItemVOs" 
+                            v-if="item.hasCustom && item.order.status != 0"
+                            :onPrint="() => handleAccept(item, index)"
+                            :onCancelPrint="(rejectMsg) => handleDecline(item, index, rejectMsg)"
+                          />
                           <!-- 支付尾款卡片 -->
-                          <div class="final-payment flex-col base-gray-bg">
+                          <div class="final-payment flex-col base-gray-bg" v-if="item.status === ORDER_STATUS.WAIT_PAY_TAIL">
                           <div class="final-payment-dingjin flex-row justify-between">
                             <p class="item-name">定金</p>
                             <p class="item-price">已支付</p>
@@ -282,9 +286,9 @@
                           </div>
                           </div>
                            <!-- 物流配送卡片 -->
-                          <div class="express flex-col base-gray-bg align-start">
-                            <b class="express-title text-red flex-row align-start">待发货</b>
-                            <template v-if="待发货">
+                          <div class="express flex-col base-gray-bg align-start" v-if="[ORDER_STATUS.DELIVERED, ORDER_STATUS.WAIT_DELIVERY, ORDER_STATUS.FINISHED].includes(item.status)">
+                            <b class="express-title text-red flex-row align-start">{{ EXPRESS_STATUS_MAP[item.status] }}</b>
+                            <template v-if="1">
                               <div class="express-item flex-row justify-start">
                                 收货方式：<p class="express-item-val">物流配送</p>
                               </div>
@@ -360,8 +364,8 @@
                         $t("order.btns.btn8")
                       }}</el-button>
                   </div>
-                  <!-- Accept -->
-                  <el-button
+                  <!-- Accept - 打印 -->
+                  <!-- <el-button
                     class="btn btn2"
                     v-if="item.hasCustom && item.order.status != 0"
                     @click="handleAccept(item, index)"
@@ -369,9 +373,9 @@
                       elementContentList.portal_order_btns_btn6 ||
                       $t("order.btns.btn6")
                     }}</el-button
-                  >
-                  <!-- Decline -->
-                  <el-button
+                  > -->
+                  <!-- Decline 拒绝打印 -->
+                  <!-- <el-button
                     class="btn"
                     v-if="item.hasCustom && item.order.status != 0"
                     @click="handleDecline(item, index)"
@@ -379,7 +383,7 @@
                       elementContentList.portal_order_btns_btn7 ||
                       $t("order.btns.btn7")
                     }}</el-button
-                  >
+                  > -->
                 </div>
               </div>
             </div>
@@ -1109,7 +1113,14 @@
   import Deposit from '@/components/Deposit';
   import AttachmentInfo from '@/components/AttachmentInfo';
   import PreviewModel from '@/components/PreviewModel';
+  import { ORDER_STATUS, ORDER_SUB_STATUS, ORDER_PROCESS_STATUS, ORDER_PROCESS_NODE_STATUS } from '../../../common/constants';
   
+  const EXPRESS_STATUS_MAP = {
+    [ORDER_STATUS.WAIT_DELIVERY]: '待发货',
+    [ORDER_STATUS.DELIVERED]: '已发货',
+    [ORDER_STATUS.FINISHED]: '已完成',
+  }
+
   export default {
     name: '',
     components: {
@@ -1143,6 +1154,10 @@
         payArr: [],
         normalList: [],
         customList: [],
+        ORDER_STATUS, 
+        ORDER_SUB_STATUS, 
+        ORDER_PROCESS_STATUS, 
+        ORDER_PROCESS_NODE_STATUS
       }
     },
     mounted () {
@@ -1193,7 +1208,12 @@
         }).then(() => {
           confirmPrint(val.order.id).then(res => {
             if (res.data) {
-              this.$message.success({ message: this.elementContentList.portal_order_msg4 || this.$t('order.msg4'), duration: 1500 })
+              this.$alert('我们将尽快为您制作模型。', '感谢您选择接受打印！', {
+                confirmButtonText: 'ok',
+                callback: action => {
+                }
+              });
+              // this.$message.success({ message: this.elementContentList.portal_order_msg4 || this.$t('order.msg4'), duration: 1500 })
             } else {
               this.$message.error({ message: this.elementContentList.portal_order_msg5 || this.$t('order.msg5'), duration: 1500 })
             }
@@ -1202,7 +1222,7 @@
         })
       },
       // 定制商品拒绝打印
-      handleDecline (val, index) {
+      handleDecline (val, index, rejectMsg) {
         const h = this.$createElement
         let text1 = this.elementContentList.portal_order_box_text5 || this.$t('order.box.text5')
         let text2 = this.elementContentList.portal_order_box_text6 || this.$t('order.box.text6')
@@ -1536,6 +1556,7 @@
                 border-bottom: 1px solid #e2e2e2;
                 margin-bottom: 15px;
                 display: flex;
+                flex-direction: column;
                 .item {
                   display: flex;
                   flex: 1;
@@ -1662,8 +1683,10 @@
                   }
                 }
                 .after_btn {
+                  align-self: flex-end;
                   margin-right: 16px;
                   width: 107px;
+                  margin-top: 10px;
                   .btn {
                     width: 91px;
                     height: 24px;

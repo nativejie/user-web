@@ -1,5 +1,5 @@
 // 订单状态 需要展示的订单状态，订单详情页进度条节点状态
-const ORDER_STATUS = {
+export const ORDER_STATUS = {
   UNPAID: 0, // 待付款
   WAIT_DELIVERY: 1, // 待发货
   DELIVERED: 2, // 已发货
@@ -15,7 +15,7 @@ const ORDER_STATUS = {
 }
 
 // 订单子状态  订单中扫描对象的状态 
-const ORDER_SUB_STATUS = {
+export const ORDER_SUB_STATUS = {
   INIT: 0, // 初始化
   IGNORE: -1, // 忽略 非扫描对象的定制商品则忽略该状态
   WAIT_SCAN: 2001, // 等待扫描
@@ -35,7 +35,7 @@ const ORDER_SUB_STATUS = {
 }
 
 // 订单进度状态
-const ORDER_PROCESS_STATUS = {
+export const ORDER_PROCESS_STATUS = {
   WAIT_CONFIRM: 101, // 提交订单
   NORMAL_WAIT_PAY: 102, // 支付订单
   CUSTOM_WAI_PAY: 103, // 支付订单
@@ -52,7 +52,7 @@ const ORDER_PROCESS_STATUS = {
 }
 
 // 订单进度子状态
-const ORDER_PROCESS_NODE_STATUS = {
+export const ORDER_PROCESS_NODE_STATUS = {
   WAIT_SCAN: 10041, // 等待扫描
   SCANNING: 10042, // 扫描中
   SCAN_DONE: 10043, // 扫描完成
