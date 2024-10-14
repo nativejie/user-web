@@ -1,7 +1,7 @@
 <template>
   <div class="custom-header">
     <div class="flex">
-      <div class="back flex" @click="handleBack(2)">
+      <div class="back flex" @click="handleBackk(2)">
         <i class="el-icon-arrow-left"></i>
         <span>{{
           elementContentList.portal_custom_basic_label11 ||
@@ -57,7 +57,7 @@ export default {
     console.log(this.label);
   },
   methods: {
-    handleBack() {
+    handleBackk() {
       if (this.step === 1) {
         // confirm before leaving
         this.$confirm(

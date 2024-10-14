@@ -11,7 +11,7 @@
       <slot></slot>
       <span slot="footer" class="dialog-footer">
         <el-button round v-if="leftBtnText" @click="onCancel">{{ leftBtnText }}</el-button>
-        <el-button round v-if={rightBtnText} type="danger" @click="onConfirm">{{ rightBtnText }}</el-button>
+        <el-button round v-if="rightBtnText" type="danger" @click="onConfirm">{{ rightBtnText }}</el-button>
       </span>
     </el-dialog>
   </div>
@@ -26,7 +26,7 @@
         default: 'Cancel'
       },
       rightBtnText: {
-        type: String,
+        type: [String, Boolean],
         default: 'Confirm'
       },
       dialogVisible: Boolean,

@@ -76,29 +76,25 @@
                   <div class="input">
                     <span class="text4 flex-row-center">
                       {{
-                        elementContentList.nickName ||
+                        elementContentList.memberNickname ||
                         $t("custom.basic.label22")
-                      }}
+                      }}1231
                       <el-tooltip effect="dark" content="输入昵称可以更好区分不同对象" placement="top" :style="{ marginLeft: '2px' }">
                         <i class="el-icon-info" :style="{ color: 'red', cursor: 'pinter' }"></i>
                       </el-tooltip>
                     </span>
                     <el-input
-                      v-model="item.nickName"
+                      v-model="item.memberNickname"
                       @blur="handleBlur(item, index)"
                       @change="handleChange(item, index)"
                       :placeholder="
                         elementContentList.portal_custom_basic_placeholder1 ||
                         $t('custom.basic.placeholder3')
                       "
-
                     />
                   </div>
-                  <p class="tips tips2" v-if="item.showTip1">
-                    {{
-                      elementContentList.portal_custom_basic_tip1 ||
-                      $t("custom.basic.tip1")
-                    }}
+                  <p class="tips tips2" v-if="item.showTip_nickName">
+                    请输入昵称
                   </p>
                 </div>
                 <!-- height -->
@@ -198,24 +194,24 @@
                   </div>
                   <div class="flex-row item-res-content">
                     <div class="item-res-item-name">Height</div>
-                    <div class="item-res-item-val">123 cm</div>
+                    <div class="item-res-item-val">{{ item.modelHeight }} cm</div>
                   </div>
                   <div class="flex-row item-res-content">
                     <div class="item-res-item-name">Weight</div>
-                    <div class="item-res-item-val">12345 g</div>
+                    <div class="item-res-item-val">{{  item.modelWeight  }} g</div>
                   </div>
                 </div>
                 <div class="item-res-item flex-row">
                   <div class="item-res-title flex-row">
-                    预估成品数据
+                    预估价格
                   </div>
                   <div class="flex-row item-res-content">
-                    <div class="item-res-item-name">Height</div>
-                    <div class="item-res-item-val">123 cm</div>
+                    <div class="item-res-item-name">总价</div>
+                    <div class="item-res-item-val">£ {{ item.estimateAmount }}</div>
                   </div>
                   <div class="flex-row item-res-content">
-                    <div class="item-res-item-name">Weight</div>
-                    <div class="item-res-item-val">12345 g</div>
+                    <div class="item-res-item-name">定金</div>
+                    <div class="item-res-item-val">£ {{  item.depositAmount  }}</div>
                   </div>
                 </div>
               </div>
@@ -934,26 +930,18 @@
           }}</span>
           <div class="label-val-wrap">
             <div class="label-val">
-              <div class="label-val-row">
-                <div class="label-val-row-item">扫描对象1</div>
+              <div class="label-val-row" v-for="item in detailInfo.customProductObjVOs">
+                <div class="label-val-row-item">{{ item.memberNickname || item.objNickname }}</div>
                 <div class="label-val-row-item">Cyrus</div>
-                <div class="label-val-row-item">174cm,64kg</div>
-                <div class="label-val-row-item">1:5</div>
-                <div class="label-val-row-item">1:5</div>
-                <div class="label-val-row-item red">£ 12</div>
-                <div class="label-val-row-item btn">Deposit</div>
-              </div>
-              <div class="label-val-row">
-                <div class="label-val-row-item">扫描对象2</div>
-                <div class="label-val-row-item">Cyrus</div>
-                <div class="label-val-row-item">174cm,64kg</div>
-                <div class="label-val-row-item">1:5</div>
-                <div class="label-val-row-item">1:5</div>
+                <div class="label-val-row-item">{{ item.height }}cm,{{ item.weight }}kg</div>
+                <div class="label-val-row-item">{{  item.radio  }}</div>
+                <div class="label-val-row-item red">£ {{item.depositPrice }}</div>
+                <Deposit />
               </div>
               <div class="label-val-row">
                 <div class="label-val-row-item red flex">
-                  £ 12 &nbsp;
-                  <div class="label-val-row-item btn">Deposit</div>
+                  £ {{ detailInfo.totalDepositPrice }} &nbsp;
+                  <Deposit />
                 </div>
               </div>
             </div>
@@ -1056,7 +1044,7 @@
               " £ " +
               (detailInfo.cusTotalPrice - detailInfo.serviceProductTotalPrice)
               }}
-              <div class="label-val-row-item btn">Deposit</div>
+              <Deposit />
             </span>
           </p>
           <!-- 配件款项 -->
@@ -1104,14 +1092,14 @@
             <i class="el-icon-user icon"></i>
             扫描对象
           </p>
-          <p class="seven-foot-msg-item-msg">人物 x5</p>
+          <p class="seven-foot-msg-item-msg">{{ detailInfo.customServiceName  }} x{{ detailInfo.customProductObjVOs.length }}</p>
         </div>
         <div class="seven-foot-msg-item">
           <p class="seven-foot-msg-item-title">
             <i class="el-icon-box icon"></i>
             造型风格
           </p>
-          <p class="seven-foot-msg-item-msg">场景组合</p>
+          <p class="seven-foot-msg-item-msg">{{ detailInfo.cusProductName }}</p>
         </div>
       </div>
     </customFooter>
@@ -1202,7 +1190,6 @@
       :dialogVisible="ruleDialogVisible"
       :onClose="handleCloseRuleDialog"
       :onConfirm="handleCloseRuleDialog"
-      :leftBtnText="false"
       rightBtnText="OK"
     >
       <p>说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容</p>
@@ -1232,13 +1219,15 @@ import {
 import { customPage, productSkuList } from "@/api/product";
 import { customGenerateConfirmOrder } from "@/api/order";
 import { customAdd } from "@/api/cart";
+import Deposit from '@/components/Deposit';
 
 export default {
   components: {
     productInfo,
     customFooter: footer,
     customHeader: header,
-    Dialog
+    Dialog,
+    Deposit
   },
   data() {
     return {
@@ -1596,6 +1585,8 @@ export default {
       calculate(params).then((res) => {
         this.objectList[index].modelHeight = res.data.modelHeight;
         this.objectList[index].modelWeight = res.data.modelWeight;
+        this.objectList[index].estimateAmount = res.data.estimateAmount;
+        this.objectList[index].depositAmount = res.data.depositAmount;
       });
     },
     handleChange(val, index) {
@@ -1628,8 +1619,10 @@ export default {
     handleBlur(val, index) {
       if (val.height) {
         val.showTip1 = false;
-      } else {
+      } else if (val.weight) {
         val.showTip1 = true;
+      } else {
+        val.showTip_nickName = true;
       }
     },
     handleRight(val, index) {
@@ -1667,7 +1660,7 @@ export default {
         modelHeight: "",
         modelWeight: "",
         // TODO: 昵称字段
-        nickName: ""
+        memberNickname: ""
       });
     },
     handleBack(val = this.step) {
@@ -1720,6 +1713,11 @@ export default {
         case 2:
           this.objectList.forEach((item) => {
             // if(this.detailInfo.cusProductName == '人物扫描'){
+            if (item.memberNickname) {
+              item.showTip_nickName = false;
+            } else {
+              item.showTip_nickName = false;
+            }
             if (item.height) {
               item.showTip1 = false;
             } else {
@@ -1740,6 +1738,7 @@ export default {
           let arr = [];
           if (this.detailInfo.cusProductName == "人物扫描") {
             this.objectList.filter((item) => {
+              if (!item.memberNickname) arr.push(item);
               if (!item.weight) arr.push(item);
               if (!item.height) arr.push(item);
               if (!item.sku) arr.push(item);
@@ -1765,12 +1764,14 @@ export default {
                   ? item.objNickname
                   : "扫描对象" + (idx + 1),
                 objNo: item.objNo ? item.objNo : "objNo" + (idx + 1),
+                memberNickname: item.memberNickname,
               };
               let obj2 = {
                 customObjId: item.customObjId,
                 customProductId: this.customProductId,
                 productSkuUid: item.sku,
                 ratio: item.ratio,
+                memberNickname: item.memberNickname
               };
               arr3.push(obj);
               arr4.push(obj2);
