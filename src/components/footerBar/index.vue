@@ -6,11 +6,23 @@
           <p>Print Your Magic Moments</p>
         </div>
         <div class="cooperate">
-          <div class="Navigation" v-for="item in 3" :key="item">
-            <p class="pink">Navigation</p>
+          <div class="Navigation">
+            <p class="pink">INFO</p>
+            <p @click="handleTo('/about')">ABOUT US</p>
             <p>Navigation</p>
             <p>Navigation</p>
-            <p>Navigation</p>
+          </div>
+          <div class="Navigation">
+            <p class="pink">FOLLOW US</p>
+            <p>FACEBOOK</p>
+            <p>INSTAGAM</p>
+            <p>TWITTER</p>
+            <p>TIKTOK</p>
+          </div>
+          <div class="Navigation">
+            <p class="pink">CONTACT US</p>
+            <p>E-MAIL</p>
+            <p>TEL</p>
           </div>
         </div>
       </div>
@@ -54,6 +66,10 @@
           this.showPrivacy = true
         }
       },
+      handleTo(path) {
+        console.log('index~70 path：', path);
+        this.$router.push(path);
+      }
     },
   }
   </script>

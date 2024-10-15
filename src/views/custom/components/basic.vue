@@ -1712,11 +1712,10 @@ export default {
           break;
         case 2:
           this.objectList.forEach((item) => {
-            // if(this.detailInfo.cusProductName == '人物扫描'){
             if (item.memberNickname) {
               item.showTip_nickName = false;
             } else {
-              item.showTip_nickName = false;
+              item.showTip_nickName = true;
             }
             if (item.height) {
               item.showTip1 = false;

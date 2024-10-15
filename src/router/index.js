@@ -94,6 +94,11 @@ export const constantRouterMap = [
       },
     ],
   },
+  {
+    path: "/about",
+    component: () => import("@/views/about/index"),
+    hidden: true,
+  }
 ];
 
 export default new Router({
