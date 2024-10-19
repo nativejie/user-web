@@ -81,6 +81,7 @@
 <script>
   import { isvalidateEmail } from '@/utils/validate';
   import { setSupport, getSupport, setCookie, getCookie } from '@/utils/support';
+  import { thirdLogin, login, register } from '@/api/login';
   export default {
     props: {
       dialogVisible: Boolean,
@@ -169,7 +170,6 @@
         })
       },
       handleLoginMore (type) {
-        console.log('index~158 登陆方式 type：', type);
       },
     }
   }
@@ -182,7 +182,7 @@
     width: 440px;
     height: 574px;
     margin: 200px auto;
-    border-radius: 24px;
+    border-radius: 24px !important;
     overflow: hidden;
     background-color: #fff;
     margin-top: 200px !important;
@@ -214,6 +214,8 @@
         flex-direction: column;
         align-items: center;
         color: #40001C;
+        border-top-left-radius: 24px;
+        border-top-right-radius: 24px;
         .login-dialog-wrap-title {
           font-size: 24px;
         }

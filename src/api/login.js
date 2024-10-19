@@ -134,3 +134,16 @@ export function refreshToken () {
   })
 }
 
+/**
+ * 第三方登录
+ * @param {String} source 第三方登录来源 facebook/linkedin/twitter
+ */
+export function thirdLogin (source ) {
+  return request({
+    url: `/oauth/render/facebook`,
+    method: 'post',
+    data: {
+      source
+    }
+  })
+}
