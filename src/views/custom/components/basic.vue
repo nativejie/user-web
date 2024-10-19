@@ -79,8 +79,16 @@
                         elementContentList.memberNickname ||
                         $t("custom.basic.label22")
                       }}1231
-                      <el-tooltip effect="dark" content="输入昵称可以更好区分不同对象" placement="top" :style="{ marginLeft: '2px' }">
-                        <i class="el-icon-info" :style="{ color: 'red', cursor: 'pinter' }"></i>
+                      <el-tooltip
+                        effect="dark"
+                        content="输入昵称可以更好区分不同对象"
+                        placement="top"
+                        :style="{ marginLeft: '2px' }"
+                      >
+                        <i
+                          class="el-icon-info"
+                          :style="{ color: 'red', cursor: 'pinter' }"
+                        ></i>
                       </el-tooltip>
                     </span>
                     <el-input
@@ -157,8 +165,16 @@
                         elementContentList.portal_custom_basic_label16 ||
                         $t("custom.basic.label16")
                       }}
-                      <el-tooltip effect="dark" content="即最终成品与真实身高的比例。例如：身高为170cm，选择1:10的比例后，最终成品的高度就为17cm" placement="top" :style="{ marginLeft: '2px' }">
-                        <i class="el-icon-info" :style="{ color: 'red', cursor: 'pinter' }"></i>
+                      <el-tooltip
+                        effect="dark"
+                        content="即最终成品与真实身高的比例。例如：身高为170cm，选择1:10的比例后，最终成品的高度就为17cm"
+                        placement="top"
+                        :style="{ marginLeft: '2px' }"
+                      >
+                        <i
+                          class="el-icon-info"
+                          :style="{ color: 'red', cursor: 'pinter' }"
+                        ></i>
                       </el-tooltip>
                     </span>
                     <el-select
@@ -189,29 +205,33 @@
               <div class="item-res flex-row">
                 <!-- TODO: 动态计算数据补充 -->
                 <div class="item-res-item flex-row">
-                  <div class="item-res-title flex-row">
-                    预估成品数据
-                  </div>
+                  <div class="item-res-title flex-row">预估成品数据</div>
                   <div class="flex-row item-res-content">
                     <div class="item-res-item-name">Height</div>
-                    <div class="item-res-item-val">{{ item.modelHeight }} cm</div>
+                    <div class="item-res-item-val">
+                      {{ item.modelHeight }} cm
+                    </div>
                   </div>
                   <div class="flex-row item-res-content">
                     <div class="item-res-item-name">Weight</div>
-                    <div class="item-res-item-val">{{  item.modelWeight  }} g</div>
+                    <div class="item-res-item-val">
+                      {{ item.modelWeight }} g
+                    </div>
                   </div>
                 </div>
                 <div class="item-res-item flex-row">
-                  <div class="item-res-title flex-row">
-                    预估价格
-                  </div>
+                  <div class="item-res-title flex-row">预估价格</div>
                   <div class="flex-row item-res-content">
                     <div class="item-res-item-name">总价</div>
-                    <div class="item-res-item-val">£ {{ item.estimateAmount }}</div>
+                    <div class="item-res-item-val">
+                      £ {{ item.estimateAmount }}
+                    </div>
                   </div>
                   <div class="flex-row item-res-content">
                     <div class="item-res-item-name">定金</div>
-                    <div class="item-res-item-val">£ {{  item.depositAmount  }}</div>
+                    <div class="item-res-item-val">
+                      £ {{ item.depositAmount }}
+                    </div>
                   </div>
                 </div>
               </div>
@@ -264,9 +284,9 @@
         <div class="four_main flex_b_c">
           <div class="left">
             <div class="tabs">
-              <div 
+              <div
                 v-for="(item, index) in serviceList"
-                class="tab_item-wrap" 
+                class="tab_item-wrap"
                 :class="tab == index ? 'active' : ''"
                 :key="item.customServiceUid"
               >
@@ -281,14 +301,14 @@
                   <i class="el-icon-success"></i>
                 </div>
                 <div class="item-content" v-if="tab == index">
-                    <p class="item-content-title">
-                      {{
-                        elementContentList.portal_custom_basic_step4_label8 ||
-                        $t("custom.basic.step4.label8")
-                      }}
-                    </p>
-                    <div class="item-content-desc">{{ serviceDesc }}</div>
-                  </div>
+                  <p class="item-content-title">
+                    {{
+                      elementContentList.portal_custom_basic_step4_label8 ||
+                      $t("custom.basic.step4.label8")
+                    }}
+                  </p>
+                  <div class="item-content-desc">{{ serviceDesc }}</div>
+                </div>
               </div>
             </div>
             <!-- <div class="style">
@@ -889,9 +909,7 @@
                     </div>
                   </div>
                 </div>
-                <span
-                  class="btn"
-                  @click="handleEditServiceProduct(item, index)"
+                <span class="btn" @click="handleEditServiceProduct(item, index)"
                   >{{
                     elementContentList.portal_custom_basic_step5_label4 ||
                     $t("custom.basic.step5.label4")
@@ -930,12 +948,21 @@
           }}</span>
           <div class="label-val-wrap">
             <div class="label-val">
-              <div class="label-val-row" v-for="item in detailInfo.customProductObjVOs">
-                <div class="label-val-row-item">{{ item.memberNickname || item.objNickname }}</div>
+              <div
+                class="label-val-row"
+                v-for="item in detailInfo.customProductObjVOs"
+              >
+                <div class="label-val-row-item">
+                  {{ item.memberNickname || item.objNickname }}
+                </div>
                 <div class="label-val-row-item">Cyrus</div>
-                <div class="label-val-row-item">{{ item.height }}cm,{{ item.weight }}kg</div>
-                <div class="label-val-row-item">{{  item.radio  }}</div>
-                <div class="label-val-row-item red">£ {{item.depositPrice }}</div>
+                <div class="label-val-row-item">
+                  {{ item.height }}cm,{{ item.weight }}kg
+                </div>
+                <div class="label-val-row-item">{{ item.radio }}</div>
+                <div class="label-val-row-item red">
+                  £ {{ item.depositPrice }}
+                </div>
                 <Deposit />
               </div>
               <div class="label-val-row">
@@ -1035,42 +1062,49 @@
           </p>
           <!-- 定制款项 -->
           <p class="in_price flex-row">
-            <span class="in_label" style="margin-right: 0">{{
-              elementContentList.portal_custom_basic_confirm_label9 ||
-              $t("custom.basic.confirm.label9")
-            }} &nbsp;</span>
-            <span style="color: #f6497f; display: flex; alignItems: center;">
+            <span class="in_label" style="margin-right: 0"
+              >{{
+                elementContentList.portal_custom_basic_confirm_label9 ||
+                $t("custom.basic.confirm.label9")
+              }}
+              &nbsp;</span
+            >
+            <span style="color: #f6497f; display: flex; alignitems: center">
               {{
-              " £ " +
-              (detailInfo.cusTotalPrice - detailInfo.serviceProductTotalPrice)
+                " £ " +
+                (detailInfo.cusTotalPrice - detailInfo.serviceProductTotalPrice)
               }}
               <Deposit />
             </span>
           </p>
           <!-- 配件款项 -->
           <p class="in_price flex-row">
-            <span class="in_label" style="margin-right: 0">{{
-              elementContentList.portal_custom_basic_confirm_label10 ||
-              $t("custom.basic.confirm.label10")
-            }}&nbsp;</span
+            <span class="in_label" style="margin-right: 0"
+              >{{
+                elementContentList.portal_custom_basic_confirm_label10 ||
+                $t("custom.basic.confirm.label10")
+              }}&nbsp;</span
             ><span style="color: #f6497f">{{
               " £ " + detailInfo.serviceProductTotalPrice
             }}</span>
           </p>
           <!-- 合计 -->
           <p class="in_total flex-row">
-            <span class="in_label" style="margin-right: 0">{{
-              elementContentList.portal_custom_basic_confirm_label11 ||
-              $t("custom.basic.confirm.label11")
-            }}&nbsp;</span
-            ><span style="color: #f6497f;fontSize: 32px;">{{
+            <span class="in_label" style="margin-right: 0"
+              >{{
+                elementContentList.portal_custom_basic_confirm_label11 ||
+                $t("custom.basic.confirm.label11")
+              }}&nbsp;</span
+            ><span style="color: #f6497f; fontsize: 32px">{{
               " £ " + detailInfo.cusTotalPrice
             }}</span>
           </p>
         </div>
       </div>
       <p class="con_btns">
-        <el-button class="red" type="text" @click="handleShowRuleDialog"> 定金规则说明</el-button>
+        <el-button class="red" type="text" @click="handleShowRuleDialog">
+          定金规则说明</el-button
+        >
         <el-button class="btn" @click="handleShowRule">{{
           elementContentList.portal_custom_basic_confirm_label12 ||
           $t("custom.basic.confirm.label12")
@@ -1092,7 +1126,11 @@
             <i class="el-icon-user icon"></i>
             扫描对象
           </p>
-          <p class="seven-foot-msg-item-msg">{{ detailInfo.customServiceName  }} x{{ detailInfo.customProductObjVOs.length }}</p>
+          <p class="seven-foot-msg-item-msg">
+            {{ detailInfo.customServiceName }} x{{
+              detailInfo.customProductObjVOs.length
+            }}
+          </p>
         </div>
         <div class="seven-foot-msg-item">
           <p class="seven-foot-msg-item-title">
@@ -1105,9 +1143,9 @@
     </customFooter>
     <productInfo v-if="showProInfo" :editServiceProduct="editServiceProduct" />
     <Dialog
-      title='操作确认'
-      :dialogVisible="dialogVisible" 
-      :onClose="handleCose" 
+      title="操作确认"
+      :dialogVisible="dialogVisible"
+      :onClose="handleCose"
       :onCancel="handleCancel"
       :onConfirm="handleConfirm"
     >
@@ -1117,73 +1155,75 @@
       title="选择预约时间"
       :dialogVisible="showSelectTimeDialog"
       :onClose="hanleCancelSelectTime"
-      :onCancel='hanleCancelSelectTime'
+      :onCancel="hanleCancelSelectTime"
       :onConfirm="handleConfirmSelectTime"
     >
-    <div class="time flex_b_c">
-      <div class="flex time-item">
-        <span>{{
-          elementContentList.portal_custom_basic_step6_label5 ||
-          $t("custom.basic.step6.label5")
-        }}</span>
-        <el-date-picker
-          class="time-item-picker"
-          v-model="arrivalDateStr"
-          type="date"
-          format="yyyy-MM-dd"
-          value-format="yyyy-MM-dd"
-          @blur="handleChangeData"
-          :picker-options="pickerOptions"
-          :placeholder="
-            elementContentList.portal_custom_basic_step6_placeholder1 ||
-            $t('custom.basic.step6.placeholder1')
-          "
-        >
-        </el-date-picker>
-        <p v-if="showDateTip" class="err_tip">
-          {{
-            elementContentList.portal_custom_basic_label20 ||
-            $t("custom.basic.label20")
-          }}
-        </p>
+      <div class="time flex_b_c">
+        <div class="flex time-item">
+          <span>{{
+            elementContentList.portal_custom_basic_step6_label5 ||
+            $t("custom.basic.step6.label5")
+          }}</span>
+          <el-date-picker
+            class="time-item-picker"
+            v-model="arrivalDateStr"
+            type="date"
+            format="yyyy-MM-dd"
+            value-format="yyyy-MM-dd"
+            @blur="handleChangeData"
+            :picker-options="pickerOptions"
+            :placeholder="
+              elementContentList.portal_custom_basic_step6_placeholder1 ||
+              $t('custom.basic.step6.placeholder1')
+            "
+          >
+          </el-date-picker>
+          <p v-if="showDateTip" class="err_tip">
+            {{
+              elementContentList.portal_custom_basic_label20 ||
+              $t("custom.basic.label20")
+            }}
+          </p>
+        </div>
+        <div class="flex time-item">
+          <span>{{
+            elementContentList.portal_custom_basic_step6_label6 ||
+            $t("custom.basic.step6.label6")
+          }}</span>
+          <el-time-picker
+            class="time-item-picker"
+            v-model="arrivalTime"
+            type="date"
+            format="HH:mm"
+            value-format="HH:mm"
+            @blur="handleChangeTime"
+            :placeholder="
+              elementContentList.portal_custom_basic_step6_placeholder2 ||
+              $t('custom.basic.step6.placeholder2')
+            "
+          >
+          </el-time-picker>
+          <p v-if="showTimeTip" class="err_tip">
+            {{
+              elementContentList.portal_custom_basic_label21 ||
+              $t("custom.basic.label21")
+            }}
+          </p>
+        </div>
       </div>
-      <div class="flex time-item">
-        <span>{{
-          elementContentList.portal_custom_basic_step6_label6 ||
-          $t("custom.basic.step6.label6")
-        }}</span>
-        <el-time-picker
-          class="time-item-picker"
-          v-model="arrivalTime"
-          type="date"
-          format="HH:mm"
-          value-format="HH:mm"
-          @blur="handleChangeTime"
-          :placeholder="
-            elementContentList.portal_custom_basic_step6_placeholder2 ||
-            $t('custom.basic.step6.placeholder2')
-          "
-        >
-        </el-time-picker>
-        <p v-if="showTimeTip" class="err_tip">
-          {{
-            elementContentList.portal_custom_basic_label21 ||
-            $t("custom.basic.label21")
-          }}
-        </p>
-      </div>
-    </div>
     </Dialog>
     <Dialog
       title="请确认您已了解定金规则"
       :dialogVisible="ruleConfirmDialogVisible"
       :onClose="hanleCloseRuleDialog"
-      :onCancel='hanleCloseRuleDialog'
+      :onCancel="hanleCloseRuleDialog"
       :onConfirm="handleToPay"
       leftBtnText="取消"
       rightBtnText="已阅读，去支付"
     >
-      <p>说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容</p>
+      <p>
+        说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容
+      </p>
     </Dialog>
     <Dialog
       title="定金规则内容"
@@ -1192,7 +1232,9 @@
       :onConfirm="handleCloseRuleDialog"
       rightBtnText="OK"
     >
-      <p>说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容</p>
+      <p>
+        说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容
+      </p>
     </Dialog>
   </div>
 </template>
@@ -1201,7 +1243,7 @@
 import productInfo from "./productInfo.vue";
 import footer from "./footer";
 import header from "./header.vue";
-import Dialog from '../../../components/Dialog';
+import Dialog from "../../../components/Dialog";
 import {
   checkExist,
   detail,
@@ -1219,7 +1261,7 @@ import {
 import { customPage, productSkuList } from "@/api/product";
 import { customGenerateConfirmOrder } from "@/api/order";
 import { customAdd } from "@/api/cart";
-import Deposit from '@/components/Deposit';
+import Deposit from "@/components/Deposit";
 
 export default {
   components: {
@@ -1227,7 +1269,7 @@ export default {
     customFooter: footer,
     customHeader: header,
     Dialog,
-    Deposit
+    Deposit,
   },
   data() {
     return {
@@ -1284,10 +1326,10 @@ export default {
       showDateTip: false,
       showTimeTip: false,
       dialogVisible: false,
-      inputWidthS: '46px',
+      inputWidthS: "46px",
       showSelectTimeDialog: false,
       ruleConfirmDialogVisible: false,
-      ruleDialogVisible: false
+      ruleDialogVisible: false,
     };
   },
   created() {
@@ -1456,6 +1498,8 @@ export default {
               ratio: item.ratio,
               type: 1,
               weight: item.weight,
+              productUid: this.customPro.productUid,
+              productBaseUid: this.customPro.productBaseUid,
             };
             calculate(params).then((res) => {
               modelHeight = res.data.modelHeight;
@@ -1550,7 +1594,7 @@ export default {
         if (item.productUid == val.productUid) {
           arr.push({
             ...item,
-            check: true
+            check: true,
           });
         }
       });
@@ -1581,6 +1625,8 @@ export default {
         ratio,
         type: 1,
         weight,
+        productUid: this.customPro.productUid,
+        productBaseUid: this.customPro.productBaseUid,
       };
       calculate(params).then((res) => {
         this.objectList[index].modelHeight = res.data.modelHeight;
@@ -1660,7 +1706,7 @@ export default {
         modelHeight: "",
         modelWeight: "",
         // TODO: 昵称字段
-        memberNickname: ""
+        memberNickname: "",
       });
     },
     handleBack(val = this.step) {
@@ -1770,7 +1816,7 @@ export default {
                 customProductId: this.customProductId,
                 productSkuUid: item.sku,
                 ratio: item.ratio,
-                memberNickname: item.memberNickname
+                memberNickname: item.memberNickname,
               };
               arr3.push(obj);
               arr4.push(obj2);
@@ -1987,7 +2033,7 @@ export default {
     handleConfirmOrderBack() {
       // TODO 匹配类型返回最后一步
       // this.step = 6;
-      console.log(`%c 返回`, 'color: #ff6700');
+      console.log(`%c 返回`, "color: #ff6700");
     },
     handleShowRule() {
       this.ruleConfirmDialogVisible = true;
@@ -2005,7 +2051,7 @@ export default {
     },
     handleCloseRuleDialog() {
       this.ruleDialogVisible = false;
-    }
+    },
   },
 };
 </script>
@@ -2047,7 +2093,7 @@ export default {
         margin: 0 0 40px 0;
       }
       .in_label {
-        display: flex;;
+        display: flex;
         font-weight: 500;
         margin-right: 80px;
         white-space: nowrap;
@@ -2292,7 +2338,7 @@ export default {
                   font-weight: normal;
                   line-height: 24px;
                   text-align: center;
-                  color: #929DAA;
+                  color: #929daa;
                 }
                 .item-res-item-val {
                   font-family: Cyrus;
@@ -2301,7 +2347,7 @@ export default {
                   line-height: 28px;
                   text-align: center;
                   letter-spacing: 0em;
-                  color: #1D2129;
+                  color: #1d2129;
                   margin-left: 16px;
                 }
               }
@@ -2566,10 +2612,10 @@ export default {
             background: #fff;
             position: relative;
             text-align: left;
-            color: #1D2129;
+            color: #1d2129;
             cursor: pointer;
             .border {
-              border: 1px solid #E0E2E9;
+              border: 1px solid #e0e2e9;
               width: 100%;
               height: 100%;
             }
@@ -2615,9 +2661,9 @@ export default {
             padding: 16px;
             border-radius: 8px;
             box-sizing: border-box;
-            background: #F8F9FC;
-            color: #1D2129;
-            transition: height .3s ease-in-out;
+            background: #f8f9fc;
+            color: #1d2129;
+            transition: height 0.3s ease-in-out;
             margin-top: 4px;
             .item-content-title {
               font-size: 16px;
@@ -2761,7 +2807,8 @@ export default {
     .image_pre {
       width: 420px;
       margin-right: 24px !important;
-      .arrow_left,.arrow_right {
+      .arrow_left,
+      .arrow_right {
         top: 200px;
       }
     }
@@ -2879,7 +2926,7 @@ export default {
     }
     .sub-title {
       font-size: 14px;
-      color: #535E6F;
+      color: #535e6f;
       margin-top: 12px;
     }
   }
@@ -2911,7 +2958,7 @@ export default {
           top: 6px;
           right: 6px;
           font-size: 16px;
-          color: #F6497F;;
+          color: #f6497f;
         }
         &.active {
           background: #fff0f2;
@@ -3018,7 +3065,7 @@ export default {
   font-weight: normal;
   line-height: 22px;
   letter-spacing: 0em;
-  color: #1D2129;
+  color: #1d2129;
 }
 .flex-row-center {
   display: flex;
@@ -3041,11 +3088,11 @@ export default {
       font-size: 14px;
     }
     .seven-foot-msg-item-title {
-      color: #1D2129;
+      color: #1d2129;
     }
     .seven-foot-msg-item-msg {
       padding-left: 20px;
-      color: #F6497F;
+      color: #f6497f;
     }
   }
 }
@@ -3057,7 +3104,7 @@ export default {
     display: flex;
     margin-bottom: 16px;
     font-size: 14px;
-    color: #1F2126;
+    color: #1f2126;
     .time-item-picker {
       margin-left: 40px;
     }
@@ -3072,7 +3119,7 @@ export default {
     height: 32px;
     border-radius: 16px;
     border: 1px solid rgba(0, 0, 0, 0.15);
-    background: #F8F9FC;
+    background: #f8f9fc;
   }
   .el-input__icon {
     line-height: 32px;
@@ -3089,7 +3136,7 @@ export default {
 .label-val {
   flex: 1;
   font-size: 14px;
-  color: #1D2129;
+  color: #1d2129;
 
   .label-val-row {
     display: flex;
@@ -3102,7 +3149,7 @@ export default {
       // flex: 1;
       min-width: 100px;
       &.red {
-        color: #F6497F;
+        color: #f6497f;
       }
     }
   }
@@ -3136,9 +3183,9 @@ export default {
     line-height: 18px;
     text-align: center;
     border-radius: 4px;
-    border: 1px #F6497F solid;
-    background-color: #FBB9CE;
-    color: #F6497F;
+    border: 1px #f6497f solid;
+    background-color: #fbb9ce;
+    color: #f6497f;
     margin-left: 6px;
   }
 }
@@ -3148,6 +3195,6 @@ export default {
   flex-wrap: wrap;
 }
 .red {
-  color: #F6497F !important;
+  color: #f6497f !important;
 }
 </style>
