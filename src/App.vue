@@ -5,7 +5,6 @@
     <!-- 全局弹窗 - 属性通过全局mixin混入 -->
     <LoginDialog v-if="loginDialogVisible" :dialogVisible="loginDialogVisible" :onClose="handleCloseLoginDialog" />
     <SignUpDialog v-if="signUpDialogVisible" :dialogVisible="signUpDialogVisible" :onClose="handleCloseSignUpDialog" />
-    <MessageBoard v-if="messageBoardVisible" :dialogVisible="messageBoardVisible" :onClose="handleCloseMessageBoard" />
   </div>
 </template>
 

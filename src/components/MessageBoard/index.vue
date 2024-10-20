@@ -13,10 +13,17 @@
 </template>
 
 <script>
+import { addProcessNote, getProcessNote } from "@/api/order";
 export default {
   props: {
     dialogVisible: Boolean,
-    onClose: Function
+    onClose: Function,
+    processId: String,
+  },
+  data() {
+    return {
+      list: []
+    }
   },
   methods: {
     handleAdd() {
@@ -25,9 +32,11 @@ export default {
           confirmButtonText: '确定留言',
           cancelButtonText: 'Cancel',
         }).then(({ value }) => {
-          this.$message({
-            type: 'success',
-            message: `留言内容：${value}`
+          addProcessNote({
+            note: value,
+            processId: this.processId
+          }).then(res => {
+            this.handleGet();
           });
           this.onClose();
         }).catch(() => {
@@ -36,7 +45,16 @@ export default {
             message: '取消输入'
           });       
         });
+    },
+    handleGet() {
+      getProcessNote(this.processId).then(res => {
+        console.log('index~52 res：', res);
+        this.list = res
+      });
     }
+  },
+  mounted() {
+    this.handleGet();
   }
 }
 </script>

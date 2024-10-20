@@ -100,18 +100,15 @@
                     <el-tooltip 
                       class="item" 
                       effect="dark" 
-                      :content="
-                        `£ ${ item.order.totalAmount }
-                        ${ item?.order?.orderItemList?.[0]?.productType == 'custom' ? `（定制商品定金：£${item.order.totalDepositAmount || '-'}，定制商品尾款：£${ item.order.totalAmount - item.order.totalDepositAmount || '-' }，配件商品：£${ item.order.totalResidueAmount || '-' }）` : '' }`
-                      " 
+                      :disabled="item?.order?.orderItemList?.[0]?.productType !== 'custom'"
+                      :content="`${ item?.order?.orderItemList?.[0]?.productType == 'custom' ? `（定制商品定金：£${item.order.totalDepositAmount || '-'}，定制商品尾款：£${ item.order.totalResidueAmount|| '-' }，配件商品：£${ item.order.totalAccessoryAmount || '-' }）` : '' }`" 
                       placement="top"
                     >
                       <p class="ellipsis" style="width: 200px">
                         £ {{ item.order.totalAmount }}
-                        {{ item?.orderItemList?.[0]?.productType }}
                         <!-- TODO: 定制化商品补充新字段展示 -->
                         {{ 
-                          item?.orderItemList?.[0]?.productType == 'custom' ? `（定制商品定金：£${ item.order.totalDepositAmount || '-' }，定制商品尾款：£${ item.order.totalAmount - item.order.totalDepositAmount || '-' }，配件商品：£${item.order.totalResidueAmount || '-'}）` : ''
+                          item?.order?.orderItemList?.[0]?.productType == 'custom' ? `（定制商品定金：£${ item.order.totalDepositAmount || '-' }，定制商品尾款：£${ item.order.totalResidueAmount || '-' }，配件商品：£${item.order.totalAccessoryAmount || '-'}）` : ''
                         }}
                       </p>
                     </el-tooltip>
@@ -171,7 +168,7 @@
                     <!-- 定制商品 -->
                     <div v-if="it.productType == 'custom'" class="item custom-item">
                       <!-- TODO: 待扫描状态判断 -->
-                      <div class="flex-col wait-saomiao" v-if="it.status === ORDER_STATUS.WAIT_SCAN">
+                      <div class="flex-col wait-saomiao" v-if="item.order.status === ORDER_STATUS.WAIT_SCAN">
                         <p class="warn-msg">请及时至门店完成扫描</p>
                         <div class="wait-info-item flex-row">
                           预约门店：<p class="wait-info-item-val">55 Corstorphine Road, Edinburgh EH12</p>
@@ -252,38 +249,42 @@
                             v-if="item.hasCustom && item.order.status != 0"
                             :onPrint="() => handleAccept(item, index)"
                             :onCancelPrint="(rejectMsg) => handleDecline(item, index, rejectMsg)"
+                            :order="item"
                           />
                           <!-- 支付尾款卡片 -->
-                          <div class="final-payment flex-col base-gray-bg" v-if="item.status === ORDER_STATUS.WAIT_PAY_TAIL">
-                          <div class="final-payment-dingjin flex-row justify-between">
-                            <p class="item-name">定金</p>
-                            <p class="item-price">已支付</p>
-                          </div>
-
-                          <div class="final-payment-content">
-                            <div class="final-payment-content-item border-bottom flex-row justify-between">
-                              <p class="item-name">尾款</p>
-                              <p class="item-price before-round-tag">待支付</p>
-                            </div>
-                            <div class="final-payment-content-item flex-row justify-between">
-                              <p class="item-name">扫描对象1</p>
-                              <p class="item-price">£ 1124.5</p>
-                            </div>
-                            <div class="final-payment-content-item border-bottom flex-row justify-between">
+                           <!-- v-if="item.order.status === ORDER_STATUS.WAIT_PAY_TAIL" -->
+                          <div class="final-payment flex-col base-gray-bg" >
+                            <div class="final-payment-dingjin flex-row justify-between">
                               <p class="item-name">定金</p>
-                              <p class="item-price">£ 1124.5</p>
+                              <p class="item-price">
+                                {{ ORDER_STATUS_MAP[item.order.status] }}
+                              </p>
                             </div>
-                            <div class="final-payment-content-item flex-row justify-between">
-                              <p class="item-name"></p>
-                              <div class="flex-row">
-                                Total&#x3000;<p class="item-price">£ 1124.5</p>
+
+                            <div class="final-payment-content">
+                              <div class="final-payment-content-item border-bottom flex-row justify-between">
+                                <p class="item-name">尾款</p>
+                                <p class="item-price before-round-tag">待支付</p>
+                              </div>
+                              <div class="final-payment-content-item flex-row justify-between" v-for="(ss, s) in it.orderPageCusObjItemVOs" key="s">
+                                <p class="item-name">{{ ss.objNickname }}</p>
+                                <p class="item-price">£ {{ ss.productPrice  }}</p>
+                              </div>
+                              <!-- <div class="final-payment-content-item border-bottom flex-row justify-between">
+                                <p class="item-name">定金</p>
+                                <p class="item-price">£ {{ item.order.totalDepositAmount }}</p>
+                              </div> -->
+                              <div class="final-payment-content-item flex-row justify-between">
+                                <p class="item-name"></p>
+                                <div class="flex-row">
+                                  Total&#x3000;<p class="item-price">£ {{ item.order.totalAmount }}</p>
+                                </div>
                               </div>
                             </div>
-                          </div>
 
-                          <div class="final-payment-foot flex-row justify-end">
-                            <el-button type="danger" round>支付尾款</el-button>
-                          </div>
+                            <div class="final-payment-foot flex-row justify-end">
+                              <el-button type="danger" round>支付尾款</el-button>
+                            </div>
                           </div>
                            <!-- 物流配送卡片 -->
                           <div class="express flex-col base-gray-bg align-start" v-if="[ORDER_STATUS.DELIVERED, ORDER_STATUS.WAIT_DELIVERY, ORDER_STATUS.FINISHED].includes(item.status)">
@@ -1113,7 +1114,16 @@
   import Deposit from '@/components/Deposit';
   import AttachmentInfo from '@/components/AttachmentInfo';
   import PreviewModel from '@/components/PreviewModel';
-  import { ORDER_STATUS, ORDER_SUB_STATUS, ORDER_PROCESS_STATUS, ORDER_PROCESS_NODE_STATUS } from '../../../common/constants';
+  import { 
+    ORDER_STATUS, 
+    ORDER_SUB_STATUS, 
+    ORDER_PROCESS_STATUS, 
+    ORDER_PROCESS_NODE_STATUS,
+    ORDER_STATUS_MAP,
+    ORDER_SUB_STATUS_MAP,
+    ORDER_PROCESS_STATUS_MAP,
+    ORDER_PROCESS_NODE_STATUS_MAP
+  } from '../../../common/constants';
   
   const EXPRESS_STATUS_MAP = {
     [ORDER_STATUS.WAIT_DELIVERY]: '待发货',
@@ -1157,7 +1167,11 @@
         ORDER_STATUS, 
         ORDER_SUB_STATUS, 
         ORDER_PROCESS_STATUS, 
-        ORDER_PROCESS_NODE_STATUS
+        ORDER_PROCESS_NODE_STATUS,
+        ORDER_STATUS_MAP,
+        ORDER_SUB_STATUS_MAP,
+        ORDER_PROCESS_STATUS_MAP,
+        ORDER_PROCESS_NODE_STATUS_MAP
       }
     },
     mounted () {

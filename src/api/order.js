@@ -168,4 +168,19 @@ export function refusePrint (orderId) {
   })
 }
 
+// 提交留言
+export function addProcessNote (data) {
+  return request({
+    url: `/order/addProcessNote`,
+    method: 'post',
+    data
+  })
+}
 
+// 获取留言
+export function getProcessNote (processId) {
+  return request({
+    url: `/order/process/note/list/${processId}`,
+    method: 'get',
+  })
+}

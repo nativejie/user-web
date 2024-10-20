@@ -24,15 +24,26 @@
         <el-link type="danger" @click="handeleCancelPrint" style="margin-left: 16px;">放弃打印</el-link>
       </div>
     </div>
+    <MessageBoard 
+      v-if="messageBoardVisible" 
+      :dialogVisible="messageBoardVisible" 
+      :onClose="handleCloseMessageBoard" 
+      :processId="order.order.id"
+    />
   </div>
 </template>
 
 <script>
+  import MessageBoard from '@/components/MessageBoard';
   export default {
     props: {
       list: Array,
       onPrint: Function,
-      onCancelPrint: Function
+      onCancelPrint: Function,
+      order: Object
+    },
+    components: {
+      MessageBoard,
     },
     methods: {
       handlePrint() {
@@ -49,6 +60,9 @@
           
         });
       },
+    },
+    mounted() {
+      console.log('index~64 this.list：', this.order);
     }
   }
 </script>
