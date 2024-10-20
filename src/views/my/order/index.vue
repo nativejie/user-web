@@ -178,7 +178,7 @@
                         </div>
                         <div class="flex-row">
                           请阅读我们提供的&#x3000;
-                          <el-link underline type="danger">3D Photography Guidelines</el-link>
+                          <el-link @click="handleShow" underline type="danger">3D Photography Guidelines</el-link>
                           &#x3000;以实现最佳扫描效果
                         </div>
                       </div>
@@ -1103,6 +1103,25 @@
         <p>{{ elementContentList.portal_order_text31 || $t("order.text31") }}</p>
       </div>
       <pay v-if="showPayMethod" @payment="changePayment" />
+      <Dialog
+        title=""
+        :dialogVisible="dialogVisible"
+        :onClose="handleCose"
+        :onCancel="handleCose"
+        :onConfirm="handleCose"
+        leftBtnText=""
+        rightBtnText=""
+        width="1080px"
+      >
+        <div class="flex-col guid align-start">
+          <p class="guid-title">3D Photography Guidelines</p>
+          <div class="flex-col guid-msg align-start" v-for="(item, index) in qaList">
+            <p class="guid-msg-title">{{ `0${index+1}&nbsp;${item.q}` }}</p>
+            <p class="guid-msg-desc">{{ item.a }}</p>
+          </div>
+          <p class="guid-foot">Adhering to these guidelines, will help to produce a clear and natural-looking image.</p>
+        </div>
+      </Dialog>
     </div>
   </template>
   
@@ -1124,12 +1143,53 @@
     ORDER_PROCESS_STATUS_MAP,
     ORDER_PROCESS_NODE_STATUS_MAP
   } from '../../../common/constants';
+  import Dialog from '@/components/Dialog';
+
   
   const EXPRESS_STATUS_MAP = {
     [ORDER_STATUS.WAIT_DELIVERY]: '待发货',
     [ORDER_STATUS.DELIVERED]: '已发货',
     [ORDER_STATUS.FINISHED]: '已完成',
   }
+
+  const qaList = [
+    {
+      q: 'Ensure adequate lighting',
+      a: 'Make sure the shooting environment has sufficient lighting to avoid background clutter.'
+    },
+    {
+      q: 'The customer must remain still',
+      a: 'During the shoot, the customer should keep their body and facial expression still, to ensure image clarity.'
+    },
+    {
+      q: 'Correct positioning',
+      a: 'The subject should stand in the centre of the scanning device, with limbs not extending beyond the central circle, to avoid facial obstruction.'
+    },
+    {
+      q: 'Clothing and appearance',
+      a: 'Avoid wearing large reflective or sequined clothing. For example: shiny shoes, leather jackets and/or leather trousers.'
+    },
+    {
+      q: 'Avoid wearing dangling or tiny items',
+      a: 'Glasses and large earrings should not be worn, as they may affect the result of the shoot.'
+    },
+    {
+      q: 'Avoid sheer fabrics',
+      a: 'Do not wear sheer clothing. For example: veils, puffy skirts and thin gauze.'
+    },
+    {
+      q: 'Avoid all black clothing',
+      a: 'Do not wear completely black clothing for the shoot.'
+    },
+    {
+      q: 'Make-up guidelines',
+      a: 'Avoid heavy make-up; do not wear overly long false eyelashes and avoid shiny make-up that may cause reflections.'
+    },
+    {
+      q: 'Hairstyle requirements',
+      a: 'Ensure no hair strands are sticking to the face.'
+    }
+  ]
 
   export default {
     name: '',
@@ -1138,7 +1198,8 @@
       pay,
       Deposit,
       AttachmentInfo,
-      PreviewModel
+      PreviewModel,
+      Dialog
     },
     data () {
       return {
@@ -1171,7 +1232,9 @@
         ORDER_STATUS_MAP,
         ORDER_SUB_STATUS_MAP,
         ORDER_PROCESS_STATUS_MAP,
-        ORDER_PROCESS_NODE_STATUS_MAP
+        ORDER_PROCESS_NODE_STATUS_MAP,
+        dialogVisible: false,
+        qaList
       }
     },
     mounted () {
@@ -1470,6 +1533,12 @@
         }
         this.getOrderList()
       },
+      handleCose() {
+        this.dialogVisible = false;
+      },
+      handleShow() {
+        this.dialogVisible = true;
+      }
     }
   }
   </script>
@@ -2236,6 +2305,34 @@
       
     }
   }
+.guid {
+  .guid-title {
+    font-size: 40px;
+    font-weight: bold;
+    color: #40001C;
+    margin-bottom: 40px;
+  }
+  .guid-msg {
+    margin-bottom: 24px;
+    .guid-msg-title {
+      font-size: 18px;
+      font-weight: 500;
+      color: #F6497F;
+    }
+    .guid-msg-desc {
+      font-size: 14px;
+      line-height: 22px;
+      color: #1D2129;
+      margin-top: 8px;
+      padding-left: 26px;
+    }
+  }
+  .guid-foot {
+    font-size: 14px;
+    line-height: 22px;
+    color: #1D2129;
+  }
+}
   </style>
   
   

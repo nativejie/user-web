@@ -4,7 +4,7 @@
       class="my-dialog"
       :title="title"
       :visible.sync="dialogVisible"
-      width="30%"
+      :width="width"
       :before-close="onClose"
       show-close
     >
@@ -32,7 +32,11 @@
       dialogVisible: Boolean,
       onCancel: Function,
       onConfirm: Function,
-      onClose: Function
+      onClose: Function,
+      width: {
+        type: String,
+        default: '30%'
+      }
     },
     data: function() {
       return {
@@ -43,7 +47,5 @@
 </script>
 
 <style lang="scss" scoped>
-// .el-dialog {
-//     border-radius: 12px !important;
-// }
+
 </style>
