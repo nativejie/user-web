@@ -78,7 +78,7 @@
                       {{
                         elementContentList.memberNickname ||
                         $t("custom.basic.label22")
-                      }}1231
+                      }}
                       <el-tooltip
                         effect="dark"
                         content="输入昵称可以更好区分不同对象"
