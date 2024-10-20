@@ -78,7 +78,7 @@
                       {{
                         elementContentList.memberNickname ||
                         $t("custom.basic.label22")
-                      }}1231
+                      }}
                       <el-tooltip effect="dark" content="输入昵称可以更好区分不同对象" placement="top" :style="{ marginLeft: '2px' }">
                         <i class="el-icon-info" :style="{ color: 'red', cursor: 'pinter' }"></i>
                       </el-tooltip>
@@ -93,7 +93,7 @@
                       "
                     />
                   </div>
-                  <p class="tips tips2" v-if="item.showTip_nickName">
+                  <p class="tips tips2" v-if="item.showTip4">
                     请输入昵称
                   </p>
                 </div>
@@ -566,64 +566,6 @@
                 {{ storeInfo.storeDesc }}
               </div>
             </div>
-            <!-- <p>
-              {{
-                elementContentList.portal_custom_basic_step6_label4 ||
-                $t("custom.basic.step6.label4")
-              }}
-            </p> -->
-            <!-- TODO: 时间选择 -->
-            <!-- <div class="time flex_b_c">
-              <div class="flex">
-                <span>{{
-                  elementContentList.portal_custom_basic_step6_label5 ||
-                  $t("custom.basic.step6.label5")
-                }}</span>
-                <el-date-picker
-                  v-model="arrivalDateStr"
-                  type="date"
-                  format="yyyy-MM-dd"
-                  value-format="yyyy-MM-dd"
-                  @blur="handleChangeData"
-                  :picker-options="pickerOptions"
-                  :placeholder="
-                    elementContentList.portal_custom_basic_step6_placeholder1 ||
-                    $t('custom.basic.step6.placeholder1')
-                  "
-                >
-                </el-date-picker>
-                <p v-if="showDateTip" class="err_tip">
-                  {{
-                    elementContentList.portal_custom_basic_label20 ||
-                    $t("custom.basic.label20")
-                  }}
-                </p>
-              </div>
-              <div class="flex">
-                <span>{{
-                  elementContentList.portal_custom_basic_step6_label6 ||
-                  $t("custom.basic.step6.label6")
-                }}</span>
-                <el-time-picker
-                  v-model="arrivalTime"
-                  type="date"
-                  format="HH:mm"
-                  value-format="HH:mm"
-                  @blur="handleChangeTime"
-                  :placeholder="
-                    elementContentList.portal_custom_basic_step6_placeholder2 ||
-                    $t('custom.basic.step6.placeholder2')
-                  "
-                >
-                </el-time-picker>
-                <p v-if="showTimeTip" class="err_tip">
-                  {{
-                    elementContentList.portal_custom_basic_label21 ||
-                    $t("custom.basic.label21")
-                  }}
-                </p>
-              </div>
-            </div> -->
           </div>
         </div>
       </div>
@@ -903,6 +845,7 @@
         </div>
       </div>
     </div>
+    <!-- 请确认你的定制信息 -->
     <div v-else class="confirm_order">
       <custom-header step="-1" @handleBack="handleConfirmOrderBack" />
       <p class="con_title">
@@ -915,26 +858,33 @@
         }}</span>
       </p>
       <div class="cus_info">
-        <p>
-          <span class="in_label">{{
-            elementContentList.portal_custom_basic_confirm_label2 ||
-            $t("custom.basic.confirm.label2")
-          }}</span
-          ><span>{{ detailInfo ? detailInfo.cusProductName : "" }}</span>
+        <p class="flex-row justify-start">
+          <span class="in_label flex-row fw300">
+            <img src="@/assets/icon/fangkuai.png" style="margin-right: 10px" />
+            {{
+              elementContentList.portal_custom_basic_confirm_label2 ||
+              $t("custom.basic.confirm.label2")
+            }}
+          </span
+          >
+          <span>{{ detailInfo ? detailInfo.cusProductName : "" }}</span>
         </p>
-        <div class="order-item-line">
+        <div class="order-item-line flex-row align-start">
           <!-- TODO: 扫描对象 -->
-          <span class="in_label">{{
-            elementContentList.portal_custom_basic_confirm_label14 ||
-            $t("custom.basic.confirm.label14")
-          }}</span>
+          <span class="in_label flex-row fw300">
+            <img src="@/assets/icon/add-people.png" style="margin-right: 10px" />
+            {{
+              elementContentList.portal_custom_basic_confirm_label14 ||
+              $t("custom.basic.confirm.label14")
+            }}
+          </span>
           <div class="label-val-wrap">
             <div class="label-val">
               <div class="label-val-row" v-for="item in detailInfo.customProductObjVOs">
                 <div class="label-val-row-item">{{ item.memberNickname || item.objNickname }}</div>
                 <div class="label-val-row-item">Cyrus</div>
                 <div class="label-val-row-item">{{ item.height }}cm,{{ item.weight }}kg</div>
-                <div class="label-val-row-item">{{  item.radio  }}</div>
+                <div class="label-val-row-item">{{  item.ratio  }}</div>
                 <div class="label-val-row-item red">£ {{item.depositPrice }}</div>
                 <Deposit />
               </div>
@@ -948,17 +898,24 @@
           </div>
         </div>
         <div class="order-item-line">
-          <span class="in_label">{{
-            elementContentList.portal_custom_basic_confirm_label5 ||
-            $t("custom.basic.confirm.label5")
-          }}</span>
+          <span class="in_label flex-row fw300">
+            <img src="@/assets/icon/box.png" style="margin-right: 10px" />
+            {{
+              elementContentList.portal_custom_basic_confirm_label5 ||
+              $t("custom.basic.confirm.label5")
+            }}
+          </span>
           <span>{{ detailInfo.customServiceName }}</span>
         </div>
-        <div class="order-item-line">
-          <span class="in_label">{{
-            elementContentList.portal_custom_basic_confirm_label6 ||
-            $t("custom.basic.confirm.label15")
-          }}</span>
+        <!-- 配件商品 -->
+        <div class="order-item-line flex-row justify-start align-start">
+          <span class="in_label flex-row fw300">
+            <img src="@/assets/icon/jiesuan.png" style="margin-right: 10px" />
+            {{
+              elementContentList.portal_custom_basic_confirm_label6 ||
+              $t("custom.basic.confirm.label15")
+            }}
+          </span>
           <div>
             <p
               v-for="(pro, idx) in detailInfo.customServiceProductVOs"
@@ -976,27 +933,36 @@
           </div>
         </div>
         <div class="order-item-line">
-          <span class="in_label">{{
-            elementContentList.portal_custom_basic_confirm_label7 ||
-            $t("custom.basic.confirm.label7")
-          }}</span>
+          <span class="in_label flex-row fw300">
+            <img src="@/assets/icon/dianpu.png" style="margin-right: 10px" />
+            {{
+              elementContentList.portal_custom_basic_confirm_label7 ||
+              $t("custom.basic.confirm.label7")
+            }}
+          </span>
           <span>{{ detailInfo.storeName }}</span>
         </div>
         <div class="order-item-line">
-          <span class="in_label">{{
-            elementContentList.portal_custom_basic_confirm_label8 ||
-            $t("custom.basic.confirm.label8")
-          }}</span>
+          <span class="in_label flex-row fw300">
+            <img src="@/assets/icon/rili.png" style="margin-right: 10px" />
+            {{
+              elementContentList.portal_custom_basic_confirm_label8 ||
+              $t("custom.basic.confirm.label8")
+            }}
+          </span>
           <span>{{
             detailInfo.arrivalDateStr + " " + detailInfo.arrivalTime
           }}</span>
         </div>
         <!-- 身高体重 -->
-        <div class="order-item-line">
-          <span class="in_label">{{
-            elementContentList.portal_custom_basic_confirm_label3 ||
-            $t("custom.basic.confirm.label3")
-          }}</span>
+        <!-- <div class="order-item-line">
+          <span class="in_label flex-row fw300">
+            <img src="@/assets/icon/rili.png" style="margin-right: 10px" />
+            {{
+              elementContentList.portal_custom_basic_confirm_label3 ||
+              $t("custom.basic.confirm.label3")
+            }}
+          </span>
           <span
             v-for="(obj, idx) in detailInfo.customProductObjVOs"
             :key="idx + 'p'"
@@ -1009,13 +975,16 @@
                 : "kg / ")
             }}
           </span>
-        </div>
+        </div> -->
         <!-- 制作比例 -->
-        <div class="order-item-line">
-          <span class="in_label">{{
-            elementContentList.portal_custom_basic_confirm_label4 ||
-            $t("custom.basic.confirm.label4")
-          }}</span
+        <!-- <div class="order-item-line">
+          <span class="in_label flex-row fw300">
+            <img src="@/assets/icon/add-people.png" style="margin-right: 10px" />
+            {{
+              elementContentList.portal_custom_basic_confirm_label4 ||
+              $t("custom.basic.confirm.label4")
+            }}
+          </span
           ><span
             v-for="(obj, idx) in detailInfo.customProductObjVOs"
             :key="idx + 'p2'"
@@ -1025,47 +994,53 @@
                 : obj.ratio + ","
             }}</span
           >
-        </div>
-        <div class="order-item-line col flex-end">
-          <p class="order-item-line-title">
+        </div> -->
+        <div class="order-item-line col flex-end" style="margin-bottom: 0">
+          <p class="order-item-line-title flex-row">
+            <img src="@/assets/icon/add-people.png" style="margin-right: 10px" />
             {{
               elementContentList.portal_custom_basic_confirm_label16 ||
               $t("custom.basic.confirm.label16")
             }}
           </p>
-          <!-- 定制款项 -->
-          <p class="in_price flex-row">
-            <span class="in_label" style="margin-right: 0">{{
+          <!-- 定制商品 -->
+          <p class="in_price flex-row" style="margin-bottom: 4px;">
+            <span class="in_label fz14 gray w120 flex-row justify-end" style="margin-right: 0">{{
               elementContentList.portal_custom_basic_confirm_label9 ||
               $t("custom.basic.confirm.label9")
             }} &nbsp;</span>
-            <span style="color: #f6497f; display: flex; alignItems: center;">
+            <span class="w120" style="color: #f6497f; display: flex; align-items: center;">
               {{
               " £ " +
               (detailInfo.cusTotalPrice - detailInfo.serviceProductTotalPrice)
               }}
+              &#x3000;
               <Deposit />
             </span>
           </p>
-          <!-- 配件款项 -->
-          <p class="in_price flex-row">
-            <span class="in_label" style="margin-right: 0">{{
+          <!-- 配件商品 -->
+          <p class="in_price flex-row" style="margin-bottom: 20px;">
+            <span class="in_label fz14 gray w120 flex-row justify-end" style="margin-right: 0">{{
               elementContentList.portal_custom_basic_confirm_label10 ||
               $t("custom.basic.confirm.label10")
             }}&nbsp;</span
-            ><span style="color: #f6497f">{{
+            ><span class="w120" style="color: #f6497f">{{
               " £ " + detailInfo.serviceProductTotalPrice
             }}</span>
           </p>
           <!-- 合计 -->
-          <p class="in_total flex-row">
-            <span class="in_label" style="margin-right: 0">{{
+          <p class="in_total flex-row"  style="margin-bottom: 0">
+            <span class="in_label fz14 w120 flex-row justify-end" style="margin-right: 0">{{
               elementContentList.portal_custom_basic_confirm_label11 ||
               $t("custom.basic.confirm.label11")
-            }}&nbsp;</span
-            ><span style="color: #f6497f;fontSize: 32px;">{{
-              " £ " + detailInfo.cusTotalPrice
-            }}</span>
+            }}&nbsp;
+            </span>
+            <span class="w120" style="color: #f6497f;">
+              £
+              <b style="font-size: 32px;">
+                {{detailInfo.cusTotalPrice}}
+              </b>
+            </span>
           </p>
         </div>
       </div>
@@ -1242,6 +1217,7 @@ export default {
           showTip1: false,
           showTip2: false,
           showTip3: false,
+          showTip4: false,
           customObjId: "",
           objNickname: "",
           objNo: "",
@@ -1249,6 +1225,9 @@ export default {
           sku: "",
           modelHeight: "",
           modelWeight: "",
+          memberNickname: "",
+          estimateAmount: '',
+          depositAmount: ''
         },
       ],
       tab: 1,
@@ -1456,6 +1435,10 @@ export default {
               ratio: item.ratio,
               type: 1,
               weight: item.weight,
+              memberNickname: item.memberNickname,
+              productUid: item.productUid,
+              productUid: item.customitemId,
+                productBaseUid: item.customProductId,
             };
             calculate(params).then((res) => {
               modelHeight = res.data.modelHeight;
@@ -1468,6 +1451,7 @@ export default {
             showTip1: false,
             showTip2: false,
             showTip3: false,
+            showTip4: false,
             modelHeight,
             modelWeight,
           };
@@ -1575,23 +1559,28 @@ export default {
       this.serviceData = val;
       this.serviceDesc = val.serviceDesc;
     },
-    getCalculate(weight, height, ratio, index) {
+    getCalculate(weight, height, ratio, index, memberNickname, obj) {
+      console.log('basic~1586 obj：', obj);
       const params = {
         height,
         ratio,
         type: 1,
         weight,
+        memberNickname,
+        productUid: obj.customObjId,
+        productBaseUid: obj.customProductId,
       };
       calculate(params).then((res) => {
         this.objectList[index].modelHeight = res.data.modelHeight;
         this.objectList[index].modelWeight = res.data.modelWeight;
         this.objectList[index].estimateAmount = res.data.estimateAmount;
         this.objectList[index].depositAmount = res.data.depositAmount;
+        this.objectList[index].memberNickname = res.data.memberNickname;
       });
     },
     handleChange(val, index) {
       if (val.height && val.weight && val.ratio) {
-        this.getCalculate(val.weight, val.height, val.ratio, index);
+        this.getCalculate(val.weight, val.height, val.ratio, index, val.memberNickname, val);
       }
     },
     handleBlur3(val, index) {
@@ -1606,7 +1595,7 @@ export default {
         val.showTip3 = true;
       }
       if (val.height && val.weight && val.ratio) {
-        this.getCalculate(val.weight, val.height, val.ratio, index);
+        this.getCalculate(val.weight, val.height, val.ratio, index, val.memberNickname, val);
       }
     },
     handleBlur2(val, index) {
@@ -1622,7 +1611,7 @@ export default {
       } else if (val.weight) {
         val.showTip1 = true;
       } else {
-        val.showTip_nickName = true;
+        val.showTip4 = true;
       }
     },
     handleRight(val, index) {
@@ -1652,6 +1641,7 @@ export default {
         showTip1: false,
         showTip2: false,
         showTip3: false,
+        showTip4: false,
         customObjId: "",
         objNickname: "",
         objNo: "",
@@ -1660,7 +1650,9 @@ export default {
         modelHeight: "",
         modelWeight: "",
         // TODO: 昵称字段
-        memberNickname: ""
+        memberNickname: "",
+        estimateAmount: '',
+        depositAmount: ''
       });
     },
     handleBack(val = this.step) {
@@ -1713,9 +1705,9 @@ export default {
         case 2:
           this.objectList.forEach((item) => {
             if (item.memberNickname) {
-              item.showTip_nickName = false;
+              item.showTip4 = false;
             } else {
-              item.showTip_nickName = true;
+              item.showTip4 = true;
             }
             if (item.height) {
               item.showTip1 = false;
@@ -2051,6 +2043,9 @@ export default {
         font-weight: 500;
         margin-right: 80px;
         white-space: nowrap;
+        &.fw300 {
+          font-weight: 300;
+        }
       }
       .in_left {
         width: 50%;
@@ -3142,12 +3137,17 @@ export default {
     margin-left: 6px;
   }
 }
-.flex-row {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-}
 .red {
   color: #F6497F !important;
+}
+.gray {
+  color: #929DAA !important;;
+}
+.fz14 {
+  font-size: 14px !important;;
+}
+.w120 {
+ width: 120px;
+ text-align: right
 }
 </style>
