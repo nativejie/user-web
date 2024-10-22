@@ -23,14 +23,14 @@ export function htmlReplace(options) {
             )
             // 替换 script 标签的 src 为 th:src，同时保留其他属性
             .replace(
-              /<script(.*?)src="\/static\/(index-\w+\.js)"(.*?)><\/script>/g,
+              /<script(.*?)src="\/static\/([^\/]+-\w+\.js)"(.*?)><\/script>/g,
               (match, p1, p2, p3) => {
                 return `<script${p1}th:src="'${cdnUrl}/static/${p2}'"${p3}></script>`;
               }
             )
             // 替换 link 标签的 href 为 th:href，同时保留其他属性
             .replace(
-              /<link(.*?)href="\/static\/(index-\w+\.css)"(.*?)>/g,
+              /<link(.*?)href="\/static\/([^\/]+-\w+\.css)"(.*?)>/g,
               (match, p1, p2, p3) => {
                 return `<link${p1}th:href="'${cdnUrl}/static/${p2}'"${p3}>`;
               }
@@ -45,6 +45,13 @@ export function htmlReplace(options) {
             .replace(
               /<html lang="en">/g,
               '<html lang="en" xmlns:th="http://www.thymeleaf.org">'
+            )
+            //<link rel="modulepreload" crossorigin href="/static/index-1e7b6b7e.js">
+            .replace(
+                /<link(.*?)rel="modulepreload"(.*?)href="\/static\/([^\/]+-\w+\.js)"(.*?)>/g,
+                (match, p1, p2, p3, p4) => {
+                    return `<link${p1}rel="modulepreload"${p2}th:href="'${cdnUrl}/static/${p3}'"${p4}>`;
+                }
             )
         );
       }

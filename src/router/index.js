@@ -30,7 +30,7 @@ export const constantRouterMap = [
     component: () => import("@/views/login/register"),
     hidden: true,
   },
-  // { path: '/password_find', component: () => import('@/views/login/forget'), hidden: true },
+  { path: '/password_find', component: () => import('@/views/login/forget'), hidden: true },
   {
     path: "/cart",
     component: () => import("@/views/cart/index"),
