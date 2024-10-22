@@ -235,7 +235,7 @@ export default {
         label6: '产品配件',
         label7: '预约门店',
         label8: '预约日期',
-        label9: '定制商品（定金） ',
+        label9: '定制商品（定金)',
         label10: '配件商品',
         label11: '合计',
         label12: 'Buy now',

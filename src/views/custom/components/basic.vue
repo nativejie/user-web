@@ -1,5 +1,5 @@
 <template>
-  <div class="basic">
+  <div class="basic" :class="`step${step}`">
     <div v-if="showStep">
       <!-- 选择宠物或人物 -->
       <div class="one" v-show="step == 1">
@@ -326,131 +326,385 @@
           </div>
         </div>
       </div>
-      <!-- 独立摆件 -->
-      <div class="five" v-show="step == 5">
-        <div class="flex">
-          <div class="back flex" @click="handleBack(5)">
-            <i class="el-icon-arrow-left"></i>
-            <span>{{
-              elementContentList.portal_custom_basic_label11 ||
-              $t("custom.basic.label11")
+      <template v-if="step == 5">
+        <!-- 独立摆件 -->
+        <div class="five" v-if="serviceData.type == 'normal'">
+          <div class="flex">
+            <div class="back flex" @click="handleBack(5)">
+              <i class="el-icon-arrow-left"></i>
+              <span>{{
+                elementContentList.portal_custom_basic_label11 ||
+                $t("custom.basic.label11")
+              }}</span>
+            </div>
+            <span style="font-size: 16px">{{
+              elementContentList.portal_custom_basic_step5_label5 ||
+              $t("custom.basic.step5.label5")
             }}</span>
           </div>
-          <span style="font-size: 16px">{{
-            elementContentList.portal_custom_basic_step5_label5 ||
-            $t("custom.basic.step5.label5")
-          }}</span>
-        </div>
-        <p class="subtitle m_t2">
-          {{
-            elementContentList.portal_custom_basic_step5_label1 ||
-            $t("custom.basic.step5.label1")
-          }}
-          <span style="color: #f6497f">{{
-            elementContentList.portal_custom_basic_step5_label2 ||
-            $t("custom.basic.step5.label2")
-          }}</span>
-        </p>
-        <div class="five_main flex_a_c">
-          <div class="left image_pre">
-            <div
-              class="images flec_c_c"
-              v-for="(item, idx) in serviceData.picResourceVOList"
-              :key="item.ossNo"
-              v-show="imageAct == idx"
-            >
-              <img :src="item.preViewUrl" />
+          <p class="subtitle m_t2">
+            {{
+              elementContentList.portal_custom_basic_step5_label1 ||
+              $t("custom.basic.step5.label1")
+            }}
+            <span style="color: #f6497f">{{
+              elementContentList.portal_custom_basic_step5_label2 ||
+              $t("custom.basic.step5.label2")
+            }}</span>
+          </p>
+          <div class="five_main flex_a_c">
+            <div class="left image_pre">
               <div
-                v-if="imageAct == idx"
-                class="arrow_left flex_c_c"
-                @click="handleLeft(item, idx)"
+                class="images flec_c_c"
+                v-for="(item, idx) in serviceData.picResourceVOList"
+                :key="item.ossNo"
+                v-show="imageAct == idx"
               >
-                <i class="el-icon-arrow-left"></i>
+                <img :src="item.preViewUrl" />
+                <div
+                  v-if="imageAct == idx"
+                  class="arrow_left flex_c_c"
+                  @click="handleLeft(item, idx)"
+                >
+                  <i class="el-icon-arrow-left"></i>
+                </div>
+                <div
+                  v-if="imageAct == idx"
+                  class="arrow_right flex_c_c"
+                  @click="handleRight(item, idx)"
+                >
+                  <i class="el-icon-arrow-right"></i>
+                </div>
               </div>
-              <div
-                v-if="imageAct == idx"
-                class="arrow_right flex_c_c"
-                @click="handleRight(item, idx)"
-              >
-                <i class="el-icon-arrow-right"></i>
+              <div class="image_list">
+                <div
+                  class="image_item"
+                  :class="imageAct == index ? 'active' : ''"
+                  v-for="(item, index) in serviceData.picResourceVOList"
+                  :key="index + 'img'"
+                  @click="handleChangeImage(item, index)"
+                >
+                  <video v-if="item.playUrl" :src="item.playUrl"></video>
+                  <img v-else :src="item.thumbnailViewUrl" />
+                  <div class="active_border"></div>
+                </div>
               </div>
             </div>
-            <div class="image_list">
-              <div
-                class="image_item"
-                :class="imageAct == index ? 'active' : ''"
-                v-for="(item, index) in serviceData.picResourceVOList"
-                :key="index + 'img'"
-                @click="handleChangeImage(item, index)"
-              >
-                <video v-if="item.playUrl" :src="item.playUrl"></video>
-                <img v-else :src="item.thumbnailViewUrl" />
-                <div class="active_border"></div>
+            <div class="right">
+              <p class="text3">
+                {{
+                  elementContentList.portal_custom_basic_step5_label3 ||
+                  $t("custom.basic.step5.label3")
+                }}
+              </p>
+              <div class="pro_list">
+                <div
+                  class="pro_item flex"
+                  v-for="(item, index) in serviceProductList"
+                  :key="index + 'pro'"
+                >
+                  <div class="pro_card flex_b_c">
+                    <div class="check">
+                      <el-checkbox v-model="item.check"></el-checkbox>
+                    </div>
+                    <div class="img">
+                      <img :src="item.productPicUrl" />
+                    </div>
+                    <div class="pro_info">
+                      <div style="flex: 1">
+                        <p>{{ item.productName }}</p>
+                        <p
+                          v-for="attr in item.attributeValueVOs"
+                          :key="attr.productAttributeUid"
+                        >
+                          {{ attr.productAttributeName + ":" + attr.value }}
+                        </p>
+                        <p class="qty">
+                          <span>Qty</span>
+                          <el-input
+                            @input="
+                              item.productQuantity =
+                                item.productQuantity.replace(/[^\d]/g, '')
+                            "
+                            v-model="item.productQuantity"
+                          />
+                        </p>
+                      </div>
+                      <div class="price">
+                        <span
+                          >£
+                          {{ item.productPrice * item.productQuantity }}</span
+                        >
+                      </div>
+                    </div>
+                  </div>
+                  <span
+                    class="btn"
+                    @click="handleEditServiceProduct(item, index)"
+                    >{{
+                      elementContentList.portal_custom_basic_step5_label4 ||
+                      $t("custom.basic.step5.label4")
+                    }}</span
+                  >
+                </div>
               </div>
             </div>
           </div>
-          <div class="right">
-            <p class="text3">
-              {{
-                elementContentList.portal_custom_basic_step5_label3 ||
-                $t("custom.basic.step5.label3")
-              }}
-            </p>
-            <div class="pro_list">
+        </div>
+        <!-- 场景组合 -->
+        <div class="seven five" v-show="serviceData.type === 'combined_scene'">
+          <div class="flex">
+            <div class="back flex" @click="handleBack(7)">
+              <i class="el-icon-arrow-left"></i>
+              <span>{{
+                elementContentList.portal_custom_basic_label11 ||
+                $t("custom.basic.label11")
+              }}</span>
+            </div>
+            <span style="font-size: 16px">{{
+              elementContentList.portal_custom_basic_step5_label5 ||
+              $t("custom.basic.step5.label5")
+            }}</span>
+          </div>
+          <p class="subtitle m_t2">
+            {{
+              elementContentList.portal_custom_basic_step5_label1 ||
+              $t("custom.basic.step5.label1")
+            }}
+            <span style="color: #f6497f">{{
+              elementContentList.portal_custom_basic_step7_label1 ||
+              $t("custom.basic.step7.label1")
+            }}</span>
+          </p>
+          <div class="five_main flex_a_c">
+            <div class="pack_tabs">
               <div
-                class="pro_item flex"
-                v-for="(item, index) in serviceProductList"
-                :key="index + 'pro'"
+                class="tabs_item flex_c_c"
+                v-for="(item, index) in packageNameList"
+                :key="index + 'p'"
+                :class="packIdx == index ? 'active' : ''"
               >
-                <div class="pro_card flex_b_c">
-                  <div class="check">
-                    <el-checkbox v-model="item.check"></el-checkbox>
-                  </div>
-                  <div class="img">
-                    <img :src="item.productPicUrl" />
-                  </div>
-                  <div class="pro_info">
-                    <div style="flex: 1">
-                      <p>{{ item.productName }}</p>
-                      <p
-                        v-for="attr in item.attributeValueVOs"
-                        :key="attr.productAttributeUid"
-                      >
-                        {{ attr.productAttributeName + ":" + attr.value }}
-                      </p>
-                      <p class="qty">
-                        <span>Qty</span>
-                        <el-input
-                          @input="
-                            item.productQuantity = item.productQuantity.replace(
-                              /[^\d]/g,
-                              ''
-                            )
-                          "
-                          v-model="item.productQuantity"
-                        />
-                      </p>
+                <div class="ellipsis">{{ item.productName }}</div>
+                <div
+                  class="border"
+                  @click="handleChangePackIdx(item, index)"
+                ></div>
+                <i class="el-icon-success" v-if="packIdx == index"></i>
+              </div>
+            </div>
+            <div class="left image_pre">
+              <div
+                class="images flec_c_c"
+                v-for="(item, idx) in serviceData.picResourceVOList"
+                :key="item.ossNo"
+                v-show="imageAct == idx"
+              >
+                <img :src="item.preViewUrl" />
+                <div
+                  v-if="imageAct == idx"
+                  class="arrow_left flex_c_c"
+                  @click="handleLeft(item, idx)"
+                >
+                  <i class="el-icon-arrow-left"></i>
+                </div>
+                <div
+                  v-if="imageAct == idx"
+                  class="arrow_right flex_c_c"
+                  @click="handleRight(item, idx)"
+                >
+                  <i class="el-icon-arrow-right"></i>
+                </div>
+              </div>
+              <div class="image_list">
+                <div
+                  class="image_item"
+                  :class="imageAct == index ? 'active' : ''"
+                  v-for="(item, index) in serviceData.picResourceVOList"
+                  :key="index + 'img'"
+                  @click="handleChangeImage(item, index)"
+                >
+                  <video v-if="item.playUrl" :src="item.playUrl"></video>
+                  <img v-else :src="item.thumbnailViewUrl" />
+                  <div class="active_border"></div>
+                </div>
+              </div>
+              <div class="text1">
+                <span>
+                  {{ "" }}
+                </span>
+              </div>
+            </div>
+            <div class="right">
+              <p class="text3">
+                {{
+                  elementContentList.portal_custom_basic_step7_label2 ||
+                  $t("custom.basic.step7.label2")
+                }}
+              </p>
+              <div class="pro_list">
+                <div
+                  class="pro_item flex"
+                  v-for="(item, index) in serviceProductList"
+                  :key="index + 'pro'"
+                >
+                  <div class="pro_card flex_b_c">
+                    <div class="check">
+                      <el-checkbox v-model="item.check"></el-checkbox>
                     </div>
-                    <div class="price">
-                      <span
-                        >£ {{ item.productPrice * item.productQuantity }}</span
-                      >
+                    <div class="img">
+                      <img :src="item.productPicUrl" />
+                    </div>
+                    <div class="pro_info">
+                      <div style="flex: 1">
+                        <p>{{ item.productName }}</p>
+                        <p
+                          v-for="attr in item.attributeValueVOs"
+                          :key="attr.productAttributeUid"
+                        >
+                          {{ attr.productAttributeName + ":" + attr.value }}
+                        </p>
+                      </div>
+                      <div class="price">
+                        <span
+                          >£
+                          {{ item.productPrice * item.productQuantity }}</span
+                        >
+                      </div>
                     </div>
                   </div>
                 </div>
-                <span
-                  class="btn"
-                  @click="handleEditServiceProduct(item, index)"
-                  >{{
-                    elementContentList.portal_custom_basic_step5_label4 ||
-                    $t("custom.basic.step5.label4")
-                  }}</span
-                >
               </div>
             </div>
           </div>
         </div>
-      </div>
+        <!-- 功能配件 -->
+        <div class="five" v-show="serviceData.type === 'accessory'">
+          <div class="flex">
+            <div class="back flex" @click="handleBack(8)">
+              <i class="el-icon-arrow-left"></i>
+              <span>{{
+                elementContentList.portal_custom_basic_label11 ||
+                $t("custom.basic.label11")
+              }}</span>
+            </div>
+            <span style="font-size: 16px">{{
+              elementContentList.portal_custom_basic_step8_label1 ||
+              $t("custom.basic.step8.label1")
+            }}</span>
+          </div>
+          <p class="subtitle m_t2">
+            {{
+              elementContentList.portal_custom_basic_step5_label1 ||
+              $t("custom.basic.step5.label1")
+            }}
+            <span style="color: #f6497f">{{
+              detailInfo ? detailInfo.customServiceName : ""
+            }}</span>
+          </p>
+          <div class="five_main flex_a_c">
+            <div class="left image_pre">
+              <div
+                class="images flec_c_c"
+                v-for="(item, idx) in serviceData.picResourceVOList"
+                :key="item.ossNo"
+                v-show="imageAct == idx"
+              >
+                <img :src="item.preViewUrl" />
+                <div
+                  v-if="imageAct == idx"
+                  class="arrow_left flex_c_c"
+                  @click="handleLeft(item, idx)"
+                >
+                  <i class="el-icon-arrow-left"></i>
+                </div>
+                <div
+                  v-if="imageAct == idx"
+                  class="arrow_right flex_c_c"
+                  @click="handleRight(item, idx)"
+                >
+                  <i class="el-icon-arrow-right"></i>
+                </div>
+              </div>
+              <div class="image_list">
+                <div
+                  class="image_item"
+                  :class="imageAct == index ? 'active' : ''"
+                  v-for="(item, index) in serviceData.picResourceVOList"
+                  :key="index + 'img'"
+                  @click="handleChangeImage(item, index)"
+                >
+                  <video v-if="item.playUrl" :src="item.playUrl"></video>
+                  <img v-else :src="item.thumbnailViewUrl" />
+                  <div class="active_border"></div>
+                </div>
+              </div>
+            </div>
+            <div class="right">
+              <p class="text3">
+                {{
+                  elementContentList.portal_custom_basic_step5_label3 ||
+                  $t("custom.basic.step5.label3")
+                }}
+              </p>
+              <div class="pro_list">
+                <div
+                  class="pro_item flex"
+                  v-for="(item, index) in serviceProductList"
+                  :key="index + 'pro'"
+                >
+                  <div class="pro_card flex_b_c">
+                    <div class="check">
+                      <el-checkbox v-model="item.check"></el-checkbox>
+                    </div>
+                    <div class="img">
+                      <img :src="item.productPicUrl" />
+                    </div>
+                    <div class="pro_info">
+                      <div style="flex: 1">
+                        <p>{{ item.productName }}</p>
+                        <p
+                          v-for="attr in item.attributeValueVOs"
+                          :key="attr.productAttributeUid"
+                        >
+                          {{ attr.productAttributeName + ":" + attr.value }}
+                        </p>
+                        <p class="qty">
+                          <span>{{
+                            elementContentList.portal_custom_basic_step7_label3 ||
+                            $t("custom.basic.step7.label3")
+                          }}</span>
+                          <el-input
+                            @input="
+                              item.productQuantity =
+                                item.productQuantity.replace(/[^\d]/g, '')
+                            "
+                            v-model="item.productQuantity"
+                          />
+                        </p>
+                      </div>
+                      <div class="price">
+                        <span
+                          >£
+                          {{ item.productPrice * item.productQuantity }}</span
+                        >
+                      </div>
+                    </div>
+                  </div>
+                  <span
+                    class="btn"
+                    @click="handleEditServiceProduct(item, index)"
+                    >{{
+                      elementContentList.portal_custom_basic_step5_label4 ||
+                      $t("custom.basic.step5.label4")
+                    }}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </template>
+
       <!-- 门店选择 -->
       <div class="six" v-show="step == 6">
         <div class="flex">
@@ -561,268 +815,18 @@
           </div>
         </div>
       </div>
-      <!-- 场景组合 -->
-      <div class="seven five" v-show="step == 7">
-        <div class="flex">
-          <div class="back flex" @click="handleBack(7)">
-            <i class="el-icon-arrow-left"></i>
-            <span>{{
-              elementContentList.portal_custom_basic_label11 ||
-              $t("custom.basic.label11")
-            }}</span>
-          </div>
-          <span style="font-size: 16px">{{
-            elementContentList.portal_custom_basic_step5_label5 ||
-            $t("custom.basic.step5.label5")
-          }}</span>
-        </div>
-        <p class="subtitle m_t2">
-          {{
-            elementContentList.portal_custom_basic_step5_label1 ||
-            $t("custom.basic.step5.label1")
-          }}
-          <span style="color: #f6497f">{{
-            elementContentList.portal_custom_basic_step7_label1 ||
-            $t("custom.basic.step7.label1")
-          }}</span>
-        </p>
-        <div class="five_main flex_a_c">
-          <div class="pack_tabs">
-            <div
-              class="tabs_item flex_c_c"
-              v-for="(item, index) in packageNameList"
-              :key="index + 'p'"
-              :class="packIdx == index ? 'active' : ''"
-            >
-              <div class="ellipsis">{{ item.productName }}</div>
-              <div
-                class="border"
-                @click="handleChangePackIdx(item, index)"
-              ></div>
-              <i class="el-icon-success" v-if="packIdx == index"></i>
-            </div>
-          </div>
-          <div class="left image_pre">
-            <div
-              class="images flec_c_c"
-              v-for="(item, idx) in serviceData.picResourceVOList"
-              :key="item.ossNo"
-              v-show="imageAct == idx"
-            >
-              <img :src="item.preViewUrl" />
-              <div
-                v-if="imageAct == idx"
-                class="arrow_left flex_c_c"
-                @click="handleLeft(item, idx)"
-              >
-                <i class="el-icon-arrow-left"></i>
-              </div>
-              <div
-                v-if="imageAct == idx"
-                class="arrow_right flex_c_c"
-                @click="handleRight(item, idx)"
-              >
-                <i class="el-icon-arrow-right"></i>
-              </div>
-            </div>
-            <div class="image_list">
-              <div
-                class="image_item"
-                :class="imageAct == index ? 'active' : ''"
-                v-for="(item, index) in serviceData.picResourceVOList"
-                :key="index + 'img'"
-                @click="handleChangeImage(item, index)"
-              >
-                <video v-if="item.playUrl" :src="item.playUrl"></video>
-                <img v-else :src="item.thumbnailViewUrl" />
-                <div class="active_border"></div>
-              </div>
-            </div>
-            <div class="text1">
-              <span>
-                {{ "" }}
-              </span>
-            </div>
-          </div>
-          <div class="right">
-            <p class="text3">
-              {{
-                elementContentList.portal_custom_basic_step7_label2 ||
-                $t("custom.basic.step7.label2")
-              }}
-            </p>
-            <div class="pro_list">
-              <div
-                class="pro_item flex"
-                v-for="(item, index) in serviceProductList"
-                :key="index + 'pro'"
-              >
-                <div class="pro_card flex_b_c">
-                  <div class="check">
-                    <el-checkbox v-model="item.check"></el-checkbox>
-                  </div>
-                  <div class="img">
-                    <img :src="item.productPicUrl" />
-                  </div>
-                  <div class="pro_info">
-                    <div style="flex: 1">
-                      <p>{{ item.productName }}</p>
-                      <p
-                        v-for="attr in item.attributeValueVOs"
-                        :key="attr.productAttributeUid"
-                      >
-                        {{ attr.productAttributeName + ":" + attr.value }}
-                      </p>
-                    </div>
-                    <div class="price">
-                      <span
-                        >£ {{ item.productPrice * item.productQuantity }}</span
-                      >
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- 功能配件 -->
-      <div class="five" v-show="step == 8">
-        <div class="flex">
-          <div class="back flex" @click="handleBack(8)">
-            <i class="el-icon-arrow-left"></i>
-            <span>{{
-              elementContentList.portal_custom_basic_label11 ||
-              $t("custom.basic.label11")
-            }}</span>
-          </div>
-          <span style="font-size: 16px">{{
-            elementContentList.portal_custom_basic_step8_label1 ||
-            $t("custom.basic.step8.label1")
-          }}</span>
-        </div>
-        <p class="subtitle m_t2">
-          {{
-            elementContentList.portal_custom_basic_step5_label1 ||
-            $t("custom.basic.step5.label1")
-          }}
-          <span style="color: #f6497f">{{
-            detailInfo ? detailInfo.customServiceName : ""
-          }}</span>
-        </p>
-        <div class="five_main flex_a_c">
-          <div class="left image_pre">
-            <div
-              class="images flec_c_c"
-              v-for="(item, idx) in serviceData.picResourceVOList"
-              :key="item.ossNo"
-              v-show="imageAct == idx"
-            >
-              <img :src="item.preViewUrl" />
-              <div
-                v-if="imageAct == idx"
-                class="arrow_left flex_c_c"
-                @click="handleLeft(item, idx)"
-              >
-                <i class="el-icon-arrow-left"></i>
-              </div>
-              <div
-                v-if="imageAct == idx"
-                class="arrow_right flex_c_c"
-                @click="handleRight(item, idx)"
-              >
-                <i class="el-icon-arrow-right"></i>
-              </div>
-            </div>
-            <div class="image_list">
-              <div
-                class="image_item"
-                :class="imageAct == index ? 'active' : ''"
-                v-for="(item, index) in serviceData.picResourceVOList"
-                :key="index + 'img'"
-                @click="handleChangeImage(item, index)"
-              >
-                <video v-if="item.playUrl" :src="item.playUrl"></video>
-                <img v-else :src="item.thumbnailViewUrl" />
-                <div class="active_border"></div>
-              </div>
-            </div>
-          </div>
-          <div class="right">
-            <p class="text3">
-              {{
-                elementContentList.portal_custom_basic_step5_label3 ||
-                $t("custom.basic.step5.label3")
-              }}
-            </p>
-            <div class="pro_list">
-              <div
-                class="pro_item flex"
-                v-for="(item, index) in serviceProductList"
-                :key="index + 'pro'"
-              >
-                <div class="pro_card flex_b_c">
-                  <div class="check">
-                    <el-checkbox v-model="item.check"></el-checkbox>
-                  </div>
-                  <div class="img">
-                    <img :src="item.productPicUrl" />
-                  </div>
-                  <div class="pro_info">
-                    <div style="flex: 1">
-                      <p>{{ item.productName }}</p>
-                      <p
-                        v-for="attr in item.attributeValueVOs"
-                        :key="attr.productAttributeUid"
-                      >
-                        {{ attr.productAttributeName + ":" + attr.value }}
-                      </p>
-                      <p class="qty">
-                        <span>{{
-                          elementContentList.portal_custom_basic_step7_label3 ||
-                          $t("custom.basic.step7.label3")
-                        }}</span>
-                        <el-input
-                          @input="
-                            item.productQuantity = item.productQuantity.replace(
-                              /[^\d]/g,
-                              ''
-                            )
-                          "
-                          v-model="item.productQuantity"
-                        />
-                      </p>
-                    </div>
-                    <div class="price">
-                      <span
-                        >£ {{ item.productPrice * item.productQuantity }}</span
-                      >
-                    </div>
-                  </div>
-                </div>
-                <span class="btn" @click="handleEditServiceProduct(item, index)"
-                  >{{
-                    elementContentList.portal_custom_basic_step5_label4 ||
-                    $t("custom.basic.step5.label4")
-                  }}
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
     <!-- 请确认你的定制信息 -->
-    <div v-else class="confirm_order">
+    <div v-show="step == 7" class="confirm_order">
       <custom-header step="-1" @handleBack="handleConfirmOrderBack" />
       <p class="con_title">
         {{
           elementContentList.portal_custom_basic_confirm_label1 ||
           $t("custom.basic.confirm.label1")
         }}
-        <span @click="handleEditInfo">{{
+        <!-- <span @click="handleEditInfo">{{
           elementContentList.portal_btns_edit || $t("btns.edit")
-        }}</span>
+        }}</span> -->
       </p>
       <div class="cus_info">
         <p class="flex-row justify-start">
@@ -932,45 +936,39 @@
             detailInfo.arrivalDateStr + " " + detailInfo.arrivalTime
           }}</span>
         </div>
-        <div class="order-item-line col flex-end" style="margin-bottom: 0">
-          <p class="order-item-line-title flex-row">
-            <img
-              src="@/assets/icon/add-people.png"
-              style="margin-right: 10px"
-            />
+      </div>
+      <div class="price-box">
+        <div class="order-item-line">
+          <span class="in_label flex-row fw300">
+            <img src="@/assets/icon/rili.png" style="margin-right: 10px" />
             {{
               elementContentList.portal_custom_basic_confirm_label16 ||
               $t("custom.basic.confirm.label16")
             }}
-          </p>
+          </span>
+        </div>
+        <div class="order-item-line col flex-end" style="margin-bottom: 0">
           <!-- 定制款项 -->
           <p class="in_price flex-row">
-            <span class="in_label" style="margin-right: 0"
-              >{{
-                elementContentList.portal_custom_basic_confirm_label9 ||
-                $t("custom.basic.confirm.label9")
-              }}
-              &nbsp;</span
-            >
-            <span style="color: #f6497f; display: flex; alignitems: center">
+            <span class="in_label">{{
+              elementContentList.portal_custom_basic_confirm_label9 ||
+              $t("custom.basic.confirm.label9")
+            }}</span>
+            <span style="color: #f6497f; display: flex; align-items: center">
               {{
                 " £ " +
                 (detailInfo.cusTotalPrice - detailInfo.serviceProductTotalPrice)
               }}
-              &#x3000;
               <Deposit />
             </span>
           </p>
           <!-- 配件商品 -->
           <p class="in_price flex-row" style="margin-bottom: 20px">
-            <span
-              class="in_label fz14 gray w120 flex-row justify-end"
-              style="margin-right: 0"
-              >{{
-                elementContentList.portal_custom_basic_confirm_label10 ||
-                $t("custom.basic.confirm.label10")
-              }}&nbsp;</span
-            ><span class="w120" style="color: #f6497f">{{
+            <span class="in_label fz14 gray">{{
+              elementContentList.portal_custom_basic_confirm_label10 ||
+              $t("custom.basic.confirm.label10")
+            }}</span
+            ><span style="color: #f6497f">{{
               " £ " + detailInfo.serviceProductTotalPrice
             }}</span>
           </p>
@@ -984,7 +982,7 @@
                 $t("custom.basic.confirm.label11")
               }}&nbsp;
             </span>
-            <span class="w120" style="color: #f6497f">
+            <span style="color: #f6497f">
               £
               <b style="font-size: 32px">
                 {{ detailInfo.cusTotalPrice }}
@@ -992,8 +990,7 @@
             </span>
           </p>
         </div>
-      </div>
-      <p class="con_btns">
+        <p class="con_btns">
         <el-button class="red" type="text" @click="handleShowRuleDialog">
           定金规则说明</el-button
         >
@@ -1006,6 +1003,8 @@
           $t("custom.basic.confirm.label13")
         }}</el-button>
       </p>
+      </div>
+      
     </div>
     <customFooter
       v-if="showStep"
@@ -1082,19 +1081,6 @@
             elementContentList.portal_custom_basic_step6_label6 ||
             $t("custom.basic.step6.label6")
           }}</span>
-          <!-- <el-time-picker
-            class="time-item-picker"
-            v-model="arrivalTime"
-            type="date"
-            format="HH:mm"
-            value-format="HH:mm"
-            @blur="handleChangeTime"
-            :placeholder="
-              elementContentList.portal_custom_basic_step6_placeholder2 ||
-              $t('custom.basic.step6.placeholder2')
-            "
-          >
-          </el-time-picker> -->
           <el-select
             style="width: 50%"
             v-model="arrivalTime"
@@ -1260,9 +1246,7 @@ export default {
     },
     arrivalDateStr(val) {
       if (val) {
-        this.timeList = this.openDate.find(
-          (item) => item.date === val
-        ).time;
+        this.timeList = this.openDate.find((item) => item.date === val).time;
       } else {
         this.timeList = [];
       }
@@ -1383,17 +1367,18 @@ export default {
       this.serviceDesc = this.serviceList[this.tab]?.serviceDesc;
       this.imageAct = 0;
       if (this.detailInfo.processStatus == 4) {
-        switch (this.serviceData.type) {
-          case "normal":
-            this.step = 5;
-            break;
-          case "accessory":
-            this.step = 8;
-            break;
-          case "combined_scene":
-            this.step = 7;
-            break;
-        }
+        // switch (this.serviceData.type) {
+        //   case "normal":
+        //     this.step = 5;
+        //     break;
+        //   case "accessory":
+        //     this.step = 8;
+        //     break;
+        //   case "combined_scene":
+        //     this.step = 7;
+        //     break;
+        // }
+        this.step = 5
       }
       if (this.step != 3) {
         this.getsServiceProductPage();
@@ -1687,12 +1672,6 @@ export default {
         case 6:
           this.step = 5;
           break;
-        case 7:
-          this.step = 4;
-          break;
-        case 8:
-          this.step = 4;
-          break;
       }
     },
     async handleSave() {
@@ -1779,17 +1758,18 @@ export default {
       );
       const { data = {} } = await detail();
       this.detailInfo = data;
-      switch (this.serviceData.type) {
-        case "normal":
-          this.step = 5;
-          break;
-        case "accessory":
-          this.step = 8;
-          break;
-        case "combined_scene":
-          this.step = 7;
-          break;
-      }
+      // switch (this.serviceData.type) {
+      //   case "normal":
+      //     this.step = 5;
+      //     break;
+      //   case "accessory":
+      //     this.step = 8;
+      //     break;
+      //   case "combined_scene":
+      //     this.step = 7;
+      //     break;
+      // }
+      this.step = 5
       this.getsServiceProductPage();
     },
     async handleSaveServiceSku() {
@@ -1825,7 +1805,6 @@ export default {
           }),
         };
       });
-      console.log("basic~1744 this.openDate：", this.openDate);
       this.showSelectTimeDialog = true;
     },
     handleNext(val) {
@@ -1939,11 +1918,14 @@ export default {
         });
       });
       this.showSelectTimeDialog = false;
+      this.step = 7;
     },
     handleConfirmOrderBack() {
       // TODO 匹配类型返回最后一步
       // this.step = 6;
-      console.log(`%c 返回`, "color: #ff6700");
+      // console.log(`%c 返回`, "color: #ff6700");
+      this.showStep = true;
+      this.step = 6;
     },
     handleShowRule() {
       this.ruleConfirmDialogVisible = true;
@@ -1971,6 +1953,12 @@ export default {
   width: 100%;
   height: 100%;
   padding: 0 40px 80px 40px;
+  &.step7 {
+    background-color: #f8f9fc !important;
+    .custom-header {
+      background-color: #f8f9fc !important;
+    }
+  }
   .confirm_order {
     .custom-header {
       height: auto;
@@ -1991,12 +1979,12 @@ export default {
     }
     .cus_info {
       border-radius: 12px;
-      background: #f8f9fc;
+      background: #ffffff;
       padding: 40px;
-      margin-top: 95px;
+      margin-top: 24px;
       display: flex;
       flex-direction: column;
-      font-size: 20px;
+      font-size: 16px;
       line-height: 28px;
       color: #1f2126;
       p {
@@ -2047,7 +2035,7 @@ export default {
     }
     .con_btns {
       text-align: right;
-      margin-top: 32px;
+      margin-top: 0 !important;
       .btn {
         width: 188px;
         height: 42px;
@@ -2731,6 +2719,7 @@ export default {
   }
   .six {
     height: 100%;
+    padding-top: 64px;
     .six_main {
       margin-top: 31px;
       display: flex;
@@ -3074,9 +3063,8 @@ export default {
 }
 .order-item-line {
   display: flex;
-  margin-bottom: 40px;
-  border-top: 1px solid #ccc;
-  padding-top: 24px;
+  border-top: 1px solid #eeeff2 !important;
+  padding: 24px 0;
   &.col {
     flex-direction: column;
   }
@@ -3119,5 +3107,59 @@ export default {
 .w120 {
   width: 120px;
   text-align: right;
+}
+.deposit {
+  line-height: 12px !important;
+}
+.in_price {
+  display: flex;
+  justify-content: flex-end;
+  font-size: 14px;
+  line-height: 22px;
+  margin-bottom: 8px !important;
+  .in_label {
+    margin-right: 0 !important;
+  }
+  span:not(.in_label) {
+    width: 130px;
+    flex: 0 0 130px;
+    text-align: right;
+    justify-content: flex-end;
+  }
+  .deposit {
+    margin-left: 8px;
+  }
+}
+.in_total {
+  font-size: 28px;
+  font-weight: 500;
+  line-height: 36px;
+  margin: 0;
+  margin-top: 12px !important;
+  display: flex;
+  justify-content: flex-end;
+  align-items: baseline;
+  .in_label {
+    margin-right: 0 !important;
+  }
+  span:not(.in_label) {
+    width: 130px;
+    flex: 0 0 130px;
+    text-align: right;
+    justify-content: flex-end;
+  }
+}
+.price-box {
+  border-radius: 12px;
+  opacity: 1;
+  /* 自动布局 */
+  padding: 24px 40px;
+  background: #ffffff;
+  margin-top: 16px;
+
+  .order-item-line:first-child {
+    border-top: none !important;
+    padding-top: 0 !important;
+  }
 }
 </style>
