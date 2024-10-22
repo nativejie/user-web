@@ -176,6 +176,7 @@ export default {
       placeholder1: 'Input your height',
       placeholder2: 'Input your weight',
       placeholder3: 'Please select print scale',
+      placeholder4: 'Input your nickName',
       msg1: 'Add to cart succuss',
       tip1: 'Please input your height',
       tip2: 'Please input your weight',

@@ -93,11 +93,11 @@
                     </span>
                     <el-input
                       v-model="item.memberNickname"
-                      @blur="handleBlur(item, index)"
+                      @blur="handleBlur4(item, index)"
                       @change="handleChange(item, index)"
                       :placeholder="
                         elementContentList.portal_custom_basic_placeholder1 ||
-                        $t('custom.basic.placeholder3')
+                        $t('custom.basic.placeholder4')
                       "
                     />
                   </div>
@@ -1019,7 +1019,7 @@
           </p>
           <p class="seven-foot-msg-item-msg">
             {{ detailInfo.customServiceName }} x{{
-              detailInfo.customProductObjVOs.length
+              detailInfo?.customProductObjVOs?.length ?? 0
             }}
           </p>
         </div>
@@ -1405,10 +1405,10 @@ export default {
       });
     },
     getObjectList() {
-      if (this.detailInfo.customProductObjVOs.length > 0) {
+      if (this.detailInfo?.customProductObjVOs?.length > 0) {
         const processItems = async () => {
           let arr = [];
-          for (let item of this.detailInfo.customProductObjVOs) {
+          for (let item of this.detailInfo?.customProductObjVOs) {
             let modelHeight = "",
               modelWeight = "";
             if (item.height && item.weight && item.ratio) {
@@ -1448,9 +1448,11 @@ export default {
       detail()
         .then((res) => {
           this.detailInfo = res.data;
+          console.log('basic~1451 this.detailInfo：', this.detailInfo);
           if (!res.data) {
             customPage({ productType: "custom" }).then((resp) => {
               this.customProList = resp.data.list;
+              console.log('basic~1455 this.customProList：', this);
               this.customPro = resp.data.list[0];
               this.type = -1;
             });
@@ -1573,6 +1575,13 @@ export default {
         );
       }
     },
+    handleBlur4(val, index) {
+      if (val.memberNickname) {
+        val.showTip4 = false;
+      } else {
+        val.showTip4 = true;
+      }
+    },
     handleBlur3(val, index) {
       if (val.sku != "") {
         val.showTip3 = false;
@@ -1607,8 +1616,6 @@ export default {
         val.showTip1 = false;
       } else if (val.weight) {
         val.showTip1 = true;
-      } else {
-        val.showTip4 = true;
       }
     },
     handleRight(val, index) {
@@ -1727,7 +1734,7 @@ export default {
       try {
         await objSave(this.customProductId, { requestBaseList });
         const { data } = await detail();
-        data?.customProductObjVOs.forEach((item, index) => {
+        data?.customProductObjVOs?.forEach((item, index) => {
           this.objectList[index].customObjId = item.customObjId;
         });
 
