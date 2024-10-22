@@ -101,9 +101,7 @@
                       "
                     />
                   </div>
-                  <p class="tips tips2" v-if="item.showTip4">
-                    请输入昵称
-                  </p>
+                  <p class="tips tips2" v-if="item.showTip4">请输入昵称</p>
                 </div>
                 <!-- height -->
                 <div class="m_r flex">
@@ -235,32 +233,6 @@
                   </div>
                 </div>
               </div>
-              <!-- <div class="results">
-                <div v-if="item.modelWeight">
-                  <p class="res flex">
-                    <img src="@/assets/index/height.png" />
-                    <span>{{
-                      elementContentList.portal_custom_basic_label18 ||
-                      $t("custom.basic.label18")
-                    }}</span>
-                    <span>{{ item.modelHeight }} </span><span>cm</span>
-                  </p>
-                  <p class="res flex">
-                    <img src="@/assets/index/height.png" />
-                    <span>{{
-                      elementContentList.portal_custom_basic_label19 ||
-                      $t("custom.basic.label19")
-                    }}</span>
-                    <span>{{ item.modelWeight }} </span><span>g</span>
-                  </p>
-                </div>
-                <p v-else class="no_res">
-                  {{
-                    elementContentList.portal_custom_basic_label17 ||
-                    $t("custom.basic.label17")
-                  }}
-                </p>
-              </div> -->
             </div>
           </div>
         </div>
@@ -701,21 +673,6 @@
                       >
                         {{ attr.productAttributeName + ":" + attr.value }}
                       </p>
-                      <!-- <p class="qty">
-                        <span>{{
-                          elementContentList.portal_custom_basic_step7_label3 ||
-                          $t("custom.basic.step7.label3")
-                        }}</span>
-                        <el-input
-                          @input="
-                            item.productQuantity = item.productQuantity.replace(
-                              /[^\d]/g,
-                              ''
-                            )
-                          "
-                          v-model="item.productQuantity"
-                        />
-                      </p> -->
                     </div>
                     <div class="price">
                       <span
@@ -724,14 +681,6 @@
                     </div>
                   </div>
                 </div>
-                <!-- <span
-                  class="btn"
-                  @click="handleEditServiceProduct(item, index)"
-                  >{{
-                    elementContentList.portal_custom_basic_step5_label4 ||
-                    $t("custom.basic.step5.label4")
-                  }}
-                </span> -->
               </div>
             </div>
           </div>
@@ -883,14 +832,16 @@
               elementContentList.portal_custom_basic_confirm_label2 ||
               $t("custom.basic.confirm.label2")
             }}
-          </span
-          >
+          </span>
           <span>{{ detailInfo ? detailInfo.cusProductName : "" }}</span>
         </p>
         <div class="order-item-line flex-row align-start">
           <!-- TODO: 扫描对象 -->
           <span class="in_label flex-row fw300">
-            <img src="@/assets/icon/add-people.png" style="margin-right: 10px" />
+            <img
+              src="@/assets/icon/add-people.png"
+              style="margin-right: 10px"
+            />
             {{
               elementContentList.portal_custom_basic_confirm_label14 ||
               $t("custom.basic.confirm.label14")
@@ -981,50 +932,12 @@
             detailInfo.arrivalDateStr + " " + detailInfo.arrivalTime
           }}</span>
         </div>
-        <!-- 身高体重 -->
-        <!-- <div class="order-item-line">
-          <span class="in_label flex-row fw300">
-            <img src="@/assets/icon/rili.png" style="margin-right: 10px" />
-            {{
-              elementContentList.portal_custom_basic_confirm_label3 ||
-              $t("custom.basic.confirm.label3")
-            }}
-          </span>
-          <span
-            v-for="(obj, idx) in detailInfo.customProductObjVOs"
-            :key="idx + 'p'"
-            >{{
-              obj.height +
-              "cm, " +
-              obj.weight +
-              (idx == detailInfo.customProductObjVOs.length - 1
-                ? "kg"
-                : "kg / ")
-            }}
-          </span>
-        </div> -->
-        <!-- 制作比例 -->
-        <!-- <div class="order-item-line">
-          <span class="in_label flex-row fw300">
-            <img src="@/assets/icon/add-people.png" style="margin-right: 10px" />
-            {{
-              elementContentList.portal_custom_basic_confirm_label4 ||
-              $t("custom.basic.confirm.label4")
-            }}
-          </span
-          ><span
-            v-for="(obj, idx) in detailInfo.customProductObjVOs"
-            :key="idx + 'p2'"
-            >{{
-              idx == detailInfo.customProductObjVOs.length - 1
-                ? obj.ratio
-                : obj.ratio + ","
-            }}</span
-          >
-        </div> -->
         <div class="order-item-line col flex-end" style="margin-bottom: 0">
           <p class="order-item-line-title flex-row">
-            <img src="@/assets/icon/add-people.png" style="margin-right: 10px" />
+            <img
+              src="@/assets/icon/add-people.png"
+              style="margin-right: 10px"
+            />
             {{
               elementContentList.portal_custom_basic_confirm_label16 ||
               $t("custom.basic.confirm.label16")
@@ -1049,26 +962,32 @@
             </span>
           </p>
           <!-- 配件商品 -->
-          <p class="in_price flex-row" style="margin-bottom: 20px;">
-            <span class="in_label fz14 gray w120 flex-row justify-end" style="margin-right: 0">{{
-              elementContentList.portal_custom_basic_confirm_label10 ||
-              $t("custom.basic.confirm.label10")
-            }}&nbsp;</span
+          <p class="in_price flex-row" style="margin-bottom: 20px">
+            <span
+              class="in_label fz14 gray w120 flex-row justify-end"
+              style="margin-right: 0"
+              >{{
+                elementContentList.portal_custom_basic_confirm_label10 ||
+                $t("custom.basic.confirm.label10")
+              }}&nbsp;</span
             ><span class="w120" style="color: #f6497f">{{
               " £ " + detailInfo.serviceProductTotalPrice
             }}</span>
           </p>
           <!-- 合计 -->
-          <p class="in_total flex-row"  style="margin-bottom: 0">
-            <span class="in_label fz14 w120 flex-row justify-end" style="margin-right: 0">{{
-              elementContentList.portal_custom_basic_confirm_label11 ||
-              $t("custom.basic.confirm.label11")
-            }}&nbsp;
+          <p class="in_total flex-row" style="margin-bottom: 0">
+            <span
+              class="in_label fz14 w120 flex-row justify-end"
+              style="margin-right: 0"
+              >{{
+                elementContentList.portal_custom_basic_confirm_label11 ||
+                $t("custom.basic.confirm.label11")
+              }}&nbsp;
             </span>
-            <span class="w120" style="color: #f6497f;">
+            <span class="w120" style="color: #f6497f">
               £
-              <b style="font-size: 32px;">
-                {{detailInfo.cusTotalPrice}}
+              <b style="font-size: 32px">
+                {{ detailInfo.cusTotalPrice }}
               </b>
             </span>
           </p>
@@ -1163,7 +1082,7 @@
             elementContentList.portal_custom_basic_step6_label6 ||
             $t("custom.basic.step6.label6")
           }}</span>
-          <el-time-picker
+          <!-- <el-time-picker
             class="time-item-picker"
             v-model="arrivalTime"
             type="date"
@@ -1175,7 +1094,22 @@
               $t('custom.basic.step6.placeholder2')
             "
           >
-          </el-time-picker>
+          </el-time-picker> -->
+          <el-select
+            style="width: 50%"
+            v-model="arrivalTime"
+            placeholder="请选择"
+            @change="handleChangeTime"
+            class="time-item-picker"
+          >
+            <el-option
+              v-for="item in timeList"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+              :disabled="item.disabled"
+            ></el-option>
+          </el-select>
           <p v-if="showTimeTip" class="err_tip">
             {{
               elementContentList.portal_custom_basic_label21 ||
@@ -1227,6 +1161,7 @@ import {
   serviceSkuSave,
   storeSave,
   storePage,
+  queryStoreTime,
   servicePage,
   serviceProductPage,
   calculate,
@@ -1235,6 +1170,7 @@ import { customPage, productSkuList } from "@/api/product";
 import { customGenerateConfirmOrder } from "@/api/order";
 import { customAdd } from "@/api/cart";
 import Deposit from "@/components/Deposit";
+import dayjs from "dayjs";
 
 export default {
   components: {
@@ -1266,8 +1202,8 @@ export default {
           modelHeight: "",
           modelWeight: "",
           memberNickname: "",
-          estimateAmount: '',
-          depositAmount: ''
+          estimateAmount: "",
+          depositAmount: "",
         },
       ],
       tab: 1,
@@ -1295,6 +1231,7 @@ export default {
       elementContentList: "",
       packageNameList: [],
       packageProList: [],
+      openDate: [],
       pickerOptions: {
         disabledDate(time) {
           return time.getTime() < Date.now() - 24 * 60 * 60 * 1000;
@@ -1307,7 +1244,29 @@ export default {
       showSelectTimeDialog: false,
       ruleConfirmDialogVisible: false,
       ruleDialogVisible: false,
+      timeList: [],
     };
+  },
+  watch: {
+    openDate: {
+      handler(val) {
+        this.pickerOptions.disabledDate = (time) => {
+          return !val
+            .map((item) => item.date)
+            .includes(dayjs(time).format("YYYY-MM-DD"));
+        };
+      },
+      deep: true,
+    },
+    arrivalDateStr(val) {
+      if (val) {
+        this.timeList = this.openDate.find(
+          (item) => item.date === val
+        ).time;
+      } else {
+        this.timeList = [];
+      }
+    },
   },
   created() {
     this.elementContentList = window.elementContentList;
@@ -1405,43 +1364,40 @@ export default {
         }
       });
     },
-    getServicePage() {
+    async getServicePage() {
       const params = {
         pageNum: 1,
         pageSize: 100,
         productBaseUid: this.detailInfo.cusProductBaseUid,
       };
-      servicePage(params).then((res) => {
-        this.serviceList = res.data.list;
-        if (this.detailInfo.customServiceUid) {
-          this.serviceList.map((item, idx) => {
-            if (this.detailInfo.customServiceUid == item.customServiceUid) {
-              this.tab = idx;
-            }
-          });
-        } else {
-          this.tab = 0;
+      const { data } = await servicePage(params);
+      this.serviceList = data.list || [];
+      if (this.detailInfo.customServiceUid) {
+        this.tab = this.serviceList.findIndex(
+          (item) => item.customServiceUid === this.detailInfo.customServiceUid
+        );
+      } else {
+        this.tab = 0;
+      }
+      this.serviceData = this.serviceList[this.tab] || {};
+      this.serviceDesc = this.serviceList[this.tab]?.serviceDesc;
+      this.imageAct = 0;
+      if (this.detailInfo.processStatus == 4) {
+        switch (this.serviceData.type) {
+          case "normal":
+            this.step = 5;
+            break;
+          case "accessory":
+            this.step = 8;
+            break;
+          case "combined_scene":
+            this.step = 7;
+            break;
         }
-        this.serviceDesc = this.serviceList[this.tab].serviceDesc;
-        this.serviceData = this.serviceList[this.tab];
-        this.imageAct = 0;
-        if (this.detailInfo.processStatus == 4) {
-          switch (this.serviceData.type) {
-            case "normal":
-              this.step = 5;
-              break;
-            case "accessory":
-              this.step = 8;
-              break;
-            case "combined_scene":
-              this.step = 7;
-              break;
-          }
-        }
-        if (this.step != 3) {
-          this.getsServiceProductPage();
-        }
-      });
+      }
+      if (this.step != 3) {
+        this.getsServiceProductPage();
+      }
     },
     getProductSkuList() {
       productSkuList({
@@ -1465,39 +1421,42 @@ export default {
     },
     getObjectList() {
       if (this.detailInfo.customProductObjVOs.length > 0) {
-        let arr = [];
-        this.detailInfo.customProductObjVOs.map((item) => {
-          let modelHeight = "",
-            modelWeight = "";
-          if (item.height && item.weight && item.ratio) {
-            const params = {
-              height: item.height,
-              ratio: item.ratio,
-              type: 1,
-              weight: item.weight,
-              memberNickname: item.memberNickname,
-              productUid: this.customPro.productUid,
-              productBaseUid: this.customPro.productBaseUid,
+        const processItems = async () => {
+          let arr = [];
+          for (let item of this.detailInfo.customProductObjVOs) {
+            let modelHeight = "",
+              modelWeight = "";
+            if (item.height && item.weight && item.ratio) {
+              const params = {
+                height: item.height,
+                ratio: item.ratio,
+                type: 1,
+                weight: item.weight,
+                memberNickname: item.memberNickname,
+                productUid: this.customPro.productUid,
+                productBaseUid: this.customPro.productBaseUid,
+              };
+              const { data } = await calculate(params);
+              modelHeight = data?.modelHeight;
+              modelWeight = data?.modelWeight;
+            }
+            let obj = {
+              ...item,
+              sku: item.productSkuUid,
+              showTip1: false,
+              showTip2: false,
+              showTip3: false,
+              showTip4: false,
+              modelHeight,
+              modelWeight,
             };
-            calculate(params).then((res) => {
-              modelHeight = res.data.modelHeight;
-              modelWeight = res.data.modelWeight;
-            });
+            arr.push(obj);
           }
-          let obj = {
-            ...item,
-            sku: item.productSkuUid,
-            showTip1: false,
-            showTip2: false,
-            showTip3: false,
-            showTip4: false,
-            modelHeight,
-            modelWeight,
-          };
-          arr.push(obj);
-        });
-        this.objectList = arr;
-        console.log("this.objectList", this.objectList);
+
+          this.objectList = arr;
+        };
+
+        processItems();
       }
     },
     getDetail() {
@@ -1599,7 +1558,7 @@ export default {
       this.serviceDesc = val.serviceDesc;
     },
     getCalculate(weight, height, ratio, index, memberNickname, obj) {
-      console.log('basic~1586 obj：', obj);
+      console.log("basic~1586 obj：", obj);
       const params = {
         height,
         ratio,
@@ -1619,7 +1578,14 @@ export default {
     },
     handleChange(val, index) {
       if (val.height && val.weight && val.ratio) {
-        this.getCalculate(val.weight, val.height, val.ratio, index, val.memberNickname, val);
+        this.getCalculate(
+          val.weight,
+          val.height,
+          val.ratio,
+          index,
+          val.memberNickname,
+          val
+        );
       }
     },
     handleBlur3(val, index) {
@@ -1634,7 +1600,14 @@ export default {
         val.showTip3 = true;
       }
       if (val.height && val.weight && val.ratio) {
-        this.getCalculate(val.weight, val.height, val.ratio, index, val.memberNickname, val);
+        this.getCalculate(
+          val.weight,
+          val.height,
+          val.ratio,
+          index,
+          val.memberNickname,
+          val
+        );
       }
     },
     handleBlur2(val, index) {
@@ -1690,8 +1663,8 @@ export default {
         modelWeight: "",
         // TODO: 昵称字段
         memberNickname: "",
-        estimateAmount: '',
-        depositAmount: ''
+        estimateAmount: "",
+        depositAmount: "",
       });
     },
     handleBack(val = this.step) {
@@ -1722,205 +1695,157 @@ export default {
           break;
       }
     },
+    async handleSave() {
+      const params = {
+        customProductId: this.customProductId,
+        productBaseUid: this.customPro.productBaseUid,
+        productUid: this.customPro.productUid,
+      };
+      const { data } = await save(params);
+      if (data) {
+        const { data: res = {} } = await detail();
+        this.customProductId = res.customProductId;
+        this.detailInfo = res;
+        this.getProductSkuList();
+      }
+      this.step = 2;
+    },
+    async handleSaveObject() {
+      this.objectList.forEach((item, index) => {
+        item.showTip1 = !item.height;
+        item.showTip2 = !item.weight;
+        item.showTip3 = !item.sku;
+        item.showTip4 = !item.memberNickname;
+
+        item.objNickname = item.objNickname || `扫描对象${index + 1}`;
+        item.objNo = item.objNo || `objNo${index + 1}`;
+      });
+      const isPersonScan = this.detailInfo.cusProductName === "人物扫描";
+      const arr = this.objectList.filter((item) => {
+        if (isPersonScan) {
+          return (
+            !item.height || !item.weight || !item.sku || !item.memberNickname
+          );
+        } else {
+          return !item.weight || !item.sku;
+        }
+      });
+      if (arr.length > 0) {
+        return false;
+      }
+
+      const requestBaseList = this.objectList.map((item) => {
+        return {
+          customObjId: item.customObjId,
+          customProductId: this.customProductId,
+          height: item.height,
+          weight: item.weight,
+          objNickname: item.objNickname,
+          objNo: item.objNo,
+          memberNickname: item.memberNickname,
+        };
+      });
+      try {
+        await objSave(this.customProductId, { requestBaseList });
+        const { data } = await detail();
+        data?.customProductObjVOs.forEach((item, index) => {
+          this.objectList[index].customObjId = item.customObjId;
+        });
+
+        const requestSkuList = this.objectList.map((item) => {
+          return {
+            customObjId: item.customObjId,
+            customProductId: this.customProductId,
+            productSkuUid: item.sku,
+            ratio: item.ratio,
+            memberNickname: item.memberNickname,
+          };
+        });
+
+        await objSkuSave(this.customProductId, { requestSkuList });
+
+        const { data: res } = await detail();
+        this.detailInfo = res;
+        this.getServicePage();
+        this.step = 4;
+      } catch (error) {
+        this.$message.error(error);
+      }
+    },
+    async handleSaveService() {
+      await serviceSave(
+        this.customProductId,
+        this.serviceData.customServiceUid
+      );
+      const { data = {} } = await detail();
+      this.detailInfo = data;
+      switch (this.serviceData.type) {
+        case "normal":
+          this.step = 5;
+          break;
+        case "accessory":
+          this.step = 8;
+          break;
+        case "combined_scene":
+          this.step = 7;
+          break;
+      }
+      this.getsServiceProductPage();
+    },
+    async handleSaveServiceSku() {
+      const requestList = this.serviceProductList
+        .filter((item) => item.check)
+        ?.map((item) => {
+          return {
+            customServiceSkuUid: item.customServiceSkuUid,
+            customServiceUid: item.customServiceUid,
+            num: Number(item.productQuantity),
+            recProductBaseUid: item.productBaseUid,
+            recProductSkuUid: item.productSkuUid,
+            recProductUid: item.productUid,
+          };
+        });
+      await serviceSkuSave(this.customProductId, { requestList });
+      const { data = {} } = await detail();
+      this.detailInfo = data;
+      this.getStorePage();
+      this.step = 6;
+    },
+    async handleShowStoreTime() {
+      const { data = [] } = await queryStoreTime(this.storeInfo.storeUid);
+      this.openDate = data.map((item) => {
+        return {
+          date: item.openDate,
+          time: item.timeList.map((time) => {
+            return {
+              label: `${time.startTime}-${time.endTime}`,
+              value: item.storeTimeId,
+              disabled: item.status === 0 ? false : true,
+            };
+          }),
+        };
+      });
+      console.log("basic~1744 this.openDate：", this.openDate);
+      this.showSelectTimeDialog = true;
+    },
     handleNext(val) {
       switch (val) {
         case 1:
-          let params2 = {
-            customProductId: this.customProductId,
-            productBaseUid: this.customPro.productBaseUid,
-            productUid: this.customPro.productUid,
-          };
-          save(params2).then((respo) => {
-            if (respo.data) {
-              detail().then((res) => {
-                this.customProductId = res.data.customProductId;
-                this.detailInfo = res.data;
-                this.getProductSkuList();
-              });
-            }
-          });
-          this.step = 2;
+          this.handleSave();
           break;
         case 2:
-          this.objectList.forEach((item) => {
-            if (item.memberNickname) {
-              item.showTip4 = false;
-            } else {
-              item.showTip4 = true;
-            }
-            if (item.height) {
-              item.showTip1 = false;
-            } else {
-              item.showTip1 = true;
-            }
-            // }
-            if (item.weight) {
-              item.showTip2 = false;
-            } else {
-              item.showTip2 = true;
-            }
-            if (item.sku != "") {
-              item.showTip3 = false;
-            } else {
-              item.showTip3 = true;
-            }
-          });
-          let arr = [];
-          if (this.detailInfo.cusProductName == "人物扫描") {
-            this.objectList.filter((item) => {
-              if (!item.memberNickname) arr.push(item);
-              if (!item.weight) arr.push(item);
-              if (!item.height) arr.push(item);
-              if (!item.sku) arr.push(item);
-            });
-          } else {
-            this.objectList.filter((item) => {
-              if (!item.weight) arr.push(item);
-              if (!item.sku) arr.push(item);
-            });
-          }
-          if (arr.length > 0) {
-            return false;
-          } else {
-            let arr3 = [];
-            let arr4 = [];
-            this.objectList.forEach((item, idx) => {
-              let obj = {
-                customObjId: item.customObjId,
-                customProductId: this.customProductId,
-                height: item.height,
-                weight: item.weight,
-                objNickname: item.objNickname
-                  ? item.objNickname
-                  : "扫描对象" + (idx + 1),
-                objNo: item.objNo ? item.objNo : "objNo" + (idx + 1),
-                memberNickname: item.memberNickname,
-              };
-              let obj2 = {
-                customObjId: item.customObjId,
-                customProductId: this.customProductId,
-                productSkuUid: item.sku,
-                ratio: item.ratio,
-                memberNickname: item.memberNickname,
-              };
-              arr3.push(obj);
-              arr4.push(obj2);
-            });
-            objSave(this.customProductId, { requestBaseList: arr3 }).then(
-              (res) => {
-                detail().then((resp) => {
-                  resp.data.customProductObjVOs.forEach((item, index) => {
-                    this.objectList[index].customObjId = item.customObjId;
-                  });
-                  this.objectList.forEach((item, idx) => {
-                    let obj2 = {
-                      customObjId: item.customObjId,
-                      customProductId: this.customProductId,
-                      productSkuUid: item.sku,
-                      ratio: item.ratio,
-                    };
-                    arr4.push(obj2);
-                  });
-                  objSkuSave(this.customProductId, {
-                    requestSkuList: arr4,
-                  }).then((res2) => {
-                    detail().then((resp2) => {
-                      this.detailInfo = resp2.data;
-                      this.getServicePage();
-                    });
-                    this.step = 4;
-                  });
-                });
-              }
-            );
-          }
+          this.handleSaveObject();
           break;
-        // case 3:
-        //   this.objectList.forEach(item => {
-        //     if (item.sku != '') {
-        //       item.showTip3 = false
-        //     } else {
-        //       item.showTip3 = true
-        //     }
-        //   });
-        //   let arr2 = []
-        //   this.objectList.filter(item => {
-        //     if (!item.sku) arr2.push(item)
-        //   })
-        //   if (arr2.length > 0) {
-        //     return false
-        //   } else {
-        //     let arr4 = []
-        //     this.objectList.forEach(item => {
-        //       let obj = {
-        //         customObjId: item.customObjId,
-        //         customProductId: this.customProductId,
-        //         productSkuUid: item.sku,
-        //         ratio: item.ratio,
-        //       }
-        //       arr4.push(obj)
-        //     })
-        //     objSkuSave(this.customProductId, { requestSkuList: arr4 }).then(res => {
-        //       detail().then(resp => {
-        //         this.detailInfo = resp.data
-        //         this.getServicePage()
-        //       })
-        //       this.step = 4
-        //     })
-        //   }
-        //   break
         case 4:
-          serviceSave(
-            this.customProductId,
-            this.serviceData.customServiceUid
-          ).then((res) => {
-            detail().then((resp) => {
-              this.detailInfo = resp.data;
-              switch (this.serviceData.type) {
-                case "normal":
-                  this.step = 5;
-                  break;
-                case "accessory":
-                  this.step = 8;
-                  break;
-                case "combined_scene":
-                  this.step = 7;
-                  break;
-              }
-              this.getsServiceProductPage();
-            });
-          });
+          this.handleSaveService();
           break;
         case 5:
         case 8:
         case 7:
-          let arr4 = [];
-          this.serviceProductList.forEach((item) => {
-            if (item.check) {
-              let obj = {
-                customServiceSkuUid: item.customServiceSkuUid,
-                customServiceUid: item.customServiceUid,
-                num: Number(item.productQuantity),
-                recProductBaseUid: item.productBaseUid,
-                recProductSkuUid: item.productSkuUid,
-                recProductUid: item.productUid,
-              };
-              arr4.push(obj);
-            }
-          });
-          const params3 = {
-            requestList: arr4,
-          };
-          serviceSkuSave(this.customProductId, params3).then((res) => {
-            detail().then((resp) => {
-              this.detailInfo = resp.data;
-              this.getStorePage();
-              this.step = 6;
-            });
-          });
+          this.handleSaveServiceSku();
           break;
         case 6:
-          this.showSelectTimeDialog = true;
+          this.handleShowStoreTime();
           break;
       }
     },
@@ -3095,6 +3020,11 @@ export default {
     color: #1f2126;
     .time-item-picker {
       margin-left: 40px;
+
+      .el-input {
+        width: 100%;
+        margin-left: 0;
+      }
     }
   }
   .el-input {
@@ -3181,13 +3111,13 @@ export default {
   color: #f6497f !important;
 }
 .gray {
-  color: #929DAA !important;;
+  color: #929daa !important;
 }
 .fz14 {
-  font-size: 14px !important;;
+  font-size: 14px !important;
 }
 .w120 {
- width: 120px;
- text-align: right
+  width: 120px;
+  text-align: right;
 }
 </style>

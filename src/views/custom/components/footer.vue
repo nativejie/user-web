@@ -18,7 +18,10 @@ export default {
   props: {
     disabled: Boolean,
     step: Number,
-    onBtnClick: Function
+    onBtnClick: {
+      type: Function,
+      default: () => {},
+    }
   },
   data: () => {
     return {

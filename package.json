@@ -16,6 +16,7 @@
   "dependencies": {
     "admin-vue-web": "file:",
     "axios": "^1.7.7",
+    "dayjs": "^1.11.13",
     "echarts": "^4.5.1",
     "element-ui": "^2.15.14",
     "js-cookie": "^3.0.5",

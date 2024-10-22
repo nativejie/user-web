@@ -4,6 +4,7 @@ specifiers:
   '@vitejs/plugin-vue2': ^2.3.1
   admin-vue-web: 'file:'
   axios: ^1.7.7
+  dayjs: ^1.11.13
   echarts: ^4.5.1
   element-ui: ^2.15.14
   fast-glob: ^3.3.2
@@ -25,6 +26,7 @@ specifiers:
 dependencies:
   admin-vue-web: 'link:'
   axios: 1.7.7
+  dayjs: 1.11.13
   echarts: 4.9.0
   element-ui: 2.15.14_vue@2.7.16
   js-cookie: 3.0.5
@@ -978,6 +980,10 @@ packages:
       es-errors: 1.3.0
       is-data-view: 1.0.1
     dev: true
+
+  /dayjs/1.11.13:
+    resolution: {integrity: sha512-oaMBel6gjolK862uaPQOVTA7q3TZhuSvuMQAAglQDOWYO9A91IrAOUJEyKVlqJlHE0vq5p5UXxzdPfMH/x6xNg==}
+    dev: false
 
   /debug/2.6.9:
     resolution: {integrity: sha512-bC7ElrdJaJnPbAP+1EotYvqZsb3ecl5wi6Bfi6BJTUcNowp6cvspg0jXznRTKDjm/E7AdgFBVeAPVMNcKGsHMA==}

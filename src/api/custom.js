@@ -1,110 +1,121 @@
-import request from '@/utils/request'
+import request from "@/utils/request";
 
 // 检测当前会员是否存在定制商品
-export function checkExist (params) {
+export function checkExist(params) {
   return request({
-    url: '/custom/check/exist',
-    method: 'get',
-    params
-  })
+    url: "/custom/check/exist",
+    method: "get",
+    params,
+  });
 }
 
 // 会员定制商品详情信息
-export function detail (params) {
+export function detail(params) {
   return request({
-    url: '/custom/detail',
-    method: 'get',
-    params
-  })
+    url: "/custom/detail",
+    method: "get",
+    params,
+  });
 }
 
 // 保存会员定制对象信息
-export function objSave (customProductId, data) {
+export function objSave(customProductId, data) {
   return request({
     url: `/custom/obj/save/${customProductId}`,
-    method: 'post',
-    data
-  })
+    method: "post",
+    data,
+  });
 }
 
 // 保存会员定制对象sku信息
-export function objSkuSave (customProductId, data) {
+export function objSkuSave(customProductId, data) {
   return request({
     url: `/custom/objSku/save/${customProductId}`,
-    method: 'post',
-    data
-  })
+    method: "post",
+    data,
+  });
 }
 
 // 保存会员定制商品信息
-export function save (data) {
+export function save(data) {
   return request({
-    url: '/custom/save',
-    method: 'post',
-    data
-  })
+    url: "/custom/save",
+    method: "post",
+    data,
+  });
 }
 
 // 保存会员定制服务信息
-export function serviceSave (customProductId, customServiceUid) {
+export function serviceSave(customProductId, customServiceUid) {
   return request({
     url: `/custom/service/save/${customProductId}?customServiceUid=${customServiceUid}`,
-    method: 'post',
-  })
+    method: "post",
+  });
 }
 
 // 保存会员定制服务推荐的商品Sku信息
-export function serviceSkuSave (customProductId, data) {
+export function serviceSkuSave(customProductId, data) {
   return request({
     url: `/custom/service/sku/save/${customProductId}`,
-    method: 'post',
-    data
-  })
+    method: "post",
+    data,
+  });
 }
 
 // 保存会员定制服务门店信息
-export function storeSave (customProductId, data) {
+export function storeSave(customProductId, data) {
   return request({
     url: `/custom/store/save/${customProductId}`,
-    method: 'post',
-    data
-  })
+    method: "post",
+    data,
+  });
 }
 
 // 查看可预约的门店
-export function storePage (data) {
+export function storePage(data) {
   return request({
     url: `/store/page`,
-    method: 'post',
-    data
-  })
+    method: "post",
+    data,
+  });
+}
+
+/**
+ * 查询可预约门店的时间列表
+ * @param {string} storeUid 商店UID
+ * @returns 
+ */
+export function queryStoreTime(storeUid) {
+  return request({
+    url: `/store/queryTime`,
+    method: "get",
+    params: { storeUid },
+  });
 }
 
 // 定制服务分页列表
-export function servicePage (data) {
+export function servicePage(data) {
   return request({
     url: `/custom/service/page`,
-    method: 'post',
-    data
-  })
+    method: "post",
+    data,
+  });
 }
 
 // 定制服务配件商品分页列表
-export function serviceProductPage (data) {
+export function serviceProductPage(data) {
   return request({
     url: `/custom/service/product/page`,
-    method: 'post',
-    data
-  })
+    method: "post",
+    data,
+  });
 }
-
 
 // 测算3D模型的身高&体重接口
-export function calculate (data) {
+export function calculate(data) {
   return request({
     url: `/custom/height/weight/calculate`,
-    method: 'post',
-    data
-  })
+    method: "post",
+    data,
+  });
 }
-
