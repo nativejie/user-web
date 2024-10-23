@@ -76,7 +76,7 @@
                   <div class="input">
                     <span class="text4 flex-row-center">
                       {{
-                        elementContentList.memberNickname ||
+                        elementContentList.objNickname ||
                         $t("custom.basic.label22")
                       }}
                       <el-tooltip
@@ -92,7 +92,7 @@
                       </el-tooltip>
                     </span>
                     <el-input
-                      v-model="item.memberNickname"
+                      v-model="item.objNickname"
                       @blur="handleBlur4(item, index)"
                       @change="handleChange(item, index)"
                       :placeholder="
@@ -858,7 +858,7 @@
                 v-for="item in detailInfo.customProductObjVOs"
               >
                 <div class="label-val-row-item">
-                  {{ item.memberNickname || item.objNickname }}
+                  {{ item.objNickname }}
                 </div>
                 <div class="label-val-row-item">Cyrus</div>
                 <div class="label-val-row-item">
@@ -1187,7 +1187,6 @@ export default {
           sku: "",
           modelHeight: "",
           modelWeight: "",
-          memberNickname: "",
           estimateAmount: "",
           depositAmount: "",
         },
@@ -1417,7 +1416,7 @@ export default {
                 ratio: item.ratio,
                 type: 1,
                 weight: item.weight,
-                memberNickname: item.memberNickname,
+                objNickname: item.objNickname,
                 productUid: this.customPro.productUid,
                 productBaseUid: this.customPro.productBaseUid,
               };
@@ -1544,14 +1543,14 @@ export default {
       this.serviceData = val;
       this.serviceDesc = val.serviceDesc;
     },
-    getCalculate(weight, height, ratio, index, memberNickname, obj) {
+    getCalculate(weight, height, ratio, index, objNickname, obj) {
       console.log("basic~1586 obj：", obj);
       const params = {
         height,
         ratio,
         type: 1,
         weight,
-        memberNickname,
+        objNickname,
         productUid: this.customPro.productUid,
         productBaseUid: this.customPro.productBaseUid,
       };
@@ -1560,7 +1559,7 @@ export default {
         this.objectList[index].modelWeight = res.data.modelWeight;
         this.objectList[index].estimateAmount = res.data.estimateAmount;
         this.objectList[index].depositAmount = res.data.depositAmount;
-        this.objectList[index].memberNickname = res.data.memberNickname;
+        this.objectList[index].objNickname = res.data.objNickname;
       });
     },
     handleChange(val, index) {
@@ -1570,13 +1569,13 @@ export default {
           val.height,
           val.ratio,
           index,
-          val.memberNickname,
+          val.objNickname,
           val
         );
       }
     },
     handleBlur4(val, index) {
-      if (val.memberNickname) {
+      if (val.objNickname) {
         val.showTip4 = false;
       } else {
         val.showTip4 = true;
@@ -1599,7 +1598,7 @@ export default {
           val.height,
           val.ratio,
           index,
-          val.memberNickname,
+          val.objNickname,
           val
         );
       }
@@ -1653,8 +1652,6 @@ export default {
         sku: "",
         modelHeight: "",
         modelWeight: "",
-        // TODO: 昵称字段
-        memberNickname: "",
         estimateAmount: "",
         depositAmount: "",
       });
@@ -1701,7 +1698,7 @@ export default {
         item.showTip1 = !item.height;
         item.showTip2 = !item.weight;
         item.showTip3 = !item.sku;
-        item.showTip4 = !item.memberNickname;
+        item.showTip4 = !item.objNickname;
 
         item.objNickname = item.objNickname || `扫描对象${index + 1}`;
         item.objNo = item.objNo || `objNo${index + 1}`;
@@ -1710,7 +1707,7 @@ export default {
       const arr = this.objectList.filter((item) => {
         if (isPersonScan) {
           return (
-            !item.height || !item.weight || !item.sku || !item.memberNickname
+            !item.height || !item.weight || !item.sku || !item.objNickname
           );
         } else {
           return !item.weight || !item.sku;
@@ -1728,7 +1725,6 @@ export default {
           weight: item.weight,
           objNickname: item.objNickname,
           objNo: item.objNo,
-          memberNickname: item.memberNickname,
         };
       });
       try {
@@ -1744,7 +1740,7 @@ export default {
             customProductId: this.customProductId,
             productSkuUid: item.sku,
             ratio: item.ratio,
-            memberNickname: item.memberNickname,
+            objNickname: item.objNickname,
           };
         });
 
