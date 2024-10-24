@@ -1119,7 +1119,6 @@ export default {
       serviceDesc: "",
       serviceProductList: [],
       editServiceProduct: {},
-      elementContentList: "",
       packageNameList: [],
       packageProList: [],
       openDate: [],
@@ -1158,7 +1157,6 @@ export default {
     },
   },
   created() {
-    this.elementContentList = window.elementContentList;
     this.getDetail();
   },
   methods: {
@@ -1681,7 +1679,7 @@ export default {
           time: item.timeList.map((time) => {
             return {
               label: `${time.startTime}-${time.endTime}`,
-              value: item.storeTimeId,
+              value: time.storeTimeId,
               disabled: item.status === 0 ? false : true,
             };
           }),
@@ -1717,8 +1715,9 @@ export default {
       }
       this.showDateTip = false;
     },
-    handleChangeTime() {
-      if (!this.arrivalTime) {
+    handleChangeTime(val) {
+      this.arrivalTime = val;
+      if (!val) {
         this.showTimeTip = true;
         return false;
       }
