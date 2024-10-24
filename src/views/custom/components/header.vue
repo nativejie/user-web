@@ -23,7 +23,7 @@
 export default {
   props: {
     step: {
-      type: Number,
+      type: [Number, String],
       default: 1,
     },
     label: {

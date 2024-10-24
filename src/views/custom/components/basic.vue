@@ -57,7 +57,14 @@
                 <div class="m_r flex">
                   <div class="input">
                     <span class="text4 flex-row-center">
+<<<<<<< HEAD
                       {{ i18nText("custom.basic.label22") }}
+=======
+                      {{
+                        elementContentList.objNickname ||
+                        $t("custom.basic.label22")
+                      }}
+>>>>>>> fd59573ce9ba7fd8ad1605d2f50b8f31ea6d8ca6
                       <el-tooltip
                         effect="dark"
                         content="输入昵称可以更好区分不同对象"
@@ -71,10 +78,17 @@
                       </el-tooltip>
                     </span>
                     <el-input
-                      v-model="item.memberNickname"
-                      @blur="handleBlur(item, index)"
+                      v-model="item.objNickname"
+                      @blur="handleBlur4(item, index)"
                       @change="handleChange(item, index)"
+<<<<<<< HEAD
                       :placeholder="i18nText('custom.basic.placeholder3')"
+=======
+                      :placeholder="
+                        elementContentList.portal_custom_basic_placeholder1 ||
+                        $t('custom.basic.placeholder4')
+                      "
+>>>>>>> fd59573ce9ba7fd8ad1605d2f50b8f31ea6d8ca6
                     />
                   </div>
                   <p class="tips tips2" v-if="item.showTip4">请输入昵称</p>
@@ -774,7 +788,7 @@
                 v-for="item in detailInfo.customProductObjVOs"
               >
                 <div class="label-val-row-item">
-                  {{ item.memberNickname || item.objNickname }}
+                  {{ item.objNickname }}
                 </div>
                 <div class="label-val-row-item">Cyrus</div>
                 <div class="label-val-row-item">
@@ -924,7 +938,7 @@
           </p>
           <p class="seven-foot-msg-item-msg">
             {{ detailInfo.customServiceName }} x{{
-              detailInfo.customProductObjVOs.length
+              detailInfo?.customProductObjVOs?.length ?? 0
             }}
           </p>
         </div>
@@ -1087,7 +1101,6 @@ export default {
           sku: "",
           modelHeight: "",
           modelWeight: "",
-          memberNickname: "",
           estimateAmount: "",
           depositAmount: "",
         },
@@ -1305,10 +1318,10 @@ export default {
       });
     },
     getObjectList() {
-      if (this.detailInfo.customProductObjVOs.length > 0) {
+      if (this.detailInfo?.customProductObjVOs?.length > 0) {
         const processItems = async () => {
           let arr = [];
-          for (let item of this.detailInfo.customProductObjVOs) {
+          for (let item of this.detailInfo?.customProductObjVOs) {
             let modelHeight = "",
               modelWeight = "";
             if (item.height && item.weight && item.ratio) {
@@ -1317,7 +1330,7 @@ export default {
                 ratio: item.ratio,
                 type: 1,
                 weight: item.weight,
-                memberNickname: item.memberNickname,
+                objNickname: item.objNickname,
                 productUid: this.customPro.productUid,
                 productBaseUid: this.customPro.productBaseUid,
               };
@@ -1428,14 +1441,14 @@ export default {
       this.serviceData = val;
       this.serviceDesc = val.serviceDesc;
     },
-    getCalculate(weight, height, ratio, index, memberNickname, obj) {
+    getCalculate(weight, height, ratio, index, objNickname, obj) {
       console.log("basic~1586 obj：", obj);
       const params = {
         height,
         ratio,
         type: 1,
         weight,
-        memberNickname,
+        objNickname,
         productUid: this.customPro.productUid,
         productBaseUid: this.customPro.productBaseUid,
       };
@@ -1444,7 +1457,7 @@ export default {
         this.objectList[index].modelWeight = res.data.modelWeight;
         this.objectList[index].estimateAmount = res.data.estimateAmount;
         this.objectList[index].depositAmount = res.data.depositAmount;
-        this.objectList[index].memberNickname = res.data.memberNickname;
+        this.objectList[index].objNickname = res.data.objNickname;
       });
     },
     handleChange(val, index) {
@@ -1454,9 +1467,16 @@ export default {
           val.height,
           val.ratio,
           index,
-          val.memberNickname,
+          val.objNickname,
           val
         );
+      }
+    },
+    handleBlur4(val, index) {
+      if (val.objNickname) {
+        val.showTip4 = false;
+      } else {
+        val.showTip4 = true;
       }
     },
     handleBlur3(val, index) {
@@ -1476,7 +1496,7 @@ export default {
           val.height,
           val.ratio,
           index,
-          val.memberNickname,
+          val.objNickname,
           val
         );
       }
@@ -1493,8 +1513,6 @@ export default {
         val.showTip1 = false;
       } else if (val.weight) {
         val.showTip1 = true;
-      } else {
-        val.showTip4 = true;
       }
     },
     handleRight(val, index) {
@@ -1532,8 +1550,6 @@ export default {
         sku: "",
         modelHeight: "",
         modelWeight: "",
-        // TODO: 昵称字段
-        memberNickname: "",
         estimateAmount: "",
         depositAmount: "",
       });
@@ -1580,7 +1596,7 @@ export default {
         item.showTip1 = !item.height;
         item.showTip2 = !item.weight;
         item.showTip3 = !item.sku;
-        item.showTip4 = !item.memberNickname;
+        item.showTip4 = !item.objNickname;
 
         item.objNickname = item.objNickname || `扫描对象${index + 1}`;
         item.objNo = item.objNo || `objNo${index + 1}`;
@@ -1589,7 +1605,7 @@ export default {
       const arr = this.objectList.filter((item) => {
         if (isPersonScan) {
           return (
-            !item.height || !item.weight || !item.sku || !item.memberNickname
+            !item.height || !item.weight || !item.sku || !item.objNickname
           );
         } else {
           return !item.weight || !item.sku;
@@ -1607,13 +1623,12 @@ export default {
           weight: item.weight,
           objNickname: item.objNickname,
           objNo: item.objNo,
-          memberNickname: item.memberNickname,
         };
       });
       try {
         await objSave(this.customProductId, { requestBaseList });
         const { data } = await detail();
-        data?.customProductObjVOs.forEach((item, index) => {
+        data?.customProductObjVOs?.forEach((item, index) => {
           this.objectList[index].customObjId = item.customObjId;
         });
 
@@ -1623,7 +1638,7 @@ export default {
             customProductId: this.customProductId,
             productSkuUid: item.sku,
             ratio: item.ratio,
-            memberNickname: item.memberNickname,
+            objNickname: item.objNickname,
           };
         });
 
