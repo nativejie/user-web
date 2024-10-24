@@ -4,16 +4,10 @@
       <!-- 选择宠物或人物 -->
       <div class="one" v-show="step == 1">
         <p class="title">
-          {{
-            elementContentList.portal_custom_basic_title1 ||
-            $t("custom.basic.title1")
-          }}
+          {{ i18nText("custom.basic.title1") }}
         </p>
         <p class="subtitle">
-          {{
-            elementContentList.portal_custom_basic_title2 ||
-            $t("custom.basic.title2")
-          }}
+          {{ i18nText("custom.basic.title2") }}
         </p>
         <div class="types flex_c_c">
           <div
@@ -28,10 +22,7 @@
             </div>
             <p>{{ item.name }}</p>
             <p>
-              {{
-                elementContentList.portal_custom_basic_label14 ||
-                $t("custom.basic.label14")
-              }}
+              {{ i18nText("custom.basic.label14") }}
             </p>
           </div>
         </div>
@@ -40,14 +31,8 @@
       <div class="two" v-show="step == 2">
         <custom-header
           :onAddClick="handleAdd"
-          :label="
-            elementContentList.portal_custom_basic_title4 ||
-            $t('custom.basic.title4')
-          "
-          :title="
-            elementContentList.portal_custom_basic_title4 ||
-            $t('custom.basic.title4')
-          "
+          :label="i18nText('custom.basic.title4')"
+          :title="i18nText('custom.basic.title4')"
           :step="step"
           @handleBack="handleShowDialog"
         ></custom-header>
@@ -59,10 +44,7 @@
           >
             <p class="label flex_b_c">
               <span>
-                {{
-                  elementContentList.portal_custom_basic_label5 ||
-                  $t("custom.basic.label5") + (index + 1)
-                }}
+                {{ i18nText("custom.basic.label5") + (index + 1) }}
               </span>
 
               <span v-if="index > 0" @click="handleDelete(item, index)">{{
@@ -107,62 +89,39 @@
                 <div class="m_r flex">
                   <div class="input">
                     <span class="text4"
-                      >{{
-                        elementContentList.portal_custom_basic_label12 ||
-                        $t("custom.basic.label12")
-                      }}
-                      (cm)</span
+                      >{{ i18nText("custom.basic.label12") }} (cm)</span
                     >
                     <el-input
                       v-model="item.height"
                       @blur="handleBlur(item, index)"
                       @change="handleChange(item, index)"
-                      :placeholder="
-                        elementContentList.portal_custom_basic_placeholder1 ||
-                        $t('custom.basic.placeholder1')
-                      "
+                      :placeholder="i18nText('custom.basic.placeholder1')"
                     />
                   </div>
                   <p class="tips tips2" v-if="item.showTip1">
-                    {{
-                      elementContentList.portal_custom_basic_tip1 ||
-                      $t("custom.basic.tip1")
-                    }}
+                    {{ i18nText("custom.basic.tip1") }}
                   </p>
                 </div>
                 <div class="m_r flex">
                   <div class="input">
                     <span class="text4"
-                      >{{
-                        elementContentList.portal_custom_basic_label13 ||
-                        $t("custom.basic.label13")
-                      }}
-                      (kg)</span
+                      >{{ i18nText("custom.basic.label13") }} (kg)</span
                     >
                     <el-input
                       v-model="item.weight"
                       @blur="handleBlur2(item, index)"
                       @change="handleChange(item, index)"
-                      :placeholder="
-                        elementContentList.portal_custom_basic_placeholder2 ||
-                        $t('custom.basic.placeholder2')
-                      "
+                      :placeholder="i18nText('custom.basic.placeholder2')"
                     />
                   </div>
                   <p class="tips tips2" v-if="item.showTip2">
-                    {{
-                      elementContentList.portal_custom_basic_tip2 ||
-                      $t("custom.basic.tip2")
-                    }}
+                    {{ i18nText("custom.basic.tip2") }}
                   </p>
                 </div>
                 <div class="m_r2 flex">
                   <div class="input">
                     <span class="text4 flex-row-center">
-                      {{
-                        elementContentList.portal_custom_basic_label16 ||
-                        $t("custom.basic.label16")
-                      }}
+                      {{ i18nText("custom.basic.label16") }}
                       <el-tooltip
                         effect="dark"
                         content="即最终成品与真实身高的比例。例如：身高为170cm，选择1:10的比例后，最终成品的高度就为17cm"
@@ -179,10 +138,7 @@
                       v-model="item.sku"
                       @change="handleBlur3(item, index)"
                       :popper-append-to-body="false"
-                      :placeholder="
-                        elementContentList.portal_custom_basic_placeholder3 ||
-                        $t('custom.basic.placeholder3')
-                      "
+                      :placeholder="i18nText('custom.basic.placeholder3')"
                     >
                       <el-option
                         v-for="attr in customSkuList"
@@ -193,10 +149,7 @@
                     </el-select>
                   </div>
                   <p class="tips tips2" v-if="item.showTip3">
-                    {{
-                      elementContentList.portal_custom_basic_tip3 ||
-                      $t("custom.basic.tip3")
-                    }}
+                    {{ i18nText("custom.basic.tip3") }}
                   </p>
                 </div>
               </div>
@@ -242,12 +195,10 @@
         <custom-header
           :onAddClick="handleAdd"
           :label="
-            elementContentList.portal_custom_basic_title4 ||
-            $t('custom.basic.step4.label1')
+            i18nText('custom.basic.step4.label1')
           "
           :title="
-            elementContentList.portal_custom_basic_title4 ||
-            $t('custom.basic.step4.title')
+            i18nText('custom.basic.step4.title')
           "
           :step="step"
           @handleBack="handleBack"
@@ -275,8 +226,7 @@
                 <div class="item-content" v-if="tab == index">
                   <p class="item-content-title">
                     {{
-                      elementContentList.portal_custom_basic_step4_label8 ||
-                      $t("custom.basic.step4.label8")
+                      i18nText("custom.basic.step4.label8")
                     }}
                   </p>
                   <div class="item-content-desc">{{ serviceDesc }}</div>
@@ -333,23 +283,19 @@
             <div class="back flex" @click="handleBack(5)">
               <i class="el-icon-arrow-left"></i>
               <span>{{
-                elementContentList.portal_custom_basic_label11 ||
-                $t("custom.basic.label11")
+                i18nText("custom.basic.label11")
               }}</span>
             </div>
             <span style="font-size: 16px">{{
-              elementContentList.portal_custom_basic_step5_label5 ||
-              $t("custom.basic.step5.label5")
+              i18nText("custom.basic.step5.label5")
             }}</span>
           </div>
           <p class="subtitle m_t2">
             {{
-              elementContentList.portal_custom_basic_step5_label1 ||
-              $t("custom.basic.step5.label1")
+              i18nText("custom.basic.step5.label1")
             }}
             <span style="color: #f6497f">{{
-              elementContentList.portal_custom_basic_step5_label2 ||
-              $t("custom.basic.step5.label2")
+              i18nText("custom.basic.step5.label2")
             }}</span>
           </p>
           <div class="five_main flex_a_c">
@@ -393,8 +339,7 @@
             <div class="right">
               <p class="text3">
                 {{
-                  elementContentList.portal_custom_basic_step5_label3 ||
-                  $t("custom.basic.step5.label3")
+                  i18nText("custom.basic.step5.label3")
                 }}
               </p>
               <div class="pro_list">
@@ -442,8 +387,7 @@
                     class="btn"
                     @click="handleEditServiceProduct(item, index)"
                     >{{
-                      elementContentList.portal_custom_basic_step5_label4 ||
-                      $t("custom.basic.step5.label4")
+                      i18nText("custom.basic.step5.label4")
                     }}</span
                   >
                 </div>
@@ -457,23 +401,19 @@
             <div class="back flex" @click="handleBack(7)">
               <i class="el-icon-arrow-left"></i>
               <span>{{
-                elementContentList.portal_custom_basic_label11 ||
-                $t("custom.basic.label11")
+                i18nText("custom.basic.label11")
               }}</span>
             </div>
             <span style="font-size: 16px">{{
-              elementContentList.portal_custom_basic_step5_label5 ||
-              $t("custom.basic.step5.label5")
+              i18nText("custom.basic.step5.label5")
             }}</span>
           </div>
           <p class="subtitle m_t2">
             {{
-              elementContentList.portal_custom_basic_step5_label1 ||
-              $t("custom.basic.step5.label1")
+              i18nText("custom.basic.step5.label1")
             }}
             <span style="color: #f6497f">{{
-              elementContentList.portal_custom_basic_step7_label1 ||
-              $t("custom.basic.step7.label1")
+              i18nText("custom.basic.step7.label1")
             }}</span>
           </p>
           <div class="five_main flex_a_c">
@@ -537,8 +477,7 @@
             <div class="right">
               <p class="text3">
                 {{
-                  elementContentList.portal_custom_basic_step7_label2 ||
-                  $t("custom.basic.step7.label2")
+                  i18nText("custom.basic.step7.label2")
                 }}
               </p>
               <div class="pro_list">
@@ -583,19 +522,16 @@
             <div class="back flex" @click="handleBack(8)">
               <i class="el-icon-arrow-left"></i>
               <span>{{
-                elementContentList.portal_custom_basic_label11 ||
-                $t("custom.basic.label11")
+                i18nText("custom.basic.label11")
               }}</span>
             </div>
             <span style="font-size: 16px">{{
-              elementContentList.portal_custom_basic_step8_label1 ||
-              $t("custom.basic.step8.label1")
+              i18nText("custom.basic.step8.label1")
             }}</span>
           </div>
           <p class="subtitle m_t2">
             {{
-              elementContentList.portal_custom_basic_step5_label1 ||
-              $t("custom.basic.step5.label1")
+              i18nText("custom.basic.step5.label1")
             }}
             <span style="color: #f6497f">{{
               detailInfo ? detailInfo.customServiceName : ""
@@ -642,8 +578,7 @@
             <div class="right">
               <p class="text3">
                 {{
-                  elementContentList.portal_custom_basic_step5_label3 ||
-                  $t("custom.basic.step5.label3")
+                  i18nText("custom.basic.step5.label3")
                 }}
               </p>
               <div class="pro_list">
@@ -670,8 +605,7 @@
                         </p>
                         <p class="qty">
                           <span>{{
-                            elementContentList.portal_custom_basic_step7_label3 ||
-                            $t("custom.basic.step7.label3")
+                            i18nText("custom.basic.step7.label3")
                           }}</span>
                           <el-input
                             @input="
@@ -694,8 +628,7 @@
                     class="btn"
                     @click="handleEditServiceProduct(item, index)"
                     >{{
-                      elementContentList.portal_custom_basic_step5_label4 ||
-                      $t("custom.basic.step5.label4")
+                      i18nText("custom.basic.step5.label4")
                     }}
                   </span>
                 </div>
@@ -711,25 +644,21 @@
           <div class="back flex" @click="handleBack(6)">
             <i class="el-icon-arrow-left"></i>
             <span>{{
-              elementContentList.portal_custom_basic_label11 ||
-              $t("custom.basic.label11")
+              i18nText("custom.basic.label11")
             }}</span>
           </div>
           <span style="font-size: 16px">{{
-            elementContentList.portal_custom_basic_step6_label1 ||
-            $t("custom.basic.step6.label1")
+            i18nText("custom.basic.step6.label1")
           }}</span>
         </div>
         <p class="subtitle m_t2">
           {{
-            elementContentList.portal_custom_basic_step6_title ||
-            $t("custom.basic.step6.title")
+            i18nText("custom.basic.step6.title")
           }}
         </p>
         <p class="sub-title">
           {{
-            elementContentList.portal_custom_basic_step6_title ||
-            $t("custom.basic.step6.subTitle")
+            i18nText("custom.basic.step6.subTitle")
           }}
         </p>
         <!-- TODO: 门店介绍 -->
@@ -748,8 +677,7 @@
                 <span class="flex"
                   ><i class="el-icon-star-on"></i
                   >{{
-                    elementContentList.portal_custom_basic_step6_label2 ||
-                    $t("custom.basic.step6.label2")
+                    i18nText("custom.basic.step6.label2")
                   }}</span
                 >
               </p>
@@ -766,10 +694,8 @@
               >
                 {{
                   item.status == 0
-                    ? elementContentList.portal_custom_basic_step6_status1 ||
-                      $t("custom.basic.step6.status1")
-                    : elementContentList.portal_custom_basic_step6_status2 ||
-                      $t("custom.basic.step6.status2")
+                    ? i18nText("custom.basic.step6.status1")
+                    : i18nText("custom.basic.step6.status2")
                 }}
                 <span>{{ item.status == 0 ? item.businessHours : "" }}</span>
               </p>
@@ -804,8 +730,7 @@
             <div class="introduce">
               <p class="in_title">
                 {{
-                  elementContentList.portal_custom_basic_step6_label3 ||
-                  $t("custom.basic.step6.label3")
+                  i18nText("custom.basic.step6.label3")
                 }}
               </p>
               <div class="in_detail">
@@ -821,8 +746,7 @@
       <custom-header step="-1" @handleBack="handleConfirmOrderBack" />
       <p class="con_title">
         {{
-          elementContentList.portal_custom_basic_confirm_label1 ||
-          $t("custom.basic.confirm.label1")
+          i18nText("custom.basic.confirm.label1")
         }}
         <!-- <span @click="handleEditInfo">{{
           elementContentList.portal_btns_edit || $t("btns.edit")
@@ -833,8 +757,7 @@
           <span class="in_label flex-row fw300">
             <img src="@/assets/icon/fangkuai.png" style="margin-right: 10px" />
             {{
-              elementContentList.portal_custom_basic_confirm_label2 ||
-              $t("custom.basic.confirm.label2")
+              i18nText("custom.basic.confirm.label2")
             }}
           </span>
           <span>{{ detailInfo ? detailInfo.cusProductName : "" }}</span>
@@ -847,8 +770,7 @@
               style="margin-right: 10px"
             />
             {{
-              elementContentList.portal_custom_basic_confirm_label14 ||
-              $t("custom.basic.confirm.label14")
+              i18nText("custom.basic.confirm.label14")
             }}
           </span>
           <div class="label-val-wrap">
@@ -883,8 +805,7 @@
           <span class="in_label flex-row fw300">
             <img src="@/assets/icon/box.png" style="margin-right: 10px" />
             {{
-              elementContentList.portal_custom_basic_confirm_label5 ||
-              $t("custom.basic.confirm.label5")
+              i18nText("custom.basic.confirm.label5")
             }}
           </span>
           <span>{{ detailInfo.customServiceName }}</span>
@@ -894,8 +815,7 @@
           <span class="in_label flex-row fw300">
             <img src="@/assets/icon/jiesuan.png" style="margin-right: 10px" />
             {{
-              elementContentList.portal_custom_basic_confirm_label6 ||
-              $t("custom.basic.confirm.label15")
+              i18nText("custom.basic.confirm.label15")
             }}
           </span>
           <div>
@@ -918,8 +838,7 @@
           <span class="in_label flex-row fw300">
             <img src="@/assets/icon/dianpu.png" style="margin-right: 10px" />
             {{
-              elementContentList.portal_custom_basic_confirm_label7 ||
-              $t("custom.basic.confirm.label7")
+              i18nText("custom.basic.confirm.label7")
             }}
           </span>
           <span>{{ detailInfo.storeName }}</span>
@@ -928,8 +847,7 @@
           <span class="in_label flex-row fw300">
             <img src="@/assets/icon/rili.png" style="margin-right: 10px" />
             {{
-              elementContentList.portal_custom_basic_confirm_label8 ||
-              $t("custom.basic.confirm.label8")
+              i18nText("custom.basic.confirm.label8")
             }}
           </span>
           <span>{{
@@ -942,8 +860,7 @@
           <span class="in_label flex-row fw300">
             <img src="@/assets/icon/rili.png" style="margin-right: 10px" />
             {{
-              elementContentList.portal_custom_basic_confirm_label16 ||
-              $t("custom.basic.confirm.label16")
+              i18nText("custom.basic.confirm.label16")
             }}
           </span>
         </div>
@@ -951,8 +868,7 @@
           <!-- 定制款项 -->
           <p class="in_price flex-row">
             <span class="in_label">{{
-              elementContentList.portal_custom_basic_confirm_label9 ||
-              $t("custom.basic.confirm.label9")
+              i18nText("custom.basic.confirm.label9")
             }}</span>
             <span style="color: #f6497f; display: flex; align-items: center">
               {{
@@ -965,8 +881,7 @@
           <!-- 配件商品 -->
           <p class="in_price flex-row" style="margin-bottom: 20px">
             <span class="in_label fz14 gray">{{
-              elementContentList.portal_custom_basic_confirm_label10 ||
-              $t("custom.basic.confirm.label10")
+              i18nText("custom.basic.confirm.label10")
             }}</span
             ><span style="color: #f6497f">{{
               " £ " + detailInfo.serviceProductTotalPrice
@@ -978,8 +893,7 @@
               class="in_label fz14 w120 flex-row justify-end"
               style="margin-right: 0"
               >{{
-                elementContentList.portal_custom_basic_confirm_label11 ||
-                $t("custom.basic.confirm.label11")
+                i18nText("custom.basic.confirm.label11")
               }}&nbsp;
             </span>
             <span style="color: #f6497f">
@@ -991,20 +905,17 @@
           </p>
         </div>
         <p class="con_btns">
-        <el-button class="red" type="text" @click="handleShowRuleDialog">
-          定金规则说明</el-button
-        >
-        <el-button class="btn" @click="handleShowRule">{{
-          elementContentList.portal_custom_basic_confirm_label12 ||
-          $t("custom.basic.confirm.label12")
-        }}</el-button>
-        <el-button class="btn btn2" @click="handleAddCart">{{
-          elementContentList.portal_custom_basic_confirm_label13 ||
-          $t("custom.basic.confirm.label13")
-        }}</el-button>
-      </p>
+          <el-button class="red" type="text" @click="handleShowRuleDialog">
+            定金规则说明</el-button
+          >
+          <el-button class="btn" @click="handleShowRule">{{
+            i18nText("custom.basic.confirm.label12")
+          }}</el-button>
+          <el-button class="btn btn2" @click="handleAddCart">{{
+            i18nText("custom.basic.confirm.label13")
+          }}</el-button>
+        </p>
       </div>
-      
     </div>
     <customFooter
       v-if="showStep"
@@ -1052,8 +963,7 @@
       <div class="time flex_b_c">
         <div class="flex time-item">
           <span>{{
-            elementContentList.portal_custom_basic_step6_label5 ||
-            $t("custom.basic.step6.label5")
+            i18nText("custom.basic.step6.label5")
           }}</span>
           <el-date-picker
             class="time-item-picker"
@@ -1064,22 +974,19 @@
             @blur="handleChangeData"
             :picker-options="pickerOptions"
             :placeholder="
-              elementContentList.portal_custom_basic_step6_placeholder1 ||
-              $t('custom.basic.step6.placeholder1')
+              i18nText('custom.basic.step6.placeholder1')
             "
           >
           </el-date-picker>
           <p v-if="showDateTip" class="err_tip">
             {{
-              elementContentList.portal_custom_basic_label20 ||
-              $t("custom.basic.label20")
+              i18nText("custom.basic.label20")
             }}
           </p>
         </div>
         <div class="flex time-item">
           <span>{{
-            elementContentList.portal_custom_basic_step6_label6 ||
-            $t("custom.basic.step6.label6")
+            i18nText("custom.basic.step6.label6")
           }}</span>
           <el-select
             style="width: 50%"
@@ -1098,8 +1005,7 @@
           </el-select>
           <p v-if="showTimeTip" class="err_tip">
             {{
-              elementContentList.portal_custom_basic_label21 ||
-              $t("custom.basic.label21")
+              i18nText("custom.basic.label21")
             }}
           </p>
         </div>
@@ -1377,7 +1283,7 @@ export default {
         //     this.step = 7;
         //     break;
         // }
-        this.step = 5
+        this.step = 5;
       }
       if (this.step != 3) {
         this.getsServiceProductPage();
@@ -1443,73 +1349,57 @@ export default {
         processItems();
       }
     },
-    getDetail() {
-      detail()
-        .then((res) => {
-          this.detailInfo = res.data;
-          console.log('basic~1451 this.detailInfo：', this.detailInfo);
-          if (!res.data) {
-            customPage({ productType: "custom" }).then((resp) => {
-              this.customProList = resp.data.list;
-              console.log('basic~1455 this.customProList：', this);
-              this.customPro = resp.data.list[0];
-              this.type = -1;
-            });
-          } else {
-            this.customProductId = res.data.customProductId;
-            customPage({ productType: "custom" }).then((resp) => {
-              this.customProList = resp.data.list;
-              this.customProList.forEach((item, idx) => {
-                if (this.detailInfo.cusProductUid == item.productUid) {
-                  this.customPro = item;
-                  this.type = idx;
-                }
-              });
-            });
-            switch (res.data.processStatus) {
-              case 0:
-                this.step = 1;
-                break;
-              case 1:
-                this.getObjectList();
-                this.getProductSkuList();
-                this.step = 2;
-                break;
-              // case 2:
-              //   this.getObjectList()
-              //   this.getProductSkuList()
-              //   this.step = 3
-              //   break
-              case 2:
-                this.getObjectList();
-                this.getProductSkuList();
-                this.getServicePage();
-                this.step = 4;
-                break;
-              case 3:
-                this.getObjectList();
-                this.getProductSkuList();
-                this.getServicePage();
-                this.step = 4;
-                break;
-              case 4:
-                this.getObjectList();
-                this.getProductSkuList();
-                this.getServicePage();
-                this.getStorePage();
-                this.step = 6;
-                break;
-              case 5:
-                this.getObjectList();
-                this.getProductSkuList();
-                this.getServicePage();
-                this.getStorePage();
-                this.step = 6;
-                break;
+    fetchDataByProcessStatus(processStatus) {
+      switch (processStatus) {
+        case 0:
+          this.step = 1;
+          break;
+        case 1:
+          this.getObjectList();
+          this.getProductSkuList();
+          this.step = 2;
+          break;
+        case 2:
+        case 3:
+          this.getObjectList();
+          this.getProductSkuList();
+          this.getServicePage();
+          this.step = 4;
+          break;
+        case 4:
+        case 5:
+          this.getObjectList();
+          this.getProductSkuList();
+          this.getServicePage();
+          this.getStorePage();
+          this.step = 6;
+          break;
+      }
+    },
+    async getDetail() {
+      try {
+        const { data } = await detail();
+        this.detailInfo = data || {};
+        const {
+          data: { list = [] },
+        } = await customPage({ productType: "custom" });
+        this.customProList = list;
+        if (!data) {
+          this.customPro = list?.[0];
+          this.type = -1;
+        } else {
+          this.customProductId = data.customProductId;
+          this.customProList.forEach((item, idx) => {
+            if (this.detailInfo.cusProductUid == item.productUid) {
+              this.customPro = item;
+              this.type = idx;
             }
-          }
-        })
-        .catch(() => {});
+          });
+          this.fetchDataByProcessStatus(data.processStatus);
+        }
+      } catch (error) {
+        console.log(error);
+      }
     },
     handleChangePackIdx(val, index) {
       this.packIdx = index;
@@ -1756,18 +1646,7 @@ export default {
       );
       const { data = {} } = await detail();
       this.detailInfo = data;
-      // switch (this.serviceData.type) {
-      //   case "normal":
-      //     this.step = 5;
-      //     break;
-      //   case "accessory":
-      //     this.step = 8;
-      //     break;
-      //   case "combined_scene":
-      //     this.step = 7;
-      //     break;
-      // }
-      this.step = 5
+      this.step = 5;
       this.getsServiceProductPage();
     },
     async handleSaveServiceSku() {
@@ -1919,9 +1798,6 @@ export default {
       this.step = 7;
     },
     handleConfirmOrderBack() {
-      // TODO 匹配类型返回最后一步
-      // this.step = 6;
-      // console.log(`%c 返回`, "color: #ff6700");
       this.showStep = true;
       this.step = 6;
     },
@@ -2132,6 +2008,7 @@ export default {
     }
   }
   .one {
+    padding-top: 64px;
     .title {
       font-size: 30px;
       font-weight: 600;

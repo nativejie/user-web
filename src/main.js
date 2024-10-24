@@ -1,23 +1,23 @@
-import Vue from 'vue'
+import Vue from "vue";
 
-import 'normalize.css/normalize.css'// A modern alternative to CSS resets
+import "normalize.css/normalize.css"; // A modern alternative to CSS resets
 
-import ElementUI from 'element-ui'
-import 'element-ui/lib/theme-chalk/index.css'
-import locale from 'element-ui/lib/locale/lang/en' // lang i18n
-import zhlocale from 'element-ui/lib/locale/lang/zh-CN' // lang i18n
-import VCharts from 'v-charts'
+import ElementUI from "element-ui";
+import "element-ui/lib/theme-chalk/index.css";
+import locale from "element-ui/lib/locale/lang/en"; // lang i18n
+import zhlocale from "element-ui/lib/locale/lang/zh-CN"; // lang i18n
+import VCharts from "v-charts";
 
-import '@/styles/index.scss' // global css
-import './style.css'
+import "@/styles/index.scss"; // global css
+import "./style.css";
 
-import App from './App'
-import router from './router'
-import store from './store'
+import App from "./App";
+import router from "./router";
+import store from "./store";
 
-import '@/icons' // icon
-import '@/permission' // permission control
-import i18n from './lang'
+import "@/icons"; // icon
+import "@/permission"; // permission control
+import i18n from "./lang";
 
 // import Directives from '@/directives'
 // Vue.use(Directives)
@@ -26,22 +26,22 @@ import i18n from './lang'
 // Object.keys(directive).forEach((key) => {
 //   Vue.directive(key, directive[key])
 // })
-const languageCode = localStorage.getItem("LanguageCode") || 'en-GB'
+const languageCode = localStorage.getItem("LanguageCode") || "en-GB";
 
-if (languageCode == 'zh-CN') {
-  Vue.use(ElementUI, { zhlocale })
+if (languageCode == "zh-CN") {
+  Vue.use(ElementUI, { zhlocale });
 } else {
-  Vue.use(ElementUI, { locale })
+  Vue.use(ElementUI, { locale });
 }
-Vue.use(VCharts)
+Vue.use(VCharts);
 
 Vue.config.productionTip = false;
 
 Vue.mixin({
   data() {
     return {
-      
-    }
+      elementContentList: window.elementContentList || {},
+    };
   },
   computed: {
     loginDialogVisible() {
@@ -52,20 +52,27 @@ Vue.mixin({
     },
     messageBoardVisible() {
       return this.$store.state.app.messageBoardVisible;
-    }
+    },
   },
   methods: {
+    i18nText(key) {
+      // for example: key = 'app.title'
+      // return elementContentList['portal_app_title'] || this.$t(key)
+      return (
+        this.elementContentList[`portal_${key.split(".").join("_")}`] || this.$t(key)
+      );
+    },
     handleOpenLoginDialog() {
-      this.$store.commit('CHANGE_LOGIN_DIALOG_VISIBLE', true);
+      this.$store.commit("CHANGE_LOGIN_DIALOG_VISIBLE", true);
     },
     handleCloseLoginDialog() {
-      this.$store.commit('CHANGE_LOGIN_DIALOG_VISIBLE', false);
+      this.$store.commit("CHANGE_LOGIN_DIALOG_VISIBLE", false);
     },
     handleOpenSignUpDialog() {
-      this.$store.commit('CHANGE_SIGN_UP_DIALOG_VISIBLE', true);
+      this.$store.commit("CHANGE_SIGN_UP_DIALOG_VISIBLE", true);
     },
     handleCloseSignUpDialog() {
-      this.$store.commit('CHANGE_SIGN_UP_DIALOG_VISIBLE', false);
+      this.$store.commit("CHANGE_SIGN_UP_DIALOG_VISIBLE", false);
     },
     /** 登陆确认 - 未登陆，拉起登陆弹窗 */
     handleCheckLogin() {
@@ -76,25 +83,22 @@ Vue.mixin({
       return IS_LOGIN;
     },
     handleOpenMessageBoard() {
-      this.$store.commit('CHANGE_MESSAGE_BOARD_VISIBLE', true);
+      this.$store.commit("CHANGE_MESSAGE_BOARD_VISIBLE", true);
     },
     handleCloseMessageBoard() {
-      this.$store.commit('CHANGE_MESSAGE_BOARD_VISIBLE', false);
-    }
-  }
-})
+      this.$store.commit("CHANGE_MESSAGE_BOARD_VISIBLE", false);
+    },
+  },
+});
 
-
-import "virtual:svg-icons-register"
+import "virtual:svg-icons-register";
 const vue = new Vue({
-  el: '#app',
+  el: "#app",
   router,
   store,
   i18n,
-  render: h => h(App),
-  components: { App }
-})
+  render: (h) => h(App),
+  components: { App },
+});
 
 export default vue;
-
-

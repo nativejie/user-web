@@ -68,15 +68,15 @@
               </el-form-item>
             </el-form>
             <div class="remember">
-              <el-checkbox v-model="isAgree" style="marginRight: 8px;" />
+              <el-checkbox v-model="isAgree" style="margin-right: 8px;" />
               <span class="agreement">
                 {{ 
                   elementContentList.portal_login_text10 || $t("login.text10")
                 }}
-                <span style="textDecoration: underline;" @click="handleShowAgreement('service')">{{
+                <span style="text-decoration: underline;" @click="handleShowAgreement('service')">{{
                   elementContentList.portal_login_text11 || $t("login.text11")
                 }}</span>,
-                <span style="textDecoration: underline;" @click="handleShowAgreement('privacy')">{{
+                <span style="text-decoration: underline;" @click="handleShowAgreement('privacy')">{{
                   elementContentList.portal_login_text12 || $t("login.text12")
                 }}</span
                 >.</span
