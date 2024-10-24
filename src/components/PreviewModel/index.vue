@@ -25,6 +25,7 @@
       </div>
     </div>
     <MessageBoard 
+      :key="order.order.id"
       v-if="messageBoardVisible" 
       :dialogVisible="messageBoardVisible" 
       :onClose="handleCloseMessageBoard" 
@@ -36,6 +37,11 @@
 <script>
   import MessageBoard from '@/components/MessageBoard';
   export default {
+    data() {
+      return {
+        messageBoardVisible: false
+      }
+    },
     props: {
       list: Array,
       onPrint: Function,
@@ -60,6 +66,12 @@
           
         });
       },
+      handleCloseMessageBoard() {
+        this.messageBoardVisible = false;
+      },
+      handleOpenMessageBoard() {
+        this.messageBoardVisible = true;
+      }
     },
     mounted() {
       console.log('index~64 this.list：', this.order);

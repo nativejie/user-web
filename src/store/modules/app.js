@@ -9,7 +9,6 @@ const app = {
     device: 'desktop',
     loginDialogVisible: false,
     signUpDialogVisible: false,
-    messageBoardVisible: false
   },
   mutations: {
     TOGGLE_SIDEBAR: state => {
@@ -34,9 +33,6 @@ const app = {
     CHANGE_SIGN_UP_DIALOG_VISIBLE: (state, bool) => {
       state.signUpDialogVisible = bool;
     },
-    CHANGE_MESSAGE_BOARD_VISIBLE: (state, bool) => {
-      state.messageBoardVisible = bool;
-    }
   },
   actions: {
     ToggleSideBar: ({ commit }) => {

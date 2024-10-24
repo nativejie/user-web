@@ -169,11 +169,10 @@ export function refusePrint (orderId) {
 }
 
 // 提交留言
-export function addProcessNote (data) {
+export function addProcessNote ({ note, processId }) {
   return request({
-    url: `/order/addProcessNote`,
+    url: `/order/addProcessNote?note=${note}&processId=${processId}`,
     method: 'post',
-    data
   })
 }
 
