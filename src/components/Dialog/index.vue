@@ -30,9 +30,18 @@
         default: 'Confirm'
       },
       dialogVisible: Boolean,
-      onCancel: Function,
-      onConfirm: Function,
-      onClose: Function,
+      onCancel: {
+        type: Function,
+        default: () => {}
+      },
+      onConfirm: {
+        type: Function,
+        default: () => {}
+      },
+      onClose: {
+        type: Function,
+        default: () => {}
+      },
       width: {
         type: String,
         default: '30%'
