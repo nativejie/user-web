@@ -57,14 +57,10 @@
                 <div class="m_r flex">
                   <div class="input">
                     <span class="text4 flex-row-center">
-<<<<<<< HEAD
-                      {{ i18nText("custom.basic.label22") }}
-=======
                       {{
                         elementContentList.objNickname ||
                         $t("custom.basic.label22")
                       }}
->>>>>>> fd59573ce9ba7fd8ad1605d2f50b8f31ea6d8ca6
                       <el-tooltip
                         effect="dark"
                         content="输入昵称可以更好区分不同对象"
@@ -81,14 +77,10 @@
                       v-model="item.objNickname"
                       @blur="handleBlur4(item, index)"
                       @change="handleChange(item, index)"
-<<<<<<< HEAD
-                      :placeholder="i18nText('custom.basic.placeholder3')"
-=======
                       :placeholder="
                         elementContentList.portal_custom_basic_placeholder1 ||
                         $t('custom.basic.placeholder4')
                       "
->>>>>>> fd59573ce9ba7fd8ad1605d2f50b8f31ea6d8ca6
                     />
                   </div>
                   <p class="tips tips2" v-if="item.showTip4">请输入昵称</p>
