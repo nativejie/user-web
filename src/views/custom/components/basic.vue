@@ -777,25 +777,25 @@
             <div class="label-val">
               <div
                 class="label-val-row"
-                v-for="item in detailInfo.customProductObjVOs"
+                v-for="(item, _i) in detailInfo.customProductObjVOs"
               >
                 <div class="label-val-row-item">
-                  {{ item.objNickName }}
+                  扫描对象{{ _i + 1 }}
                 </div>
-                <div class="label-val-row-item">{{ item.objNickName }}</div>
+                <div class="label-val-row-item">{{ item.objNickName || item.objNo || '-' }}</div>
                 <div class="label-val-row-item">
                   {{ item.height }}cm,{{ item.weight }}kg
                 </div>
-                <div class="label-val-row-item">{{ item.radio }}</div>
+                <div class="label-val-row-item">{{ item.ratio || '-' }}</div>
                 <div class="label-val-row-item red">
-                  £ {{ item.depositPrice }}
+                  £ {{ item.depositPrice || '-' }}
                 </div>
-                <Deposit />
+                <Deposit v-if="item.depositPrice" />
               </div>
               <div class="label-val-row">
                 <div class="label-val-row-item red flex">
                   £ {{ detailInfo.totalDepositPrice }} &nbsp;
-                  <Deposit />
+                  <Deposit v-if="detailInfo.totalDepositPrice" />
                 </div>
               </div>
             </div>
@@ -875,7 +875,7 @@
                 " £ " +
                 (detailInfo.cusTotalPrice - detailInfo.serviceProductTotalPrice)
               }}
-              <Deposit />
+              <Deposit v-if="detailInfo.cusTotalPrice - detailInfo.serviceProductTotalPrice" />
             </span>
           </p>
           <!-- 配件商品 -->
@@ -1123,9 +1123,9 @@ export default {
       packageProList: [],
       openDate: [],
       pickerOptions: {
-        disabledDate(time) {
-          return time.getTime() < Date.now() - 24 * 60 * 60 * 1000;
-        },
+        // disabledDate(time) {
+        //   return time.getTime() < Date.now() - 24 * 60 * 60 * 1000;
+        // },
       },
       showDateTip: false,
       showTimeTip: false,
@@ -1675,7 +1675,7 @@ export default {
             return {
               label: `${time.startTime}-${time.endTime}`,
               value: time.storeTimeId,
-              disabled: item.status === 0 ? false : true,
+              disabled: time.status === 0 ? true : false,
             };
           }),
         };

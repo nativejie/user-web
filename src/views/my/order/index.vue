@@ -197,21 +197,19 @@
                             {{ it.productName }}
                           </p>
                           <p
-                            class="pro_style"
-                            v-for="obj in it.orderPageCusObjItemVOs"
+                            class="pro_style flex-row justify-start"
+                            v-for="(obj, objIndex) in it.orderPageCusObjItemVOs"
                             :key="obj.cartCusItemId"
                           >
-                            <span style="margin-right: 24px">{{
-                              obj.objNickname
-                            }}</span>
-                            <span style="margin-right: 24px">{{ obj.objNickname }}</span>
+                            <span style="margin-right: 24px">扫描对象{{ objIndex + 1 }}</span>
+                            <span style="margin-right: 24px">{{ obj.objNickname || '-' }}</span>
                             <span style="margin-right: 24px">{{
                               (obj.height ? obj.height + "cm, " : "") +
                               (obj.weight ? obj.weight + "kg" : "")
                             }}</span>
-                            <span style="margin-right: 24px">{{ obj.ratio }}</span>
-                            <span style="color: #f6497f; margin-right: 24px;">£ {{ obj.productPrice }}</span>
-                            <Deposit />
+                            <span style="margin-right: 24px">{{ obj.ratio || '-' }}</span>
+                            <span style="color: #f6497f; margin-right: 24px;">£ {{ obj.depositPrice || '-' }}</span>
+                            <Deposit v-if="obj.depositPrice" />
                           </p>
                           <div class="pro_info">
                             <p>
@@ -241,7 +239,7 @@
                           </div>
                           <div class="flex-row" style="justify-content: start;">
                             <p class="it_price" style="margin-right: 24px">£ {{ it.productPrice }}</p>
-                            <Deposit />
+                            <Deposit v-if="it.productPrice" />
                           </div>
                           <!-- 打印确认 -->
                           <PreviewModel 
@@ -252,8 +250,7 @@
                             :order="item"
                           />
                           <!-- 支付尾款卡片 -->
-                           <!-- v-if="item.order.status === ORDER_STATUS.WAIT_PAY_TAIL" -->
-                          <div class="final-payment flex-col base-gray-bg" >
+                          <div class="final-payment flex-col base-gray-bg" v-if="item.order.status === ORDER_STATUS.WAIT_PAY_TAIL">
                             <div class="final-payment-dingjin flex-row justify-between">
                               <p class="item-name">定金</p>
                               <p class="item-price">

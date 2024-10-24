@@ -150,10 +150,10 @@
                   <p class="pro_title">{{ item.productName }}</p>
                   <p
                     class="pro_style"
-                    v-for="it in item.cartCusObjItemVOS"
+                    v-for="(it, itIndex) in item.cartCusObjItemVOS"
                     :key="it.cartCusItemId"
                   >
-                    <span style="margin-right: 24px">{{ it.objNickname }}</span>
+                    <span style="margin-right: 24px">扫描对象{{ itIndex }}</span>
                     <!-- TODO: 新增字段 -->
                     <span style="margin-right: 24px">{{ it.objNickname }}</span>
                     <span style="margin-right: 24px">{{
@@ -162,11 +162,11 @@
                     }}</span>
                     <span style="margin-right: 24px">{{ it.ratio }}</span>
                     <span style="color: #f6497f; margin-right: 24px">£ {{ it.price }}</span>
-                    <Deposit />
+                    <Deposit v-if="it.price" />
                   </p>
                   <div class="price custom-item-price">
                     <p class="price-val">£ {{ item.priceTotal }}</p>
-                    <Deposit />
+                    <Deposit v-if="it.price" />
                   </div>
                   <div class="pro_info">
                     <p @click="isOpen = !isOpen">

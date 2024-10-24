@@ -227,7 +227,7 @@
                           <span style="margin-right: 24px; color: #f6497f"
                             >£ {{ it.price }}</span
                           >
-                          <Deposit />
+                          <Deposit v-if="it.price" />
                         </p>
                         <div class="pro_info2">
                           <div style="margin-top: 16px">

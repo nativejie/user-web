@@ -12,16 +12,16 @@
 
 <style lang="scss" scoped>
 .deposit {
+  box-sizing: border-box;
+  padding: 2px 0;
   font-size: 12px;
-  display: inline-block;
+  line-height: 12px;
   min-width: 54px;
   width: 54px;
   height: 18px;
-  line-height: 18px;
   text-align: center;
   background: #FBECF1;
   border-radius: 4px;
-  box-sizing: border-box;
   border: 1px solid #FBB9CE;
   color: #F6497F;
 }
