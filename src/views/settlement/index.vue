@@ -217,7 +217,7 @@
                           </span>
                           <span style="margin-right: 24px">
                             <!-- TODO: 新字段 -->
-                            {{it.cyrus}}
+                            {{ it.objNickname }}
                           </span>
                           <span style="margin-right: 24px">{{
                             (it.height ? it.height + "cm" : "") +

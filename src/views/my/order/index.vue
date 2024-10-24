@@ -204,7 +204,7 @@
                             <span style="margin-right: 24px">{{
                               obj.objNickname
                             }}</span>
-                            <span style="margin-right: 24px">Cyrus</span>
+                            <span style="margin-right: 24px">{{ obj.objNickname }}</span>
                             <span style="margin-right: 24px">{{
                               (obj.height ? obj.height + "cm, " : "") +
                               (obj.weight ? obj.weight + "kg" : "")

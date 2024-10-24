@@ -155,7 +155,7 @@
                   >
                     <span style="margin-right: 24px">{{ it.objNickname }}</span>
                     <!-- TODO: 新增字段 -->
-                    <span style="margin-right: 24px">{{ it.cyrus || 'Cyrus' }}</span>
+                    <span style="margin-right: 24px">{{ it.objNickname }}</span>
                     <span style="margin-right: 24px">{{
                       (it.height ? it.height + "cm" : "") +
                       (it.weight ? it.weight + "kg" : "")

@@ -76,7 +76,7 @@
                   <div class="input">
                     <span class="text4 flex-row-center">
                       {{
-                        elementContentList.objNickname ||
+                        elementContentList.objNickName ||
                         $t("custom.basic.label22")
                       }}
                       <el-tooltip
@@ -92,7 +92,7 @@
                       </el-tooltip>
                     </span>
                     <el-input
-                      v-model="item.objNickname"
+                      v-model="item.objNickName"
                       @blur="handleBlur4(item, index)"
                       @change="handleChange(item, index)"
                       :placeholder="
@@ -858,9 +858,9 @@
                 v-for="item in detailInfo.customProductObjVOs"
               >
                 <div class="label-val-row-item">
-                  {{ item.objNickname }}
+                  {{ item.objNickName }}
                 </div>
-                <div class="label-val-row-item">Cyrus</div>
+                <div class="label-val-row-item">{{ item.objNickName }}</div>
                 <div class="label-val-row-item">
                   {{ item.height }}cm,{{ item.weight }}kg
                 </div>
@@ -1181,7 +1181,7 @@ export default {
           showTip3: false,
           showTip4: false,
           customObjId: "",
-          objNickname: "",
+          objNickName: "",
           objNo: "",
           productSkuUid: "",
           sku: "",
@@ -1416,7 +1416,7 @@ export default {
                 ratio: item.ratio,
                 type: 1,
                 weight: item.weight,
-                objNickname: item.objNickname,
+                objNickName: item.objNickName,
                 productUid: this.customPro.productUid,
                 productBaseUid: this.customPro.productBaseUid,
               };
@@ -1543,14 +1543,12 @@ export default {
       this.serviceData = val;
       this.serviceDesc = val.serviceDesc;
     },
-    getCalculate(weight, height, ratio, index, objNickname, obj) {
-      console.log("basic~1586 obj：", obj);
+    getCalculate(weight, height, ratio, index, obj) {
       const params = {
         height,
         ratio,
         type: 1,
         weight,
-        objNickname,
         productUid: this.customPro.productUid,
         productBaseUid: this.customPro.productBaseUid,
       };
@@ -1559,7 +1557,6 @@ export default {
         this.objectList[index].modelWeight = res.data.modelWeight;
         this.objectList[index].estimateAmount = res.data.estimateAmount;
         this.objectList[index].depositAmount = res.data.depositAmount;
-        this.objectList[index].objNickname = res.data.objNickname;
       });
     },
     handleChange(val, index) {
@@ -1569,13 +1566,12 @@ export default {
           val.height,
           val.ratio,
           index,
-          val.objNickname,
           val
         );
       }
     },
     handleBlur4(val, index) {
-      if (val.objNickname) {
+      if (val.objNickName) {
         val.showTip4 = false;
       } else {
         val.showTip4 = true;
@@ -1598,7 +1594,6 @@ export default {
           val.height,
           val.ratio,
           index,
-          val.objNickname,
           val
         );
       }
@@ -1646,7 +1641,7 @@ export default {
         showTip3: false,
         showTip4: false,
         customObjId: "",
-        objNickname: "",
+        objNickName: "",
         objNo: "",
         productSkuUid: "",
         sku: "",
@@ -1698,16 +1693,16 @@ export default {
         item.showTip1 = !item.height;
         item.showTip2 = !item.weight;
         item.showTip3 = !item.sku;
-        item.showTip4 = !item.objNickname;
+        item.showTip4 = !item.objNickName;
 
-        item.objNickname = item.objNickname || `扫描对象${index + 1}`;
+        item.objNickName = item.objNickName || `扫描对象${index + 1}`;
         item.objNo = item.objNo || `objNo${index + 1}`;
       });
       const isPersonScan = this.detailInfo.cusProductName === "人物扫描";
       const arr = this.objectList.filter((item) => {
         if (isPersonScan) {
           return (
-            !item.height || !item.weight || !item.sku || !item.objNickname
+            !item.height || !item.weight || !item.sku || !item.objNickName
           );
         } else {
           return !item.weight || !item.sku;
@@ -1723,7 +1718,7 @@ export default {
           customProductId: this.customProductId,
           height: item.height,
           weight: item.weight,
-          objNickname: item.objNickname,
+          objNickName: item.objNickName,
           objNo: item.objNo,
         };
       });
@@ -1740,7 +1735,7 @@ export default {
             customProductId: this.customProductId,
             productSkuUid: item.sku,
             ratio: item.ratio,
-            objNickname: item.objNickname,
+            objNickName: item.objNickName,
           };
         });
 
